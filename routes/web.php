@@ -24,7 +24,18 @@ Route::middleware('guest')->group(function () {
 // Group untuk yang SUDAH Login (Auth)
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        // 1. Ambil Berita (Urutkan dari yang terbaru)
+        // Kita pakai latest() biar yang baru di atas
+        $articles = Article::latest()->get();
+
+        // 2. Ambil Jadwal (Hanya yang tanggalnya >= hari ini)
+        // Supaya balapan masa lalu tidak muncul di sidebar
+        $races = Race::where('race_date', '>=', now())
+                     ->orderBy('race_date', 'asc')
+                     ->take(5) // Batasi cuma 5 balapan di sidebar biar gak kepanjangan
+                     ->get();
+
+        return view('dashboard', compact('articles', 'races'));
     })->name('dashboard');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
