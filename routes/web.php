@@ -1,19 +1,32 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
+use App\Models\Article; 
+use App\Models\Race;
 
-// Redirect halaman awal langsung ke Login
+// 1. Halaman Utama langsung ke Dashboard (Bisa diakses siapa saja)
 Route::get('/', function () {
-    // Opsional: Kalau user ternyata sudah login, lempar ke dashboard saja
-    if (Auth::check()) {
-        return redirect()->route('dashboard');
-    }
-    // Kalau belum, paksa ke halaman login
-    return redirect()->route('login');
+    return redirect()->route('dashboard');
 });
 
-// Group untuk Guest (yang belum login)
+// 2. Route Dashboard (PUBLIC / TIDAK PERLU LOGIN)
+Route::get('/dashboard', function () {
+    // Ambil data (gunakan dummy jika database kosong untuk mencegah error)
+    // Kita gunakan 'try-catch' atau pengecekan sederhana
+
+    $articles = Article::latest()->get();
+
+    $races = Race::where('race_date', '>=', now())
+                 ->orderBy('race_date', 'asc')
+                 ->take(5)
+                 ->get();
+
+    return view('dashboard', compact('articles', 'races'));
+})->name('dashboard');
+
+// 3. Group untuk Tamu (Belum Login)
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.process');
@@ -21,22 +34,16 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 });
 
-// Group untuk yang SUDAH Login (Auth)
+// 4. Group untuk User LOGIN (Proteksi Pembelian)
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        // 1. Ambil Berita (Urutkan dari yang terbaru)
-        // Kita pakai latest() biar yang baru di atas
-        $articles = Article::latest()->get();
 
-        // 2. Ambil Jadwal (Hanya yang tanggalnya >= hari ini)
-        // Supaya balapan masa lalu tidak muncul di sidebar
-        $races = Race::where('race_date', '>=', now())
-                     ->orderBy('race_date', 'asc')
-                     ->take(5) // Batasi cuma 5 balapan di sidebar biar gak kepanjangan
-                     ->get();
-
-        return view('dashboard', compact('articles', 'races'));
-    })->name('dashboard');
-
+    // Fitur Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Fitur Beli Tiket (Hanya bisa diakses kalau sudah login)
+    // Jika tamu klik tombol beli, Laravel otomatis melempar ke halaman Login
+    Route::get('/booking/{id}', function ($id) {
+        return "Halo! Ini halaman booking untuk Race ID: " . $id . ". Kamu melihat ini karena sudah login.";
+        // Nanti kita ganti dengan Controller beneran: [BookingController::class, 'show']
+    })->name('booking.show');
 });

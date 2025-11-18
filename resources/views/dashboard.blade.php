@@ -83,26 +83,35 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark navbar-f1 shadow-sm mb-4">
         <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-flag-fill me-2"></i>F1 HUB</a>
+            <a class="navbar-brand" href="{{ route('dashboard') }}"><i class="bi bi-flag-fill me-2"></i>F1 HUB</a>
 
-            <div class="dropdown ms-auto">
-                <a href="#" class="text-white text-decoration-none dropdown-toggle fw-bold" data-bs-toggle="dropdown">
-                    <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                    @if(Auth::user()->role == 'admin')
-                        <li><a class="dropdown-item fw-bold text-danger" href="#"><i class="bi bi-speedometer2 me-2"></i>Panel Admin</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                    @endif
+            <div class="d-flex align-items-center ms-auto">
 
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-ticket-perforated me-2"></i>Tiket Saya</a></li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="dropdown-item text-danger">Logout</button>
-                        </form>
-                    </li>
-                </ul>
+                @auth
+                    <div class="dropdown">
+                        <a href="#" class="text-white text-decoration-none dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                            @if(Auth::user()->role == 'admin')
+                                <li><a class="dropdown-item fw-bold text-danger" href="#"><i class="bi bi-speedometer2 me-2"></i>Panel Admin</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            @endif
+
+                            <li><a class="dropdown-item" href="#"><i class="bi bi-ticket-perforated me-2"></i>Tiket Saya</a></li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="btn btn-sm btn-outline-light me-2 fw-bold">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-sm btn-light text-danger fw-bold">Register</a>
+                @endauth
+
             </div>
         </div>
     </nav>
