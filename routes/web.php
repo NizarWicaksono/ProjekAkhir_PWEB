@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminRaceController;
 use App\Models\Article;
 use App\Models\Race;
 
@@ -52,8 +53,12 @@ Route::middleware('auth')->group(function () {
 // GROUP ROUTE KHUSUS ADMIN
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
-    // Dashboard Admin
+    // Dashboard (yang sudah ada)
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-    // Nanti kita tambah route artikel, tiket, dll disini
+    // === ROUTE BARU UNTUK JADWAL ===
+    Route::get('/races', [AdminRaceController::class, 'index'])->name('admin.races.index'); // Lihat List
+    Route::get('/races/create', [AdminRaceController::class, 'create'])->name('admin.races.create'); // Form Tambah
+    Route::post('/races', [AdminRaceController::class, 'store'])->name('admin.races.store'); // Proses Simpan
+    Route::delete('/races/{id}', [AdminRaceController::class, 'destroy'])->name('admin.races.destroy'); // Hapus
 });
