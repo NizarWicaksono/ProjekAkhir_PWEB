@@ -51,14 +51,18 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-        // Cek apakah email & password cocok
+    
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate(); // Keamanan session
-            return redirect()->intended('dashboard'); // Masuk ke dashboard
+            $request->session()->regenerate();
+        
+            // CEK ROLE USER DISINI
+            if (Auth::user()->role === 'admin') {
+                return redirect()->route('admin.dashboard'); // Lempar ke Admin
+            }
+        
+            return redirect()->intended('dashboard'); // Lempar ke User Biasa
         }
-
-        // Jika salah
+    
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ]);

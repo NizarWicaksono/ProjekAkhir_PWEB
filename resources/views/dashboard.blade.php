@@ -80,7 +80,6 @@
     </style>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg navbar-dark navbar-f1 shadow-sm mb-4">
         <div class="container">
             <a class="navbar-brand" href="{{ route('dashboard') }}"><i class="bi bi-flag-fill me-2"></i>F1 HUB</a>

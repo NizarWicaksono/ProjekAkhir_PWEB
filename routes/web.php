@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
-use App\Models\Article; 
+use App\Http\Controllers\AdminController;
+use App\Models\Article;
 use App\Models\Race;
 
 // 1. Halaman Utama langsung ke Dashboard (Bisa diakses siapa saja)
@@ -46,4 +47,13 @@ Route::middleware('auth')->group(function () {
         return "Halo! Ini halaman booking untuk Race ID: " . $id . ". Kamu melihat ini karena sudah login.";
         // Nanti kita ganti dengan Controller beneran: [BookingController::class, 'show']
     })->name('booking.show');
+});
+
+// GROUP ROUTE KHUSUS ADMIN
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+
+    // Dashboard Admin
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // Nanti kita tambah route artikel, tiket, dll disini
 });
