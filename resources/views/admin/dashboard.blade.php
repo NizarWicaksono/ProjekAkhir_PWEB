@@ -72,7 +72,7 @@
                     <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-grid me-1"></i> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.lihatjadwal') }}"><i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.pendapatan') }}"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
                 </ul>
 
                 <div class="d-flex align-items-center">
@@ -140,7 +140,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="#" class="btn-action d-block text-decoration-none text-center">
+                <a href="{{ route('admin.pendapatan') }}" class="btn-action d-block text-decoration-none text-center">
                     <i class="bi bi-file-earmark-spreadsheet display-6 d-block mb-2"></i>
                     Export Laporan Penjualan
                 </a>

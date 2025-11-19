@@ -9,6 +9,7 @@ use App\Models\Article;
 use App\Models\Race;
 use App\Models\Circuit;
 use Illuminate\Http\Request;
+use App\Http\Controllers\AdminFinanceController;
 
 // 1. Halaman Utama langsung ke Dashboard (Bisa diakses siapa saja)
 Route::get('/', function () {
@@ -63,5 +64,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/races/create', [AdminRaceController::class, 'create'])->name('admin.tambahjadwal'); // Form Tambah
     Route::post('/races', [AdminRaceController::class, 'store'])->name('admin.races.store'); // Proses Simpan
     Route::delete('/races/{id}', [AdminRaceController::class, 'destroy'])->name('admin.races.destroy'); // Hapus
+    // === ROUTE BARU UNTUK PENDAPATAN ===
+    Route::get('/pendapatan', [AdminFinanceController::class, 'index'])->name('admin.pendapatan');
 });
 
