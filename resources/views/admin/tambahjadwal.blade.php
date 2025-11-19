@@ -39,7 +39,7 @@
 
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-dark fw-bold">Simpan Jadwal</button>
-                        <a href="{{ route('admin.races.index') }}" class="btn btn-outline-secondary">Batal</a>
+                        <a href="{{ route('admin.lihatjadwal') }}" class="btn btn-outline-secondary">Batal</a>
                     </div>
                 </form>
 

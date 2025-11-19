@@ -16,7 +16,7 @@
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold">📅 Daftar Jadwal Balapan</h3>
-            <a href="{{ route('admin.races.create') }}" class="btn btn-danger fw-bold">
+            <a href="{{ route('admin.tambahjadwal') }}" class="btn btn-danger fw-bold">
                 <i class="bi bi-plus-lg me-1"></i> Tambah Baru
             </a>
         </div>

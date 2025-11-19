@@ -57,8 +57,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // === ROUTE BARU UNTUK JADWAL ===
-    Route::get('/races', [AdminRaceController::class, 'index'])->name('admin.races.index'); // Lihat List
-    Route::get('/races/create', [AdminRaceController::class, 'create'])->name('admin.races.create'); // Form Tambah
+    Route::get('/races', [AdminRaceController::class, 'index'])->name('admin.lihatjadwal'); // Lihat List
+    Route::get('/races/create', [AdminRaceController::class, 'create'])->name('admin.tambahjadwal'); // Form Tambah
     Route::post('/races', [AdminRaceController::class, 'store'])->name('admin.races.store'); // Proses Simpan
     Route::delete('/races/{id}', [AdminRaceController::class, 'destroy'])->name('admin.races.destroy'); // Hapus
 });

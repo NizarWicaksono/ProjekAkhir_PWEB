@@ -11,13 +11,13 @@ class AdminRaceController extends Controller
     public function index()
     {
         $races = Race::orderBy('race_date', 'asc')->get();
-        return view('admin.races.index', compact('races'));
+        return view('admin.lihatjadwal', compact('races'));
     }
 
     // 2. Halaman Form Tambah Jadwal
     public function create()
     {
-        return view('admin.races.create');
+        return view('admin.tambahjadwal');
     }
 
     // 3. Proses Simpan ke Database
@@ -39,7 +39,7 @@ class AdminRaceController extends Controller
             'base_price' => $request->base_price,
         ]);
 
-        return redirect()->route('admin.races.index')->with('success', 'Jadwal balapan berhasil ditambahkan!');
+        return redirect()->route('admin.lihatjadwal')->with('success', 'Jadwal balapan berhasil ditambahkan!');
     }
 
     // 4. Hapus Jadwal (Bonus)

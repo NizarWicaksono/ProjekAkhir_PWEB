@@ -70,7 +70,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-grid me-1"></i> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.lihatjadwal') }}"><i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
                 </ul>
@@ -87,7 +87,6 @@
     </nav>
 
     <div class="container pb-5">
-
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold m-0">📊 Overview Statistik</h3>
             <a href="{{ route('dashboard') }}" class="btn btn-outline-dark btn-sm fw-bold">
@@ -129,7 +128,7 @@
         <h5 class="fw-bold mb-3">⚡ Aksi Cepat</h5>
         <div class="row g-3">
             <div class="col-md-4">
-                <button class="btn-action">
+                <a href="{{ route('admin.tambahjadwal') }}" class="btn-action d-block text-decoration-none text-center">
                     <i class="bi bi-plus-circle display-6 d-block mb-2"></i>
                     Tambah Jadwal Balapan
                 </button>
@@ -147,7 +146,6 @@
                 </button>
             </div>
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
