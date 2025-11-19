@@ -11,13 +11,17 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Panggil Seeder Sirkuit (Master Data)
         $this->call(CircuitSeeder::class);
-        // 1. Buat Akun ADMIN
+
+        // Panggil Seeder Data Masa Lalu (Jadwal & Tiket)
+        $this->call(PastDataSeeder::class);
+        // Buat Akun ADMIN
         User::create([
             'name' => 'Admin',
             'email' => 'admin@f1.com',
             'password' => Hash::make('admin123'), // Password admin
-            'role' => 'admin', // <--- KUNCI PENTING
+            'role' => 'admin', 
         ]);
     }
 }
