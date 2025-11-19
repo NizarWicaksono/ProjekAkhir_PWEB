@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Race;
 use App\Models\User;
 use App\Models\Ticket;
+use App\Models\Circuit;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -16,7 +17,7 @@ class PastDataSeeder extends Seeder
     {
         // 1. Buat User Dummy Pembeli
         $users = [];
-        $names = ['Arvin', 'Ahmad', 'Adam', 'Daffa', 'Indra'];
+        $names = ['Leclerc', 'Verstappen', 'Lando', 'Lewis', 'Carlos'];
 
         foreach ($names as $name) {
             $users[] = User::firstOrCreate(
@@ -29,52 +30,58 @@ class PastDataSeeder extends Seeder
             );
         }
 
-        // 2. Buat 3 Balapan AWAL TAHUN 2025 (Sudah Lewat)
+        // 2. Data Balapan Masa Lalu (Maret-April 2025)
+        // KITA HANYA BUTUH NAMA GP, karena detail sirkuit diambil dari database
         $pastRaces = [
             [
-                'name' => 'Australian Grand Prix 2025',
-                'circuit_name' => 'Albert Park Circuit',
+                'gp_name' => 'Australian Grand Prix', // Harus sama persis dengan di CircuitSeeder
                 'race_date' => Carbon::create(2025, 3, 16),
                 'base_price' => 3500000,
             ],
             [
-                'name' => 'Chinese Grand Prix 2025',
-                'circuit_name' => 'Shanghai International Circuit',
+                'gp_name' => 'Chinese Grand Prix',
                 'race_date' => Carbon::create(2025, 3, 23),
                 'base_price' => 2800000,
             ],
             [
-                'name' => 'Japanese Grand Prix 2025',
-                'circuit_name' => 'Suzuka International Racing Course',
+                'gp_name' => 'Japanese Grand Prix',
                 'race_date' => Carbon::create(2025, 4, 6),
                 'base_price' => 2500000,
             ],
         ];
 
         foreach ($pastRaces as $raceData) {
-            $race = Race::firstOrCreate(
-                ['name' => $raceData['name']],
-                $raceData
-            );
+            // A. CARI CIRCUIT ID BERDASARKAN NAMA GP
+            $circuit = Circuit::where('gp_name', $raceData['gp_name'])->first();
 
-            // 3. Generate Tiket (Semua Harga Sama)
-            // Kita buat 15 tiket per balapan, 10 terjual
-            for ($i = 1; $i <= 15; $i++) {
-                $isSold = $i <= 10; // 10 tiket pertama terjual
-                $buyer = $isSold ? $users[array_rand($users)] : null;
+            // Jika sirkuit ketemu, baru buat jadwalnya
+            if ($circuit) {
+                // Gunakan firstOrCreate dengan 'circuit_id'
+                $race = Race::firstOrCreate(
+                    [
+                        'circuit_id' => $circuit->id, // <--- INI PERBAIKANNYA
+                        'race_date' => $raceData['race_date']
+                    ],
+                    [
+                        'base_price' => $raceData['base_price']
+                    ]
+                );
 
-                Ticket::create([
-                    'race_id' => $race->id,
-                    'user_id' => $buyer ? $buyer->id : null,
-                    'ticket_code' => '2025-' . strtoupper(Str::random(6)),
+                // 3. Generate Tiket (Sama seperti sebelumnya)
+                for ($i = 1; $i <= 15; $i++) {
+                    $isSold = $i <= 10;
+                    $buyer = $isSold ? $users[array_rand($users)] : null;
 
-                    // PERUBAHAN DI SINI: Semua kategori dan harga sama
-                    'category_name' => 'General Admission',
-                    'price' => $race->base_price, // Harga ambil dari harga dasar race
-
-                    'status' => $isSold ? 'sold' : 'available',
-                    'purchase_date' => $isSold ? $race->race_date->subDays(rand(5, 60)) : null,
-                ]);
+                    Ticket::create([
+                        'race_id' => $race->id,
+                        'user_id' => $buyer ? $buyer->id : null,
+                        'ticket_code' => '2025-' . strtoupper(Str::random(6)),
+                        'category_name' => 'General Admission',
+                        'price' => $race->base_price,
+                        'status' => $isSold ? 'sold' : 'available',
+                        'purchase_date' => $isSold ? $race->race_date->subDays(rand(5, 60)) : null,
+                    ]);
+                }
             }
         }
     }
