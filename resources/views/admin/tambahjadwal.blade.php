@@ -2,13 +2,33 @@
 <html lang="id">
 <head>
     <title>Tambah Jadwal - Admin F1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        /* Style card agar terlihat menonjol */
+        .card { border-radius: 12px; }
+    </style>
 </head>
 <body class="bg-light">
-    <div class="container mt-5">
+
+    <div class="container mt-5 pb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <h3 class="fw-bold m-0">🏁 Tambah Jadwal Balapan</h3>
+            </div>
+
+        <div class="d-flex justify-content-start mb-4">
+             <a class="btn btn-sm btn-outline-dark fw-bold" href="{{ route('admin.dashboard') }}">
+                 <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
+            </a>
+        </div>
+
         <div class="card shadow-sm border-0" style="max-width: 600px; margin: 0 auto;">
             <div class="card-header bg-white py-3">
-                <h5 class="mb-0 fw-bold">🏁 Tambah Jadwal Balapan</h5>
+                <h5 class="mb-0 fw-bold">Input Detail Balapan</h5>
             </div>
             <div class="card-body p-4">
 
@@ -39,12 +59,13 @@
 
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-dark fw-bold">Simpan Jadwal</button>
-                        <a href="{{ route('admin.lihatjadwal') }}" class="btn btn-outline-secondary">Batal</a>
+                        <a href="{{ route('admin.lihatjadwal') }}" class="btn btn-outline-secondary">Batal / Lihat Daftar</a>
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

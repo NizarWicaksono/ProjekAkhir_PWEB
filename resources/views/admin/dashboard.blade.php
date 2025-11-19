@@ -131,19 +131,19 @@
                 <a href="{{ route('admin.tambahjadwal') }}" class="btn-action d-block text-decoration-none text-center">
                     <i class="bi bi-plus-circle display-6 d-block mb-2"></i>
                     Tambah Jadwal Balapan
-                </button>
+                </a>
             </div>
             <div class="col-md-4">
-                <button class="btn-action">
+                <a href="#" class="btn-action d-block text-decoration-none text-center">
                     <i class="bi bi-pencil-square display-6 d-block mb-2"></i>
                     Tulis Artikel Baru
-                </button>
+                </a>
             </div>
             <div class="col-md-4">
-                <button class="btn-action">
+                <a href="#" class="btn-action d-block text-decoration-none text-center">
                     <i class="bi bi-file-earmark-spreadsheet display-6 d-block mb-2"></i>
                     Export Laporan Penjualan
-                </button>
+                </a>
             </div>
         </div>
     </div>
