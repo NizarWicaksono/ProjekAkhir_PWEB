@@ -10,7 +10,7 @@ class AdminRaceController extends Controller
     // 1. Halaman List Jadwal
     public function index()
     {
-        $races = Race::orderBy('race_date', 'asc')->get();
+        $races = Race::orderBy('race_date', 'desc')->get();
         return view('admin.lihatjadwal', compact('races'));
     }
 

@@ -11,14 +11,38 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
 
-        /* STYLE NAVBAR ADMIN (Sama persis dengan Dashboard) */
+        /* NAVBAR ADMIN */
         .navbar-admin { background-color: #111; padding: 15px 0; }
         .navbar-brand { font-weight: 900; letter-spacing: -1px; font-size: 24px; color: #e10600 !important; }
         .nav-link { color: #ccc !important; font-weight: 600; font-size: 0.9rem; margin-right: 15px; }
         .nav-link:hover, .nav-link.active { color: white !important; }
 
-        /* Style Tabel */
-        .card { border-radius: 12px; overflow: hidden; }
+        /* STYLE CARD JADWAL */
+        .race-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: white;
+            height: 100%; /* Wajib full height */
+            display: flex;
+            flex-direction: column; /* Susun konten ke bawah */
+        }
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .race-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .race-info { font-size: 0.9rem; color: #6c757d; margin-bottom: 0.25rem; }
+        .race-price { font-weight: 700; color: #198754; font-size: 1.2rem; margin-top: 0.5rem; }
+
+        /* Decoration Line */
+        .card-top-line {
+            height: 5px;
+            background: #e10600;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -38,13 +62,11 @@
                             <i class="bi bi-grid me-1"></i> Dashboard
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link active" href="#">
                             <i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal
                         </a>
                     </li>
-
                     <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
                 </ul>
@@ -75,48 +97,48 @@
             </div>
         @endif
 
-        <div class="card border-0 shadow-sm">
-            <div class="card-body p-0">
-                <table class="table table-hover mb-0 align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th class="ps-4 py-3">Tanggal</th>
-                            <th>Nama Event</th>
-                            <th>Sirkuit</th>
-                            <th>Harga Dasar</th>
-                            <th class="text-end pe-4">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($races as $race)
-                        <tr>
-                            <td class="ps-4 fw-bold">{{ $race->race_date->format('d M Y') }}</td>
-                            <td>{{ $race->name }}</td>
-                            <td class="text-muted small">{{ $race->circuit_name }}</td>
-                            <td class="text-success fw-bold">Rp {{ number_format($race->base_price, 0, ',', '.') }}</td>
-                            <td class="text-end pe-4">
-                                <form action="{{ route('admin.races.destroy', $race->id) }}" method="POST" onsubmit="return confirm('Yakin hapus jadwal ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus Jadwal">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="text-center py-5 text-muted">
-                                <div class="mb-2"><i class="bi bi-calendar-x display-4"></i></div>
-                                <p class="fw-bold mb-1">Belum ada jadwal balapan.</p>
-                                <p class="small">Klik tombol "Tambah Baru" di pojok kanan atas.</p>
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="row g-4">
+            @forelse($races as $race)
+            <div class="col-md-4 col-lg-3">
+                <div class="race-card shadow-sm position-relative">
+                    <div class="card-top-line"></div>
+
+                    <div class="card-body p-4 d-flex flex-column h-100">
+
+                        <div>
+                            <h5 class="race-title text-dark">{{ $race->name }}</h5>
+                            <p class="race-info">
+                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>{{ $race->circuit_name }}
+                            </p>
+                            <p class="race-info">
+                                <i class="bi bi-calendar-event-fill text-secondary me-2"></i>
+                                {{ $race->race_date->format('d M Y') }}
+                            </p>
+                        </div>
+
+                        <hr class="mt-auto mb-3 text-muted opacity-25">
+
+                        <div>
+                            <small class="text-muted d-block" style="font-size: 0.8rem;">Harga Mulai</small>
+                            <div class="race-price">
+                                Rp {{ number_format($race->base_price, 0, ',', '.') }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+            @empty
+            <div class="col-12">
+                <div class="alert alert-light text-center border-0 shadow-sm py-5">
+                    <i class="bi bi-calendar-x display-4 text-muted mb-3 d-block"></i>
+                    <h5 class="fw-bold mb-1">Belum ada jadwal balapan.</h5>
+                    <p class="text-muted">Klik tombol "Tambah Baru" di pojok kanan atas untuk memulai.</p>
+                </div>
+            </div>
+            @endforelse
         </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
