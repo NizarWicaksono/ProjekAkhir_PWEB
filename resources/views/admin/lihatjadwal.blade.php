@@ -10,22 +10,19 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-
-        /* NAVBAR ADMIN */
         .navbar-admin { background-color: #111; padding: 15px 0; }
         .navbar-brand { font-weight: 900; letter-spacing: -1px; font-size: 24px; color: #e10600 !important; }
         .nav-link { color: #ccc !important; font-weight: 600; font-size: 0.9rem; margin-right: 15px; }
         .nav-link:hover, .nav-link.active { color: white !important; }
 
-        /* STYLE CARD JADWAL */
         .race-card {
             border: none;
             border-radius: 12px;
             transition: transform 0.2s, box-shadow 0.2s;
             background: white;
-            height: 100%; /* Wajib full height */
+            height: 100%;
             display: flex;
-            flex-direction: column; /* Susun konten ke bawah */
+            flex-direction: column;
         }
         .race-card:hover {
             transform: translateY(-5px);
@@ -35,7 +32,6 @@
         .race-info { font-size: 0.9rem; color: #6c757d; margin-bottom: 0.25rem; }
         .race-price { font-weight: 700; color: #198754; font-size: 1.2rem; margin-top: 0.5rem; }
 
-        /* Decoration Line */
         .card-top-line {
             height: 5px;
             background: #e10600;
@@ -106,11 +102,17 @@
                     <div class="card-body p-4 d-flex flex-column h-100">
 
                         <div>
-                            <h5 class="race-title text-dark">{{ $race->name }}</h5>
+                            <h5 class="race-title text-dark">{{ $race->circuit->gp_name }}</h5>
+
                             <p class="race-info">
-                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>{{ $race->circuit_name }}
+                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                                {{ $race->circuit->circuit_name }}
                             </p>
-                            <p class="race-info">
+                            <p class="race-info ps-4 text-muted small">
+                                {{ $race->circuit->country }}
+                            </p>
+
+                            <p class="race-info mt-2">
                                 <i class="bi bi-calendar-event-fill text-secondary me-2"></i>
                                 {{ $race->race_date->format('d M Y') }}
                             </p>

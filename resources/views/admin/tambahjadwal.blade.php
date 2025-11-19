@@ -8,17 +8,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        /* Style card agar terlihat menonjol */
         .card { border-radius: 12px; }
     </style>
 </head>
 <body class="bg-light">
 
-    <div class="container mt-5 pb-5">
+    <nav class="navbar navbar-expand-lg navbar-admin shadow-sm mb-5" style="background-color: #111;">
+        <div class="container">
+            <a class="navbar-brand" href="{{ route('admin.dashboard') }}" style="color: #e10600; font-weight: 900;">ADMIN PANEL</a>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
 
         <div class="d-flex justify-content-between align-items-center mb-2">
             <h3 class="fw-bold m-0">🏁 Tambah Jadwal Balapan</h3>
-            </div>
+        </div>
 
         <div class="d-flex justify-content-start mb-4">
              <a class="btn btn-sm btn-outline-dark fw-bold" href="{{ route('admin.dashboard') }}">
@@ -36,13 +41,23 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Nama Grand Prix</label>
-                        <input type="text" name="name" class="form-control" placeholder="Contoh: Bahrain Grand Prix" required>
+                        <label class="form-label fw-bold">1. Pilih Grand Prix</label>
+                        <select name="circuit_id" id="gp_selector" class="form-select" required>
+                            <option value="" selected disabled>-- Pilih Nama GP --</option>
+                            @foreach($circuits as $circuit)
+                                <option
+                                    value="{{ $circuit->id }}"
+                                    data-circuit="{{ $circuit->circuit_name }}"
+                                    data-country="{{ $circuit->country }}">
+                                    {{ $circuit->gp_name }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Nama Sirkuit</label>
-                        <input type="text" name="circuit_name" class="form-control" placeholder="Contoh: Bahrain International Circuit" required>
+                        <label class="form-label fw-bold">2. Lokasi Sirkuit </label>
+                        <input type="text" id="circuit_display" class="form-control bg-light" readonly>
                     </div>
 
                     <div class="row">
@@ -51,9 +66,8 @@
                             <input type="date" name="race_date" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-bold">Harga Dasar Tiket (IDR)</label>
-                            <input type="number" name="base_price" class="form-control" placeholder="1500000" required>
-                            <small class="text-muted">Harga termurah (General Admission)</small>
+                            <label class="form-label fw-bold">Harga Tiket (IDR)</label>
+                            <input type="number" name="base_price" class="form-control" required>
                         </div>
                     </div>
 
@@ -66,6 +80,24 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const gpSelector = document.getElementById('gp_selector');
+        const circuitDisplay = document.getElementById('circuit_display');
+
+        gpSelector.addEventListener('change', function() {
+            // Ambil option yang sedang dipilih
+            const selectedOption = this.options[this.selectedIndex];
+
+            // Ambil data dari atribut 'data-circuit' dan 'data-country'
+            const circuitName = selectedOption.getAttribute('data-circuit');
+            const countryName = selectedOption.getAttribute('data-country');
+
+            // Isi kolom input otomatis
+            circuitDisplay.value = `${circuitName}, ${countryName}`;
+        });
+    </script>
 </body>
 </html>

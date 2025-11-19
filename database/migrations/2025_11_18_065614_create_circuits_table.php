@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('races', function (Blueprint $table) {
+        Schema::create('circuits', function (Blueprint $table) {
             $table->id();
-            // GANTI kolom nama & sirkuit string menjadi Foreign Key
-            $table->foreignId('circuit_id')->constrained('circuits')->onDelete('cascade');
-        
-            $table->date('race_date');
-            $table->decimal('base_price', 15, 2);
+            $table->string('gp_name');      // Contoh: Bahrain Grand Prix
+            $table->string('circuit_name'); // Contoh: Bahrain International Circuit
+            $table->string('country');      // Contoh: Bahrain
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('races');
+        Schema::dropIfExists('circuits');
     }
 };

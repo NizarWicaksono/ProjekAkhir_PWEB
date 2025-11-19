@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Race;
 use App\Models\Article;
 
+
 class AdminController extends Controller
 {
     public function dashboard()

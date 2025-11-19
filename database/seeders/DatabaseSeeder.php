@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(CircuitSeeder::class);
         // 1. Buat Akun ADMIN
         User::create([
             'name' => 'Admin',

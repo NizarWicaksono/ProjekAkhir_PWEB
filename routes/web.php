@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminRaceController;
 use App\Models\Article;
 use App\Models\Race;
+use App\Models\Circuit;
+use Illuminate\Http\Request;
 
 // 1. Halaman Utama langsung ke Dashboard (Bisa diakses siapa saja)
 Route::get('/', function () {
@@ -62,3 +64,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/races', [AdminRaceController::class, 'store'])->name('admin.races.store'); // Proses Simpan
     Route::delete('/races/{id}', [AdminRaceController::class, 'destroy'])->name('admin.races.destroy'); // Hapus
 });
+
