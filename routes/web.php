@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 // 1. Halaman Utama
 Route::get('/', function () {
-    return redirect()->route('users.dashboard');
+    return redirect()->route('dashboard');
 });
 
 // 2. Dashboard User
@@ -26,7 +26,7 @@ Route::get('/dashboard', function () {
                  ->get();
 
     return view('users.dashboard', compact('articles', 'races'));
-})->name('dashboard');
+})->name('uers.dashboard');
 
 // 3. Guest (Login/Register)
 Route::middleware('guest')->group(function () {

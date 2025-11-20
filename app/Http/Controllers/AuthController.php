@@ -51,18 +51,18 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-    
+
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-        
+
             // CEK ROLE USER DISINI
             if (Auth::user()->role === 'admin') {
                 return redirect()->route('admin.dashboard'); // Lempar ke Admin
             }
-        
+
             return redirect()->intended('dashboard'); // Lempar ke User Biasa
         }
-    
+
         return back()->withErrors([
             'email' => 'Email atau password salah.',
         ]);
@@ -74,6 +74,6 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/dashboard');
     }
 }
