@@ -66,5 +66,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::delete('/races/{id}', [AdminRaceController::class, 'destroy'])->name('admin.races.destroy'); // Hapus
     // === ROUTE BARU UNTUK PENDAPATAN ===
     Route::get('/pendapatan', [AdminFinanceController::class, 'index'])->name('admin.pendapatan');
+    Route::get('/pendapatan/{id}', [AdminFinanceController::class, 'show'])->name('admin.pendapatan.detail');
 });
 

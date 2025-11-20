@@ -4,34 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket;
+use App\Models\Race;
 use Illuminate\Support\Facades\DB;
 
 class AdminFinanceController extends Controller
 {
     public function index()
     {
-        // 1. Hitung Total Pendapatan (Semua Tiket Sold)
         $totalRevenue = Ticket::where('status', 'sold')->sum('price');
-
-        // 2. Hitung Total Tiket Terjual
         $totalTicketsSold = Ticket::where('status', 'sold')->count();
 
-        // 3. Laporan Per Balapan (Paling Laku)
-        // Kita join 3 tabel: tickets -> races -> circuits
+        // UPDATE: Tambahkan races.id ke select dan groupBy agar bisa dijadikan link
         $raceReports = Ticket::where('tickets.status', 'sold')
             ->join('races', 'tickets.race_id', '=', 'races.id')
             ->join('circuits', 'races.circuit_id', '=', 'circuits.id')
             ->select(
+                'races.id as race_id', // <--- PENTING: Ambil ID Race
                 'circuits.gp_name',
                 'races.race_date',
                 DB::raw('count(tickets.id) as sold_count'),
                 DB::raw('sum(tickets.price) as total_income')
             )
-            ->groupBy('circuits.gp_name', 'races.race_date')
-            ->orderByDesc('total_income') // Urutkan dari pendapatan terbesar
+            ->groupBy('races.id', 'circuits.gp_name', 'races.race_date') // Group by ID juga
+            ->orderByDesc('total_income')
             ->get();
 
-        // 4. Transaksi Terbaru (5 Terakhir)
         $recentTransactions = Ticket::with(['user', 'race.circuit'])
             ->where('status', 'sold')
             ->orderByDesc('created_at')
@@ -39,5 +36,21 @@ class AdminFinanceController extends Controller
             ->get();
 
         return view('admin.pendapatan', compact('totalRevenue', 'totalTicketsSold', 'raceReports', 'recentTransactions'));
+    }
+
+    // === METHOD BARU UNTUK HALAMAN DETAIL ===
+    public function show($id)
+    {
+        // 1. Ambil Data Balapan
+        $race = Race::with('circuit')->findOrFail($id);
+
+        // 2. Ambil Semua Transaksi Sold untuk Balapan ini
+        $transactions = Ticket::where('race_id', $id)
+            ->where('status', 'sold')
+            ->with('user') // Ambil data pembeli
+            ->orderByDesc('purchase_date') // Urutkan dari pembelian terakhir
+            ->get();
+
+        return view('admin.detailpendapatan', compact('race', 'transactions'));
     }
 }

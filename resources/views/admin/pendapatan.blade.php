@@ -90,8 +90,8 @@
                                     <th class="ps-4">Nama Event</th>
                                     <th>Tanggal</th>
                                     <th class="text-center">Tiket Terjual</th>
-                                    <th class="text-end pe-4">Total Pendapatan</th>
-                                </tr>
+                                    <th class="text-end">Total Pendapatan</th>
+                                    <th class="text-end pe-4">Aksi</th> </tr>
                             </thead>
                             <tbody>
                                 @forelse($raceReports as $report)
@@ -99,10 +99,16 @@
                                     <td class="ps-4 fw-bold">{{ $report->gp_name }}</td>
                                     <td class="small text-muted">{{ \Carbon\Carbon::parse($report->race_date)->format('d M Y') }}</td>
                                     <td class="text-center"><span class="badge bg-secondary">{{ $report->sold_count }}</span></td>
-                                    <td class="text-end pe-4 fw-bold text-success">Rp {{ number_format($report->total_income, 0, ',', '.') }}</td>
+                                    <td class="text-end fw-bold text-success">Rp {{ number_format($report->total_income, 0, ',', '.') }}</td>
+
+                                    <td class="text-end pe-4">
+                                        <a href="{{ route('admin.pendapatan', $report->race_id) }}" class="btn btn-sm btn-outline-primary fw-bold">
+                                            Detail <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                                 @empty
-                                <tr><td colspan="4" class="text-center py-5 text-muted">Belum ada data penjualan.</td></tr>
+                                <tr><td colspan="5" class="text-center py-5 text-muted">Belum ada data penjualan.</td></tr>
                                 @endforelse
                             </tbody>
                         </table>
