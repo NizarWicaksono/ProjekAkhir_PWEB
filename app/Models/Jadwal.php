@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Race extends Model
+class Jadwal extends Model
 {
     // Hapus 'name' dan 'circuit_name' dari sini
     protected $fillable = [

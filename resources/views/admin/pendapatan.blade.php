@@ -52,7 +52,7 @@
             <div class="col-md-6">
                 <div class="card p-4 h-100">
                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
+                        <div class="grow">
                             <div class="stat-label mb-1">Total Pendapatan Bersih</div>
                             <div class="stat-value text-success">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
                         </div>
@@ -65,7 +65,7 @@
             <div class="col-md-6">
                 <div class="card p-4 h-100">
                     <div class="d-flex align-items-center">
-                        <div class="flex-grow-1">
+                        <div class="grow">
                             <div class="stat-label mb-1">Total Tiket Terjual</div>
                             <div class="stat-value">{{ $totalTicketsSold }} <span class="fs-6 text-muted fw-normal">Tiket</span></div>
                         </div>
