@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         // Hitung data untuk statistik (Card Atas)
         $totalUsers = User::where('role', 'user')->count();
-        $totalRaces = Race::count();
+        $totalRaces = Jadwal::count();
         $totalArticles = Article::count();
 
         // Nanti diganti dengan data real dari tabel transaksi

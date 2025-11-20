@@ -8,9 +8,9 @@ class Circuit extends Model
 {
     protected $fillable = ['gp_name', 'circuit_name', 'country'];
 
-    // Satu sirkuit bisa punya banyak jadwal balapan (tiap tahun)
-    public function races()
+    public function races() // Nama function boleh tetap races atau diganti jadwals
     {
-        return $this->hasMany(Race::class);
+        // PERBAIKAN: Ganti Race::class menjadi Jadwal::class
+        return $this->hasMany(Jadwal::class, 'circuit_id');
     }
 }

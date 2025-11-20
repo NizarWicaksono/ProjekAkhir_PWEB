@@ -121,7 +121,7 @@
                         <hr class="mt-auto mb-3 text-muted opacity-25">
 
                         <div>
-                            <small class="text-muted d-block" style="font-size: 0.8rem;">Harga Mulai</small>
+                            <small class="text-muted d-block" style="font-size: 0.8rem;">Harga</small>
                             <div class="race-price">
                                 Rp {{ number_format($race->base_price, 0, ',', '.') }}
                             </div>

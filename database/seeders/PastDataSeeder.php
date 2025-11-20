@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Race;
+use App\Models\Jadwal;
 use App\Models\User;
 use App\Models\Ticket;
 use App\Models\Circuit;
@@ -57,7 +57,7 @@ class PastDataSeeder extends Seeder
             // Jika sirkuit ketemu, baru buat jadwalnya
             if ($circuit) {
                 // Gunakan firstOrCreate dengan 'circuit_id'
-                $race = Race::firstOrCreate(
+                $race = Jadwal::firstOrCreate(
                     [
                         'circuit_id' => $circuit->id, // <--- INI PERBAIKANNYA
                         'race_date' => $raceData['race_date']

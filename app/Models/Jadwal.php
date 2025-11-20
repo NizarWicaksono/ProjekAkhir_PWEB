@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    // Hapus 'name' dan 'circuit_name' dari sini
+    // PENTING: Karena nama model 'Jadwal' tapi tabelnya 'races', kita harus definisikan ini:
+    protected $table = 'races';
+
     protected $fillable = [
         'circuit_id',
         'race_date',
@@ -17,7 +19,6 @@ class Jadwal extends Model
         'race_date' => 'date',
     ];
 
-    // Kebalikannya: Satu jadwal milik satu sirkuit
     public function circuit()
     {
         return $this->belongsTo(Circuit::class);

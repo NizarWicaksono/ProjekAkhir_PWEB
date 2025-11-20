@@ -10,7 +10,7 @@ class Ticket extends Model
     use HasFactory;
 
     protected $fillable = [
-        'race_id',
+        'race_id', // Nama kolom di database tetap race_id (jangan diubah biar ga ribet migrasi)
         'user_id',
         'ticket_code',
         'category_name',
@@ -19,13 +19,14 @@ class Ticket extends Model
         'purchase_date'
     ];
 
-    // Relasi ke Race
+    // Relasi ke Jadwal
     public function race()
     {
-        return $this->belongsTo(Race::class);
+        // PERBAIKAN: Ganti Race::class menjadi Jadwal::class
+        // Parameter kedua 'race_id' penting karena nama kolom FK kita masih 'race_id'
+        return $this->belongsTo(Jadwal::class, 'race_id');
     }
 
-    // Relasi ke User
     public function user()
     {
         return $this->belongsTo(User::class);

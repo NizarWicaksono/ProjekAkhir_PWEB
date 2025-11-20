@@ -13,17 +13,19 @@ use Illuminate\Http\Request;
 
 // 1. Halaman Utama
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('users.dashboard');
 });
 
 // 2. Dashboard User
 Route::get('/dashboard', function () {
     $articles = Article::latest()->get();
-    $races = Race::where('race_date', '>=', now())
+
+    $races = Jadwal::where('race_date', '>=', now())
                  ->orderBy('race_date', 'asc')
                  ->take(5)
                  ->get();
-    return view('dashboard', compact('articles', 'races'));
+
+    return view('users.dashboard', compact('articles', 'races'));
 })->name('dashboard');
 
 // 3. Guest (Login/Register)

@@ -53,7 +53,7 @@
                 <div class="card p-4 h-100">
                     <div class="d-flex align-items-center">
                         <div class="grow">
-                            <div class="stat-label mb-1">Total Pendapatan Bersih</div>
+                            <div class="stat-label mb-1">Total Pendapatan</div>
                             <div class="stat-value text-success">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
                         </div>
                         <div class="bg-success bg-opacity-10 p-3 rounded-3">
@@ -91,7 +91,8 @@
                                     <th>Tanggal</th>
                                     <th class="text-center">Tiket Terjual</th>
                                     <th class="text-end">Total Pendapatan</th>
-                                    <th class="text-end pe-4">Aksi</th> </tr>
+                                    <th class="text-end pe-4">Aksi</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 @forelse($raceReports as $report)
@@ -102,7 +103,7 @@
                                     <td class="text-end fw-bold text-success">Rp {{ number_format($report->total_income, 0, ',', '.') }}</td>
 
                                     <td class="text-end pe-4">
-                                        <a href="{{ route('admin.pendapatan', $report->race_id) }}" class="btn btn-sm btn-outline-primary fw-bold">
+                                        <a href="{{ route('admin.pendapatan.detail', $report->race_id) }}" class="btn btn-sm btn-outline-primary fw-bold">
                                             Detail <i class="bi bi-arrow-right"></i>
                                         </a>
                                     </td>

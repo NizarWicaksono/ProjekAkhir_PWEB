@@ -12,7 +12,7 @@ class JadwalController extends Controller
     // 1. Halaman List Jadwal
     public function index()
     {
-        $races = Race::with('circuit')->orderBy('race_date', 'desc')->get();
+        $races = Jadwal::with('circuit')->orderBy('race_date', 'desc')->get();
         return view('admin.lihatjadwal', compact('races'));
     }
 
@@ -32,7 +32,7 @@ class JadwalController extends Controller
             'base_price' => 'required|numeric|min:0',
         ]);
 
-        Race::create([
+        Jadwal::create([
             'circuit_id' => $request->circuit_id,
             'race_date' => $request->race_date,
             'base_price' => $request->base_price,
@@ -44,7 +44,7 @@ class JadwalController extends Controller
     // 4. Hapus Jadwal
     public function destroy($id)
     {
-        Race::destroy($id);
+        Jadwal::destroy($id);
         return redirect()->back()->with('success', 'Jadwal berhasil dihapus.');
     }
 }

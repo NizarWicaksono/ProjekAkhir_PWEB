@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket;
-use App\Models\Jadwal;
+use App\Models\Jadwal; 
 use Illuminate\Support\Facades\DB;
 
 class KeuanganController extends Controller
@@ -14,18 +14,18 @@ class KeuanganController extends Controller
         $totalRevenue = Ticket::where('status', 'sold')->sum('price');
         $totalTicketsSold = Ticket::where('status', 'sold')->count();
 
-        // UPDATE: Tambahkan races.id ke select dan groupBy agar bisa dijadikan link
+        // Join pakai nama TABEL ('races'), jadi ini TIDAK PERLU diganti ke 'jadwals'
         $raceReports = Ticket::where('tickets.status', 'sold')
             ->join('races', 'tickets.race_id', '=', 'races.id')
             ->join('circuits', 'races.circuit_id', '=', 'circuits.id')
             ->select(
-                'races.id as race_id', // <--- PENTING: Ambil ID Race
+                'races.id as race_id',
                 'circuits.gp_name',
                 'races.race_date',
                 DB::raw('count(tickets.id) as sold_count'),
                 DB::raw('sum(tickets.price) as total_income')
             )
-            ->groupBy('races.id', 'circuits.gp_name', 'races.race_date') // Group by ID juga
+            ->groupBy('races.id', 'circuits.gp_name', 'races.race_date')
             ->orderByDesc('total_income')
             ->get();
 
@@ -38,17 +38,15 @@ class KeuanganController extends Controller
         return view('admin.pendapatan', compact('totalRevenue', 'totalTicketsSold', 'raceReports', 'recentTransactions'));
     }
 
-    // === METHOD BARU UNTUK HALAMAN DETAIL ===
     public function show($id)
     {
-        // 1. Ambil Data Balapan
-        $race = Race::with('circuit')->findOrFail($id);
+        // PERBAIKAN: Ganti Race:: menjadi Jadwal::
+        $race = Jadwal::with('circuit')->findOrFail($id);
 
-        // 2. Ambil Semua Transaksi Sold untuk Balapan ini
         $transactions = Ticket::where('race_id', $id)
             ->where('status', 'sold')
-            ->with('user') // Ambil data pembeli
-            ->orderByDesc('purchase_date') // Urutkan dari pembelian terakhir
+            ->with('user')
+            ->orderByDesc('purchase_date')
             ->get();
 
         return view('admin.detailpendapatan', compact('race', 'transactions'));
