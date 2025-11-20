@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KeuanganController;
+use App\Http\Controllers\BookingController;
 use App\Models\Article;
 use App\Models\Jadwal;
 use App\Models\Circuit;
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
 
 // 1. Halaman Utama
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    return redirect()->route('users.dashboard');
 });
 
 // 2. Dashboard User
@@ -26,7 +27,7 @@ Route::get('/dashboard', function () {
                  ->get();
 
     return view('users.dashboard', compact('articles', 'races'));
-})->name('uers.dashboard');
+})->name('users.dashboard');
 
 // 3. Guest (Login/Register)
 Route::middleware('guest')->group(function () {
@@ -39,9 +40,16 @@ Route::middleware('guest')->group(function () {
 // 4. User Login
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/booking/{id}', function ($id) {
-        return "Halo! Ini halaman booking untuk Race ID: " . $id;
-    })->name('booking.show');
+    // 1. Halaman Form Booking (GET)
+    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    // 2. Proses Simpan/Bayar (POST)
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    // ROUTE BARU: Halaman List Tiket
+    Route::get('/tickets', [BookingController::class, 'index'])->name('tickets.index');
+    // Route Booking Show (Detail beli)
+    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    // Route Proses Bayar
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
 });
 
 // 5. ADMIN (Gunakan Controller Baru)
