@@ -46,8 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
     // ROUTE BARU: Halaman List Tiket
     Route::get('/tickets', [BookingController::class, 'index'])->name('tickets.index');
-    // Route Booking Show (Detail beli)
-    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
     // Route Proses Bayar
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
     // ROUTE BARU: Riwayat

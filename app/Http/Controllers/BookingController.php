@@ -25,16 +25,8 @@ class BookingController extends Controller
 
         return view('users.tickets', compact('races', 'myTicketCount'));
     }
-    // 1. Tampilkan Halaman Booking (Detail Event + Form Jumlah)
-    public function show($id)
-    {
-        // Ambil data jadwal beserta info sirkuitnya
-        $race = Jadwal::with('circuit')->findOrFail($id);
 
-        return view('users.booking', compact('race'));
-    }
-
-    // 2. Proses Pembelian (Checkout)
+    // Proses Pembelian (Checkout)
     public function store(Request $request)
     {
         // Validasi input
@@ -62,8 +54,7 @@ class BookingController extends Controller
         }
 
         // Redirect kembali ke dashboard dengan pesan sukses
-        return redirect()->route('users.dashboard')->with('success', "Pembayaran Berhasil! Anda telah membeli {$request->quantity} tiket.");
-    }
+        return redirect()->route('tickets.index')->with('success', "Berhasil membeli {$request->quantity} tiket!");}
 
     public function history()
     {
