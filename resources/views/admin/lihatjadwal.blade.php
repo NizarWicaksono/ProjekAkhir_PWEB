@@ -59,7 +59,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="{{ route('admin.lihatjadwal') }}">
                             <i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal
                         </a>
                     </li>

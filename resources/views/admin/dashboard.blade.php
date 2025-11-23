@@ -89,7 +89,7 @@
     <div class="container pb-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold m-0">📊 Overview Statistik</h3>
-            <a href="{{ route('dashboard') }}" class="btn btn-outline-dark btn-sm fw-bold">
+            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-dark btn-sm fw-bold">
                 <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Website User
             </a>
         </div>
