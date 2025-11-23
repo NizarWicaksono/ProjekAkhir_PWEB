@@ -13,17 +13,11 @@ class JadwalController extends Controller
     public function index()
     {
         $races = Jadwal::with('circuit')->orderBy('race_date', 'desc')->get();
-        return view('admin.lihatjadwal', compact('races'));
-    }
-
-    // 2. Halaman Form Tambah Jadwal
-    public function create()
-    {
         $circuits = Circuit::orderBy('gp_name', 'asc')->get();
-        return view('admin.tambahjadwal', compact('circuits'));
+        return view('admin.lihatjadwal', compact('races', 'circuits'));
     }
 
-    // 3. Proses Simpan ke Database
+    // 2. Proses Simpan
     public function store(Request $request)
     {
         $request->validate([
@@ -41,7 +35,7 @@ class JadwalController extends Controller
         return redirect()->route('admin.lihatjadwal')->with('success', 'Jadwal berhasil ditambahkan!');
     }
 
-    // 4. Hapus Jadwal
+    // 3. Hapus Jadwal
     public function destroy($id)
     {
         Jadwal::destroy($id);

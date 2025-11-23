@@ -61,7 +61,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
     // === JADWAL (Pakai JadwalController) ===
     Route::get('/races', [JadwalController::class, 'index'])->name('admin.lihatjadwal');
-    Route::get('/races/create', [JadwalController::class, 'create'])->name('admin.tambahjadwal');
     Route::post('/races', [JadwalController::class, 'store'])->name('admin.races.store');
     Route::delete('/races/{id}', [JadwalController::class, 'destroy'])->name('admin.races.destroy');
 
