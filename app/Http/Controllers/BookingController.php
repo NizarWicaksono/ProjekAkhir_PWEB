@@ -64,4 +64,28 @@ class BookingController extends Controller
         // Redirect kembali ke dashboard dengan pesan sukses
         return redirect()->route('users.dashboard')->with('success', "Pembayaran Berhasil! Anda telah membeli {$request->quantity} tiket.");
     }
+
+    public function history()
+    {
+        // Ambil tiket milik user yang sedang login
+        // Urutkan dari pembelian terbaru
+        $tickets = Ticket::where('user_id', Auth::id())
+                         ->where('status', 'sold')
+                         ->with('race.circuit') // Load data balapan & sirkuit
+                         ->orderByDesc('purchase_date')
+                         ->get();
+
+        return view('users.history', compact('tickets'));
+    }
+
+    public function downloadTicket($code)
+    {
+        $ticket = Ticket::where('ticket_code', $code)
+                        ->where('user_id', Auth::id())
+                        ->with('race.circuit')
+                        ->firstOrFail();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.ticket', compact('ticket'));
+        return $pdf->download('F1-Ticket-' . $ticket->ticket_code . '.pdf');
+    }
 }

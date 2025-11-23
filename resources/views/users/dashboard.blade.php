@@ -81,9 +81,22 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
                                 <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bi bi-person me-2 text-muted"></i> Profil
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('users.history') }}">
+                                        <i class="bi bi-clock-history me-2 text-muted"></i> Riwayat
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="dropdown-item text-danger fw-bold">Logout</button>
+                                        <button type="submit" class="dropdown-item text-danger fw-bold">
+                                            <i class="bi bi-box-arrow-right me-2"></i> Logout
+                                        </button>
                                     </form>
                                 </li>
                             </ul>
@@ -149,7 +162,7 @@
                                 <div class="date-month">{{ $race->race_date->format('M') }}</div>
                             </div>
 
-                            <div class="flex-grow-1">
+                            <div class="grow">
                                 <h6 class="fw-bold mb-0 text-truncate">{{ $race->circuit->gp_name }}</h6>
                                 <small class="text-muted d-block mb-1">{{ $race->circuit->circuit_name }}</small>
                                 <small class="text-success fw-bold" style="font-size: 0.75rem;">

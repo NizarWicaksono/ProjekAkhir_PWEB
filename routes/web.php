@@ -50,6 +50,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
     // Route Proses Bayar
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    // ROUTE BARU: Riwayat
+    Route::get('/history', [BookingController::class, 'history'])->name('users.history');
+    // Route Download Tiket
+    Route::get('/ticket/{code}/download', [BookingController::class, 'downloadTicket'])->name('ticket.download');
 });
 
 // 5. ADMIN (Gunakan Controller Baru)
