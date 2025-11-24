@@ -6,20 +6,29 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Jadwal;
 use App\Models\Article;
+use App\Models\Ticket;
 
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        // Hitung data untuk statistik (Card Atas)
+        // 1. Hitung Statistik Dasar
         $totalUsers = User::where('role', 'user')->count();
         $totalRaces = Jadwal::count();
         $totalArticles = Article::count();
 
-        // Nanti diganti dengan data real dari tabel transaksi
-        $totalPendapatan = 0;
+        // 2. Hitung Pendapatan & Tiket Terjual (Hanya yang 'sold')
+        $totalPendapatan = Ticket::where('status', 'sold')->sum('price');
+        $totalTickets = Ticket::where('status', 'sold')->count();
 
-        return view('admin.dashboard', compact('totalUsers', 'totalRaces', 'totalArticles', 'totalPendapatan'));
+        // 3. Kirim semua data ke View
+        return view('admin.dashboard', compact(
+            'totalUsers',
+            'totalRaces',
+            'totalArticles',
+            'totalPendapatan',
+            'totalTickets'
+        ));
     }
 }

@@ -51,9 +51,9 @@
         <div class="row g-4 mb-4">
             <div class="col-md-6">
                 <div class="card p-4 h-100">
-                    <div class="d-flex align-items-center">
-                        <div class="grow">
-                            <div class="stat-label mb-1">Total Pendapatan</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="stat-label mb-1">Total Pendapatan Bersih</div>
                             <div class="stat-value text-success">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
                         </div>
                         <div class="bg-success bg-opacity-10 p-3 rounded-3">
@@ -64,8 +64,8 @@
             </div>
             <div class="col-md-6">
                 <div class="card p-4 h-100">
-                    <div class="d-flex align-items-center">
-                        <div class="grow">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
                             <div class="stat-label mb-1">Total Tiket Terjual</div>
                             <div class="stat-value">{{ $totalTicketsSold }} <span class="fs-6 text-muted fw-normal">Tiket</span></div>
                         </div>

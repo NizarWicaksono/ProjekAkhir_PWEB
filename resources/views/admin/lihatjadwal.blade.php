@@ -76,6 +76,7 @@
             <div class="col-md-4 col-lg-3">
                 <div class="race-card shadow-sm position-relative">
                     <div class="card-top-line"></div>
+
                     <div class="card-body p-4 d-flex flex-column h-100">
                         <div>
                             <h5 class="race-title text-dark">{{ $race->circuit->gp_name }}</h5>
@@ -87,18 +88,12 @@
                                 <i class="bi bi-calendar-event-fill text-secondary me-2"></i>{{ $race->race_date->format('d M Y') }}
                             </p>
                         </div>
+
                         <hr class="mt-auto mb-3 text-muted opacity-25">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <small class="text-muted d-block" style="font-size: 0.8rem;">Harga Mulai</small>
-                                <div class="race-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
-                            </div>
-                            <form action="{{ route('admin.races.destroy', $race->id) }}" method="POST" onsubmit="return confirm('Yakin hapus jadwal ini?');">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-light text-danger btn-sm border rounded-circle" style="width: 32px; height: 32px;">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
+
+                        <div>
+                            <small class="text-muted d-block" style="font-size: 0.8rem;">Harga</small>
+                            <div class="race-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
                         </div>
                     </div>
                 </div>
@@ -123,25 +118,19 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
-
                     <form action="{{ route('admin.races.store') }}" method="POST">
                         @csrf
-
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted text-uppercase">Pilih Grand Prix</label>
                             <select name="circuit_id" id="gp_selector" class="form-select" required>
-                                <option value="" selected disabled>-- Cari Nama Balapan --</option>
+                                <option value="" selected disabled>--Pilih GP--</option>
                                 @foreach($circuits as $circuit)
-                                    <option
-                                        value="{{ $circuit->id }}"
-                                        data-circuit="{{ $circuit->circuit_name }}"
-                                        data-country="{{ $circuit->country }}">
+                                    <option value="{{ $circuit->id }}" data-circuit="{{ $circuit->circuit_name }}" data-country="{{ $circuit->country }}">
                                         {{ $circuit->gp_name }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="mb-3">
                             <label class="form-label fw-bold small text-muted text-uppercase">Lokasi Sirkuit</label>
                             <div class="input-group">
@@ -149,7 +138,6 @@
                                 <input type="text" id="circuit_display" class="form-control bg-light text-muted" readonly>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-6 mb-3">
                                 <label class="form-label fw-bold small text-muted text-uppercase">Tanggal</label>
@@ -160,23 +148,19 @@
                                 <input type="number" name="base_price" class="form-control" required>
                             </div>
                         </div>
-
                         <div class="d-grid mt-3">
                             <button type="submit" class="btn btn-danger fw-bold">Simpan Jadwal</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <script>
         const gpSelector = document.getElementById('gp_selector');
         const circuitDisplay = document.getElementById('circuit_display');
-
         gpSelector.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const circuitName = selectedOption.getAttribute('data-circuit');

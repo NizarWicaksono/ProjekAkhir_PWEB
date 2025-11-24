@@ -150,8 +150,7 @@
 
                                     <button type="button" class="btn btn-dark rounded-pill px-4 fw-bold"
                                             data-bs-toggle="modal"
-                                            data-bs-target="#buyModal-{{ $race->id }}">
-                                        Beli <i class="bi bi-cart-plus ms-1"></i>
+                                            data-bs-target="#buyModal-{{ $race->id }}">Beli<i class="bi bi-cart-plus ms-1"></i>
                                     </button>
                                 </div>
                             </div>

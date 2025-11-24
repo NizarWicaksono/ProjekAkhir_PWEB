@@ -104,8 +104,12 @@
             </div>
             <div class="col-md-3">
                 <div class="stat-card">
-                    <div class="stat-icon" style="color: #2ecc71; background: #eafff0;"><i class="bi bi-ticket-perforated-fill"></i></div>
-                    <div class="stat-value">0</div>
+                    <div class="stat-icon" style="color: #2ecc71; background: #eafff0;">
+                        <i class="bi bi-ticket-perforated-fill"></i>
+                    </div>
+                
+                    <div class="stat-value">{{ number_format($totalTickets, 0, ',', '.') }}</div>
+                
                     <div class="stat-label">Tiket Terjual</div>
                 </div>
             </div>
@@ -128,7 +132,7 @@
         <h5 class="fw-bold mb-3">⚡ Aksi Cepat</h5>
         <div class="row g-3">
             <div class="col-md-4">
-                <a href="{{ route('admin.tambahjadwal') }}" class="btn-action d-block text-decoration-none text-center">
+                <a href="#" class="btn-action d-block text-decoration-none text-center">
                     <i class="bi bi-plus-circle display-6 d-block mb-2"></i>
                     Tambah Jadwal Balapan
                 </a>
