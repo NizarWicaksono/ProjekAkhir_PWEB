@@ -150,9 +150,6 @@
                 <div class="sidebar-widget">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="fw-bold m-0">🏁 Next Races</h5>
-                        <a href="{{ route('tickets.index') }}" class="text-danger text-decoration-none small fw-bold">
-                            Lihat Semua
-                        </a>
                     </div>
 
                     @forelse($races as $race)

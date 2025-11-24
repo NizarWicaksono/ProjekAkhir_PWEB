@@ -71,7 +71,7 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-grid me-1"></i> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.lihatjadwal') }}"><i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.artikel') }}"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.pendapatan') }}"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
                 </ul>
 
@@ -107,9 +107,9 @@
                     <div class="stat-icon" style="color: #2ecc71; background: #eafff0;">
                         <i class="bi bi-ticket-perforated-fill"></i>
                     </div>
-                
+
                     <div class="stat-value">{{ number_format($totalTickets, 0, ',', '.') }}</div>
-                
+
                     <div class="stat-label">Tiket Terjual</div>
                 </div>
             </div>

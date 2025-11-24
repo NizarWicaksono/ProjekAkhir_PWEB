@@ -67,4 +67,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // === KEUANGAN (Pakai KeuanganController) ===
     Route::get('/pendapatan', [KeuanganController::class, 'index'])->name('admin.pendapatan');
     Route::get('/pendapatan/{id}', [KeuanganController::class, 'show'])->name('admin.pendapatan.detail');
+
+    // === MANAJEMEN ARTIKEL ===
+    Route::get('/articles', [ArticleController::class, 'index'])->name('admin.artikel');
+    Route::get('/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
+    Route::post('/articles', [ArticleController::class, 'store'])->name('admin.articles.store');
+    Route::delete('/articles/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
 });
