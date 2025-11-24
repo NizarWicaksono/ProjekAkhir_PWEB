@@ -2,9 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    //
+    use HasFactory;
+
+    // TAMBAHKAN BAGIAN INI (Agar data bisa disimpan)
+    protected $fillable = [
+        'title',
+        'content',
+        'image',
+        'published_date',
+        'user_id',
+    ];
+
+    // Relasi ke User (Penulis)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

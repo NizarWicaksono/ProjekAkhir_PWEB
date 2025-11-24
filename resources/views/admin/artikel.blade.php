@@ -33,7 +33,7 @@
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="bi bi-grid me-1"></i> Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.lihatjadwal') }}"><i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('admin.articles.index') }}"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('admin.pendapatan') }}"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
                 </ul>
                 <div class="d-flex align-items-center">
@@ -69,15 +69,17 @@
 
                     <div class="card-body p-4 d-flex flex-column h-100">
                         <span class="badge bg-light text-muted border mb-2 w-auto align-self-start">
-                            {{ \Carbon\Carbon::parse($article->published_date)->format('d M Y') }}
+                            <i class="bi bi-clock me-1"></i>
+                            {{ $article->created_at->format('d M Y, H:i') }} WIB
                         </span>
+
                         <h5 class="fw-bold mb-2 text-dark" style="min-height: 3rem;">{{ Str::limit($article->title, 50) }}</h5>
                         <p class="text-muted small mb-3 grow">
                             {{ Str::limit($article->content, 100) }}
                         </p>
 
                         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
-                            <small class="text-muted"><i class="bi bi-person me-1"></i> Admin</small>
+                            <small class="text-muted"><i class="bi bi-person-circle me-1"></i> Admin</small>
 
                             <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" onsubmit="return confirm('Hapus artikel ini?');">
                                 @csrf @method('DELETE')

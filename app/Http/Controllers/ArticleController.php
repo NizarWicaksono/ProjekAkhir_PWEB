@@ -10,29 +10,24 @@ use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    // 1. Halaman List Artikel
     public function index()
     {
         $articles = Article::latest()->get();
-        // PERUBAHAN: View ada di admin.artikel
         return view('admin.artikel', compact('articles'));
     }
 
-    // 2. Halaman Form Tambah
     public function create()
     {
-        // PERUBAHAN: View ada di admin.tambahartikel
         return view('admin.tambahartikel');
     }
 
-    // 3. Proses Simpan
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'published_date' => 'required|date',
+            // 'published_date' => 'required', // TIDAK PERLU VALIDASI LAGI
         ]);
 
         $imagePath = null;
@@ -44,14 +39,52 @@ class ArticleController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'image' => $imagePath,
-            'published_date' => $request->published_date,
+
+            // SET OTOMATIS TANGGAL & WAKTU SEKARANG
+            'published_date' => now(),
+
             'user_id' => Auth::id(),
         ]);
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diterbitkan!');
     }
 
-    // 4. Hapus Artikel
+    // 4. LIHAT DETAIL ARTIKEL
+    public function show($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('admin.detailartikel', compact('article'));
+    }
+
+    // 6. PROSES UPDATE ARTIKEL
+    public function update(Request $request, $id)
+    {
+        $article = Article::findOrFail($id);
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        // Cek jika ada gambar baru yang diupload
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama
+            if ($article->image) {
+                Storage::disk('public')->delete($article->image);
+            }
+            // Simpan gambar baru
+            $imagePath = $request->file('image')->store('articles', 'public');
+            $article->image = $imagePath;
+        }
+
+        // Update data lainnya
+        $article->title = $request->title;
+        $article->content = $request->content;
+        $article->save(); // Simpan perubahan
+
+        return redirect()->route('admin.articles.show', $article->id)->with('success', 'Artikel berhasil diperbarui!');}
+
     public function destroy($id)
     {
         $article = Article::findOrFail($id);

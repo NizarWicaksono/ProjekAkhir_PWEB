@@ -46,16 +46,10 @@
                                 <input type="text" name="title" class="form-control" placeholder="Contoh: Max Verstappen Juara Dunia..." required>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Tanggal Tayang</label>
-                                    <input type="date" name="published_date" class="form-control" value="{{ date('Y-m-d') }}" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label fw-bold">Gambar Cover (Opsional)</label>
-                                    <input type="file" name="image" class="form-control" accept="image/*">
-                                    <div class="form-text">Biarkan kosong jika tidak ada gambar.</div>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Gambar Cover (Opsional)</label>
+                                <input type="file" name="image" class="form-control" accept="image/*">
+                                <div class="form-text">Biarkan kosong jika tidak ada gambar.</div>
                             </div>
 
                             <div class="mb-4">
@@ -65,7 +59,7 @@
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-danger fw-bold py-2">
-                                    Terbitkan Artikel
+                                    <i class="bi bi-send me-2"></i> Terbitkan Artikel Sekarang
                                 </button>
                             </div>
 
