@@ -48,9 +48,6 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold m-0">📊 Overview Statistik</h3>
-        <a href="{{ route('users.dashboard') }}" class="btn btn-outline-dark btn-sm fw-bold">
-            <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Website User
-        </a>
     </div>
 
     <div class="row g-4 mb-5">

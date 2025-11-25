@@ -43,7 +43,7 @@
 
                 <a href="{{ route('admin.articles.show', $article->id) }}" class="stretched-link"></a>
 
-                <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=2070&auto=format&fit=crop' }}"
+                <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                      class="article-img" alt="Cover">
 
                 <div class="card-body p-4 d-flex flex-column h-100">

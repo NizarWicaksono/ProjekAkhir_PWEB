@@ -21,7 +21,7 @@
             <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
 
                 <div id="read-section">
-                    <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://via.placeholder.com/800x400?text=No+Image' }}"
+                    <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                          class="w-100 object-fit-cover" style="height: 400px;" alt="Cover">
 
                     <div class="card-body p-5">
@@ -62,7 +62,7 @@
                                 <label class="form-label fw-bold small text-uppercase text-muted">Update Cover (Opsional)</label>
                                 <div class="d-flex align-items-center">
                                     @if($article->image)
-                                        <img src="{{ asset('storage/' . $article->image) }}" class="rounded me-3" width="80" height="60" style="object-fit: cover;">
+                                        <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                                     @endif
                                     <input type="file" name="image" class="form-control" accept="image/*">
                                 </div>

@@ -32,7 +32,7 @@
                     <div class="card news-card-hover shadow-sm h-100 position-relative">
                         <a href="{{ route('news.show', $article->id) }}" class="stretched-link"></a>
                         <div style="height: 200px; overflow: hidden;">
-                            <img src="{{ $article->image ? asset('storage/'.$article->image) : 'https://images.unsplash.com/photo-1598556965690-65036b75f5d1?q=80&w=2070&auto=format&fit=crop' }}"
+                            <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                                  class="card-img-top w-100 h-100" style="object-fit: cover;" alt="News Cover">
                         </div>
                         <div class="card-body p-3 d-flex flex-column">

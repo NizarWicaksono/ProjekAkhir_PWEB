@@ -88,7 +88,7 @@
             <div class="col-lg-10">
 
                 <div class="card article-card bg-white">
-                    <img src="{{ $article->image ? asset('storage/'.$article->image) : 'https://images.unsplash.com/photo-1598556965690-65036b75f5d1?q=80&w=2070&auto=format&fit=crop' }}"
+                    <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                          class="article-img-header"
                          alt="{{ $article->title }}">
 
