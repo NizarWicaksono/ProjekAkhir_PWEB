@@ -29,7 +29,7 @@
         /* SIDEBAR */
         .sidebar-card {
             background: white; border-radius: 16px; border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); position: sticky; top: 90px; /* Adjusted top for sticky navbar */
         }
         .icon-box {
             width: 50px; height: 50px; background-color: #fff5f5; color: #e10600;
@@ -86,21 +86,26 @@
                     <li class="nav-item"><a class="nav-link active" href="#">Beli Tiket</a></li>
                 </ul>
                 <div class="d-flex align-items-center text-white">
-                    <div class="dropdown">
-                        <a href="#" class="text-white text-decoration-none dropdown-toggle fw-bold" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
-                            <li><a class="dropdown-item" href="{{ route('users.history') }}">Riwayat</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger fw-bold">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                    @auth
+                        <div class="dropdown">
+                            <a href="#" class="text-white text-decoration-none dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                <li><a class="dropdown-item" href="{{ route('users.history') }}">Riwayat</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger fw-bold">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-light text-danger fw-bold me-2">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-sm btn-outline-light fw-bold">Register</a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -148,15 +153,23 @@
                                         <div class="ticket-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
                                     </div>
 
-                                    <button type="button" class="btn btn-dark rounded-pill px-4 fw-bold"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#buyModal-{{ $race->id }}">Beli<i class="bi bi-cart-plus ms-1"></i>
-                                    </button>
+                                    @auth
+                                        <button type="button" class="btn btn-dark rounded-pill px-4 fw-bold"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#buyModal-{{ $race->id }}">Beli<i class="bi bi-cart-plus ms-1"></i>
+                                        </button>
+                                    @else
+                                        <button type="button" class="btn btn-dark rounded-pill px-4 fw-bold"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#guestModal">Beli<i class="bi bi-lock-fill ms-1"></i>
+                                        </button>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    @auth
                     <div class="modal fade" id="buyModal-{{ $race->id }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -209,6 +222,8 @@
                             </div>
                         </div>
                     </div>
+                    @endauth
+
                     @empty
                     <div class="col-12">
                         <div class="alert alert-light border text-center py-5 rounded-4">
@@ -231,9 +246,41 @@
                             <h2 class="fw-bold m-0 text-dark">{{ $myTicketCount }}</h2>
                         </div>
                     </div>
-                    <a href="{{ route('users.history') }}" class="btn btn-outline-dark w-100 fw-bold py-2 rounded-pill">
-                        <i class="bi bi-clock-history me-2"></i> Lihat Riwayat
-                    </a>
+
+                    @auth
+                        <a href="{{ route('users.history') }}" class="btn btn-outline-dark w-100 fw-bold py-2 rounded-pill">
+                            <i class="bi bi-clock-history me-2"></i> Lihat Riwayat
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-outline-danger w-100 fw-bold py-2 rounded-pill">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> Login untuk Riwayat
+                        </a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="guestModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content text-center p-3">
+                <div class="modal-body">
+                    <div class="mb-3 text-danger">
+                        <i class="bi bi-shield-lock-fill display-1"></i>
+                    </div>
+                    <h4 class="fw-bold mb-2">Akses Terbatas</h4>
+                    <p class="text-muted small mb-4">
+                        Anda harus login terlebih dahulu untuk melanjutkan proses pembelian tiket.
+                    </p>
+
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('login') }}" class="btn btn-danger fw-bold rounded-pill">
+                            Login Sekarang
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary fw-bold rounded-pill" data-bs-dismiss="modal">
+                            Nanti Saja
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,16 +289,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Kita simpan harga dasar setiap race di object JS agar mudah diakses
+        // Data Harga (Hanya dirender jika ada races)
         const prices = {
             @foreach($races as $race)
                 {{ $race->id }}: {{ $race->base_price }},
             @endforeach
         };
 
-        // Fungsi Update Quantity (Tombol + -)
+        // Fungsi Update Quantity
         function updateQty(id, change) {
             const input = document.getElementById('qty-' + id);
+            if(!input) return; // Guard clause
+
             let newVal = parseInt(input.value) + change;
 
             if (newVal < 1) newVal = 1;
@@ -261,19 +310,15 @@
             updateTotal(id);
         }
 
-        // Fungsi Hitung Total (Saat Input Berubah)
+        // Fungsi Hitung Total
         function updateTotal(id) {
             const input = document.getElementById('qty-' + id);
             const totalDisplay = document.getElementById('total-' + id);
+            if(!input || !totalDisplay) return;
 
             let qty = parseInt(input.value);
 
-            // Validasi input manual
-            if (isNaN(qty) || qty < 1) {
-                qty = 1;
-                // Jangan langsung ubah value saat ngetik, tunggu user selesai (biar ga ganggu)
-                // Tapi buat perhitungan total, anggap 1 dulu.
-            }
+            if (isNaN(qty) || qty < 1) qty = 1;
             if (qty > 99) {
                 qty = 99;
                 input.value = 99;

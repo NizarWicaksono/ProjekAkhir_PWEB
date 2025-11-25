@@ -22,8 +22,16 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            position: sticky; top: 20px;
+            /* position: sticky; dihapus dari sini agar wrapper yang menangani */
         }
+
+        /* CLASS BARU: Untuk membuat seluruh sidebar sticky */
+        .sticky-sidebar {
+            position: sticky;
+            top: 90px; /* Jarak dari atas layar saat sticky aktif */
+            z-index: 10;
+        }
+
         .race-item {
             border-bottom: 1px solid #eee;
             padding-bottom: 15px; margin-bottom: 15px;
@@ -71,7 +79,7 @@
                         <a class="nav-link active" href="{{ route('users.dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('tickets.index') }}">Beli Tiket</a>
+                        <a class="nav-link" href="{{ route('tickets.index') }}">Jadwal</a>
                     </li>
                 </ul>
 
@@ -118,7 +126,8 @@
                 <div class="row">
 
                     @forelse($articles as $article)
-                        <div class="col-md-6 mb-4"> <div class="card news-card-hover shadow-sm h-100 position-relative">
+                        <div class="col-md-6 mb-4">
+                            <div class="card news-card-hover shadow-sm h-100 position-relative">
 
                                 <a href="{{ route('news.show', $article->id) }}" class="stretched-link"></a>
 
@@ -156,35 +165,39 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="sidebar-widget">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="fw-bold m-0">🏁 Next Races</h5>
+                <div class="sticky-sidebar">
+
+                    <div class="sidebar-widget">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="fw-bold m-0">🏁 Next Races</h5>
+                        </div>
+
+                        @forelse($races as $race)
+                            <div class="race-item d-flex align-items-center">
+                                <div class="date-box me-3">
+                                    <div class="date-day">{{ $race->race_date->format('d') }}</div>
+                                    <div class="date-month">{{ $race->race_date->format('M') }}</div>
+                                </div>
+                                <div class="grow">
+                                    <h6 class="fw-bold mb-0 text-truncate">{{ $race->circuit->gp_name }}</h6>
+                                    <small class="text-muted d-block mb-1">{{ $race->circuit->circuit_name }}</small>
+                                    <small class="text-success fw-bold" style="font-size: 0.75rem;">Mulai Rp {{ number_format($race->base_price, 0, ',', '.') }}</small>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="text-center py-4 text-muted">
+                                <i class="bi bi-flag-fill fs-1 mb-2 d-block text-secondary"></i>
+                                <p class="small fw-bold">Tidak ada jadwal dekat.</p>
+                            </div>
+                        @endforelse
                     </div>
 
-                    @forelse($races as $race)
-                        <div class="race-item d-flex align-items-center">
-                            <div class="date-box me-3">
-                                <div class="date-day">{{ $race->race_date->format('d') }}</div>
-                                <div class="date-month">{{ $race->race_date->format('M') }}</div>
-                            </div>
-                            <div class="grow">
-                                <h6 class="fw-bold mb-0 text-truncate">{{ $race->circuit->gp_name }}</h6>
-                                <small class="text-muted d-block mb-1">{{ $race->circuit->circuit_name }}</small>
-                                <small class="text-success fw-bold" style="font-size: 0.75rem;">Mulai Rp {{ number_format($race->base_price, 0, ',', '.') }}</small>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="text-center py-4 text-muted">
-                            <i class="bi bi-flag-fill fs-1 mb-2 d-block text-secondary"></i>
-                            <p class="small fw-bold">Tidak ada jadwal dekat.</p>
-                        </div>
-                    @endforelse
-                </div>
+                    <div class="card border-0 shadow-sm mt-4 bg-dark text-white text-center p-4" style="border-radius: 12px;">
+                        <h5 class="fw-bold">Ingin Nonton Langsung?</h5>
+                        <p class="small text-white-50 mb-3">Cek ketersediaan tiket untuk balapan favoritmu sekarang.</p>
+                        <a href="{{ route('tickets.index') }}" class="btn btn-danger fw-bold w-100 rounded-pill">Beli Tiket Sekarang</a>
+                    </div>
 
-                <div class="card border-0 shadow-sm mt-4 bg-dark text-white text-center p-4" style="border-radius: 12px;">
-                    <h5 class="fw-bold">Ingin Nonton Langsung?</h5>
-                    <p class="small text-white-50 mb-3">Cek ketersediaan tiket untuk balapan favoritmu sekarang.</p>
-                    <a href="{{ route('tickets.index') }}" class="btn btn-danger fw-bold w-100 rounded-pill">Beli Tiket Sekarang</a>
                 </div>
             </div>
 

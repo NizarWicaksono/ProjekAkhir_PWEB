@@ -31,6 +31,8 @@ Route::get('/dashboard', function () {
 })->name('users.dashboard');
 
 Route::get('/news/{id}', [ArticleController::class, 'showPublic'])->name('news.show');
+// ROUTE BARU: Halaman List Tiket
+Route::get('/tickets', [BookingController::class, 'index'])->name('tickets.index');
 
 // 3. Guest (Login/Register)
 Route::middleware('guest')->group(function () {
@@ -47,8 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
     // 2. Proses Simpan/Bayar (POST)
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    // ROUTE BARU: Halaman List Tiket
-    Route::get('/tickets', [BookingController::class, 'index'])->name('tickets.index');
     // Route Proses Bayar
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
     // ROUTE BARU: Riwayat

@@ -12,17 +12,22 @@ class BookingController extends Controller
 {
     public function index()
     {
-        // 1. Ambil semua jadwal masa depan
-        $races = Jadwal::with('circuit')
-                    ->where('race_date', '>=', now())
-                    ->orderBy('race_date', 'asc')
-                    ->get();
-
-        // 2. Hitung jumlah tiket yang dimiliki User yang sedang login
-        $myTicketCount = Ticket::where('user_id', Auth::id())
-                                ->where('status', 'sold')
-                                ->count();
-
+        // Ambil data balapan
+        $races = Jadwal::where('race_date', '>=', now())
+                     ->orderBy('race_date', 'asc')
+                     ->with('circuit')
+                     ->get();
+    
+        // Perbaikan Logika: Cek dulu apakah user login
+        if (Auth::check()) {
+            // Kalau login, hitung tiketnya
+            // Sesuaikan dengan model Ticket kamu, biasanya ada where('user_id', ...)
+            $myTicketCount = \App\Models\Ticket::where('user_id', Auth::id())->count();
+        } else {
+            // Kalau guest, jumlah tiket pasti 0
+            $myTicketCount = 0;
+        }
+    
         return view('users.tickets', compact('races', 'myTicketCount'));
     }
 
