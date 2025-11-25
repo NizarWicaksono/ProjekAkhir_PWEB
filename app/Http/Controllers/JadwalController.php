@@ -6,15 +6,27 @@ use Illuminate\Http\Request;
 use App\Models\Jadwal;
 use App\Models\Circuit;
 
-// PERBAIKAN: Ubah nama class menjadi JadwalController (Sesuai nama file)
 class JadwalController extends Controller
 {
-    // 1. Halaman List Jadwal
+    // 1. Halaman List Jadwal (Diupdate untuk memisahkan Active & Past)
     public function index()
     {
-        $races = Jadwal::with('circuit')->orderBy('race_date', 'desc')->get();
+        // Jadwal yang akan datang atau hari ini (Urutkan dari yang terdekat)
+        $activeRaces = Jadwal::with('circuit')
+                        ->whereDate('race_date', '>=', now())
+                        ->orderBy('race_date', 'asc')
+                        ->get();
+
+        // Jadwal yang sudah lewat (Urutkan dari yang baru saja selesai)
+        $pastRaces = Jadwal::with('circuit')
+                        ->whereDate('race_date', '<', now())
+                        ->orderBy('race_date', 'desc')
+                        ->get();
+
         $circuits = Circuit::orderBy('gp_name', 'asc')->get();
-        return view('admin.lihatjadwal', compact('races', 'circuits'));
+
+        // Kirim variabel activeRaces dan pastRaces ke view
+        return view('admin.lihatjadwal', compact('activeRaces', 'pastRaces', 'circuits'));
     }
 
     // 2. Proses Simpan

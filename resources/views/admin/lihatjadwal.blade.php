@@ -1,113 +1,140 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <title>Kelola Jadwal - Admin F1</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+@extends('layouts.admin')
 
+@section('title', 'Kelola Jadwal - Admin F1')
+
+@push('styles')
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .navbar-admin { background-color: #111; padding: 15px 0; }
-        .navbar-brand { font-weight: 900; letter-spacing: -1px; font-size: 24px; color: #e10600 !important; }
-        .nav-link { color: #ccc !important; font-weight: 600; font-size: 0.9rem; margin-right: 15px; }
-        .nav-link:hover, .nav-link.active { color: white !important; }
-
         .race-card {
             border: none; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s;
             background: white; height: 100%; display: flex; flex-direction: column;
+            overflow: hidden;
         }
         .race-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .race-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
         .race-info { font-size: 0.9rem; color: #6c757d; margin-bottom: 0.25rem; }
         .race-price { font-weight: 700; color: #198754; font-size: 1.2rem; margin-top: 0.5rem; }
-        .card-top-line { height: 5px; background: #e10600; border-top-left-radius: 12px; border-top-right-radius: 12px; flex-shrink: 0; }
+
+        /* Garis Warna di atas kartu */
+        .card-top-line { height: 5px; background: #e10600; }
+        .race-card.past-race .card-top-line { background: #6c757d; } /* Abu-abu untuk yang lewat */
+
+        /* Tab Nav Custom */
+        .nav-tabs .nav-link { color: #6c757d; font-weight: 600; border: none; padding: 10px 20px; }
+        .nav-tabs .nav-link.active { color: #e10600; border-bottom: 3px solid #e10600; background: transparent; }
+        .nav-tabs { border-bottom: 2px solid #eee; margin-bottom: 20px; }
 
         /* Modal Style */
         .modal-content { border-radius: 16px; border: none; }
         .modal-header { background-color: #212529; color: white; border-top-left-radius: 16px; border-top-right-radius: 16px; }
         .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
     </style>
-</head>
-<body class="bg-light">
+@endpush
 
-    <nav class="navbar navbar-expand-lg navbar-admin shadow-sm mb-5">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i>ADMIN PANEL</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="bi bi-grid me-1"></i> Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-ticket-detailed me-1"></i> Tiket & Jadwal</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.articles.index') }}"><i class="bi bi-newspaper me-1"></i> Artikel</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('admin.pendapatan') }}"><i class="bi bi-wallet2 me-1"></i> Pendapatan</a></li>
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span class="text-white me-3 small">Hi, {{ Auth::user()->name }}</span>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf <button type="submit" class="btn btn-sm btn-danger fw-bold">Logout</button>
-                    </form>
-                </div>
-            </div>
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold m-0">📅 Kelola Jadwal Balapan</h3>
+        <button type="button" class="btn btn-danger fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addRaceModal">
+            <i class="bi bi-plus-lg me-1"></i> Tambah Jadwal Baru
+        </button>
+    </div>
+
+    @if(session('success'))
+        <div class="alert alert-success border-0 shadow-sm mb-4">
+            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
         </div>
-    </nav>
+    @endif
 
-    <div class="container pb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold m-0">📅 Daftar Jadwal Balapan</h3>
-
-            <button type="button" class="btn btn-danger fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addRaceModal">
-                <i class="bi bi-plus-lg me-1"></i> Tambah Baru
+    <ul class="nav nav-tabs" id="scheduleTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab">
+                🚀 Akan Datang <span class="badge bg-danger ms-1 rounded-pill">{{ $activeRaces->count() }}</span>
             </button>
-        </div>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab">
+                🏁 Sudah Selesai <span class="badge bg-secondary ms-1 rounded-pill">{{ $pastRaces->count() }}</span>
+            </button>
+        </li>
+    </ul>
 
-        @if(session('success'))
-            <div class="alert alert-success border-0 shadow-sm mb-4">
-                <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-            </div>
-        @endif
+    <div class="tab-content" id="scheduleTabContent">
 
-        <div class="row g-4">
-            @forelse($races as $race)
-            <div class="col-md-4 col-lg-3">
-                <div class="race-card shadow-sm position-relative">
-                    <div class="card-top-line"></div>
+        <div class="tab-pane fade show active" id="active" role="tabpanel">
+            <div class="row g-4">
+                @forelse($activeRaces as $race)
+                <div class="col-md-4 col-lg-3">
+                    <div class="race-card shadow-sm">
+                        <div class="card-top-line"></div> <div class="card-body p-4 d-flex flex-column h-100">
+                            <span class="badge bg-light text-danger border border-danger w-auto align-self-start mb-2">
+                                <i class="bi bi-clock me-1"></i> Segera
+                            </span>
 
-                    <div class="card-body p-4 d-flex flex-column h-100">
-                        <div>
                             <h5 class="race-title text-dark">{{ $race->circuit->gp_name }}</h5>
-                            <p class="race-info">
-                                <i class="bi bi-geo-alt-fill text-danger me-2"></i>{{ $race->circuit->circuit_name }}
-                            </p>
+                            <p class="race-info"><i class="bi bi-geo-alt-fill text-danger me-2"></i>{{ $race->circuit->circuit_name }}</p>
                             <p class="race-info ps-4 text-muted small">{{ $race->circuit->country }}</p>
-                            <p class="race-info mt-2">
-                                <i class="bi bi-calendar-event-fill text-secondary me-2"></i>{{ $race->race_date->format('d M Y') }}
-                            </p>
-                        </div>
+                            <p class="race-info mt-2"><i class="bi bi-calendar-event-fill text-secondary me-2"></i>{{ $race->race_date->format('d M Y, H:i') }} WIB</p>
 
-                        <hr class="mt-auto mb-3 text-muted opacity-25">
+                            <hr class="mt-auto mb-3 text-muted opacity-25">
+                            <div class="d-flex justify-content-between align-items-end">
+                                <div>
+                                    <small class="text-muted d-block" style="font-size: 0.8rem;">Harga</small>
+                                    <div class="race-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
+                                </div>
 
-                        <div>
-                            <small class="text-muted d-block" style="font-size: 0.8rem;">Harga</small>
-                            <div class="race-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
+                                <form action="{{ route('admin.races.destroy', $race->id) }}" method="POST" onsubmit="return confirm('Yakin hapus jadwal ini?');">
+                                    @csrf @method('DELETE')
+                                    <button class="btn btn-sm btn-light text-danger border hover-shadow">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            @empty
-            <div class="col-12">
-                <div class="alert alert-light text-center border-0 shadow-sm py-5">
-                    <i class="bi bi-calendar-x display-4 text-muted mb-3 d-block"></i>
-                    <h5 class="fw-bold mb-1">Belum ada jadwal balapan.</h5>
-                    <p class="text-muted">Klik tombol "Tambah Baru" di pojok kanan atas.</p>
+                @empty
+                <div class="col-12 py-5 text-center">
+                    <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" width="100" class="mb-3 opacity-50" alt="Empty">
+                    <h5 class="text-muted fw-bold">Tidak ada jadwal aktif.</h5>
+                    <p class="text-secondary small">Tambahkan jadwal baru untuk memulai penjualan tiket.</p>
                 </div>
+                @endforelse
             </div>
-            @endforelse
         </div>
+
+        <div class="tab-pane fade" id="past" role="tabpanel">
+            <div class="row g-4">
+                @forelse($pastRaces as $race)
+                <div class="col-md-4 col-lg-3">
+                    <div class="race-card past-race shadow-sm bg-light" style="opacity: 0.8;">
+                        <div class="card-top-line"></div> <div class="card-body p-4 d-flex flex-column h-100">
+                            <span class="badge bg-secondary w-auto align-self-start mb-2">
+                                <i class="bi bi-check-circle me-1"></i> Selesai
+                            </span>
+
+                            <h5 class="race-title text-muted">{{ $race->circuit->gp_name }}</h5>
+                            <p class="race-info text-muted"><i class="bi bi-geo-alt-fill me-2"></i>{{ $race->circuit->circuit_name }}</p>
+                            <p class="race-info mt-2 text-decoration-line-through">
+                                <i class="bi bi-calendar-check me-2"></i>{{ $race->race_date->format('d M Y') }}
+                            </p>
+
+                            <hr class="mt-auto mb-3 text-muted opacity-25">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="{{ route('admin.pendapatan.detail', $race->id) }}" class="btn btn-sm btn-outline-dark fw-bold w-100">
+                                    <i class="bi bi-wallet2 me-1"></i> Cek Laporan
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @empty
+                <div class="col-12 py-5 text-center">
+                    <h5 class="text-muted fw-bold">Belum ada history balapan.</h5>
+                </div>
+                @endforelse
+            </div>
+        </div>
+
     </div>
 
     <div class="modal fade" id="addRaceModal" tabindex="-1" aria-hidden="true">
@@ -140,8 +167,8 @@
                         </div>
                         <div class="row">
                             <div class="col-6 mb-3">
-                                <label class="form-label fw-bold small text-muted text-uppercase">Tanggal</label>
-                                <input type="date" name="race_date" class="form-control" required>
+                                <label class="form-label fw-bold small text-muted text-uppercase">Tanggal & Jam</label>
+                                <input type="datetime-local" name="race_date" class="form-control" required>
                             </div>
                             <div class="col-6 mb-3">
                                 <label class="form-label fw-bold small text-muted text-uppercase">Harga (IDR)</label>
@@ -156,17 +183,20 @@
             </div>
         </div>
     </div>
+@endsection
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+@push('scripts')
     <script>
         const gpSelector = document.getElementById('gp_selector');
         const circuitDisplay = document.getElementById('circuit_display');
-        gpSelector.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const circuitName = selectedOption.getAttribute('data-circuit');
-            const countryName = selectedOption.getAttribute('data-country');
-            circuitDisplay.value = `${circuitName}, ${countryName}`;
-        });
+
+        if(gpSelector) {
+            gpSelector.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const circuitName = selectedOption.getAttribute('data-circuit');
+                const countryName = selectedOption.getAttribute('data-country');
+                circuitDisplay.value = `${circuitName}, ${countryName}`;
+            });
+        }
     </script>
-</body>
-</html>
+@endpush

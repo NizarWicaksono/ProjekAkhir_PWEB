@@ -37,67 +37,31 @@
             <div class="col-md-6">
                 <div class="ticket-card shadow-sm">
                     <div class="card-top-accent"></div>
+
                     <div class="card-body p-4 d-flex flex-column h-100">
                         <div class="mb-3">
                             <span class="badge bg-danger bg-opacity-10 text-danger border border-danger mb-2 px-2">
-                                {{ $race->race_date->format('d M Y') }}
+                                {{ $race->race_date->format('d M Y, H:i') }} WIB
                             </span>
                             <h5 class="fw-bold text-dark mb-1">{{ $race->circuit->gp_name }}</h5>
                             <small class="text-muted d-block">
-                                <i class="bi bi-geo-alt-fill me-1 text-secondary"></i> {{ $race->circuit->circuit_name }}
+                                <i class="bi bi-geo-alt-fill me-1 text-secondary"></i>
+                                {{ $race->circuit->circuit_name }}
                             </small>
                         </div>
-                        <hr class="border-secondary opacity-10 my-auto">
-                        <div class="mt-3 d-flex justify-content-between align-items-end">
-                            <div>
-                                <small class="text-muted d-block" style="font-size: 0.75rem;">Mulai dari</small>
-                                <div class="ticket-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
-                            </div>
-                            @auth
-                                <button type="button" class="btn btn-dark rounded-pill px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#buyModal-{{ $race->id }}">Beli<i class="bi bi-cart-plus ms-1"></i></button>
-                            @else
-                                <button type="button" class="btn btn-dark rounded-pill px-4 fw-bold" data-bs-toggle="modal" data-bs-target="#guestModal">Beli<i class="bi bi-lock-fill ms-1"></i></button>
-                            @endauth
-                        </div>
                     </div>
                 </div>
-            </div>
 
-            @auth
-            <div class="modal fade" id="buyModal-{{ $race->id }}" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header-custom d-flex justify-content-between align-items-center">
-                            <h5 class="fw-bold m-0 text-uppercase letter-spacing-1">Checkout Tiket</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body p-4">
-                            <div class="text-center mb-4">
-                                <h4 class="fw-bold mb-1">{{ $race->circuit->gp_name }}</h4>
-                                <p class="text-muted small mb-2">{{ $race->circuit->circuit_name }}</p>
-                                <span class="badge bg-dark">{{ $race->race_date->format('d F Y') }}</span>
-                            </div>
-                            <form action="{{ route('booking.store') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="race_id" value="{{ $race->id }}">
-                                <div class="mb-4 text-center">
-                                    <label class="fw-bold mb-2 text-muted small text-uppercase">Jumlah Tiket</label>
-                                    <div class="qty-input-group shadow-sm">
-                                        <button type="button" class="btn btn-qty btn-minus" onclick="updateQty({{ $race->id }}, -1)"><i class="bi bi-dash-lg"></i></button>
-                                        <input type="number" name="quantity" id="qty-{{ $race->id }}" class="input-qty" value="1" min="1" max="99" oninput="updateTotal({{ $race->id }})">
-                                        <button type="button" class="btn btn-qty btn-plus" onclick="updateQty({{ $race->id }}, 1)"><i class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                </div>
-                                <div class="bg-light p-3 rounded-3 mb-4 border d-flex justify-content-between align-items-center">
-                                    <div><small class="text-muted d-block">Total Bayar</small><small class="text-muted">@ Rp {{ number_format($race->base_price, 0, ',', '.') }}</small></div>
-                                    <span class="fw-bold fs-4 text-success" id="total-{{ $race->id }}">Rp {{ number_format($race->base_price, 0, ',', '.') }}</span>
-                                </div>
-                                <button type="submit" class="btn btn-danger w-100 py-3 fw-bold rounded-pill shadow-sm">BAYAR SEKARANG <i class="bi bi-credit-card-2-front ms-2"></i></button>
-                            </form>
-                        </div>
+                <div class="modal-body p-4">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold mb-1">{{ $race->circuit->gp_name }}</h4>
+                        <p class="text-muted small mb-2">{{ $race->circuit->circuit_name }}</p>
+
+                        <span class="badge bg-dark">
+                            <i class="bi bi-calendar-event me-1"></i> {{ $race->race_date->format('d F Y') }} • {{ $race->race_date->format('H:i') }} WIB
+                        </span>
                     </div>
                 </div>
-            </div>
             @endauth
             @empty
             <div class="col-12"><div class="alert alert-light border text-center py-5 rounded-4"><h5 class="fw-bold">Jadwal Belum Tersedia</h5></div></div>

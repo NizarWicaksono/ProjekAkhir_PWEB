@@ -16,7 +16,8 @@ class Jadwal extends Model
     ];
 
     protected $casts = [
-        'race_date' => 'date',
+    'race_date' => 'datetime', // Pastikan dicasting ke datetime
+    'base_price' => 'decimal:2',
     ];
 
     public function circuit()

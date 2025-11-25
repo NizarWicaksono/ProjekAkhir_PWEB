@@ -60,10 +60,12 @@
 
     <div class="col-lg-4">
         <div class="sticky-sidebar">
+
             <div class="sidebar-widget">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h5 class="fw-bold m-0">🏁 Next Races</h5>
                 </div>
+
                 @forelse($races as $race)
                     <div class="race-item d-flex align-items-center">
                         <div class="date-box me-3">
@@ -72,8 +74,16 @@
                         </div>
                         <div class="grow">
                             <h6 class="fw-bold mb-0 text-truncate">{{ $race->circuit->gp_name }}</h6>
-                            <small class="text-muted d-block mb-1">{{ $race->circuit->circuit_name }}</small>
-                            <small class="text-success fw-bold" style="font-size: 0.75rem;">Mulai Rp {{ number_format($race->base_price, 0, ',', '.') }}</small>
+                            <small class="text-muted d-block mb-1">
+                                {{ $race->circuit->circuit_name }}
+                            </small>
+                            <small class="text-danger fw-bold d-block mb-1" style="font-size: 0.75rem;">
+                                <i class="bi bi-clock me-1"></i> {{ $race->race_date->format('H:i') }} WIB
+                            </small>
+
+                            <small class="text-success fw-bold" style="font-size: 0.75rem;">
+                                Mulai Rp {{ number_format($race->base_price, 0, ',', '.') }}
+                            </small>
                         </div>
                     </div>
                 @empty
@@ -89,6 +99,7 @@
                 <p class="small text-white-50 mb-3">Cek ketersediaan tiket untuk balapan favoritmu sekarang.</p>
                 <a href="{{ route('tickets.index') }}" class="btn btn-danger fw-bold w-100 rounded-pill">Beli Tiket Sekarang</a>
             </div>
+
         </div>
     </div>
 </div>

@@ -53,9 +53,25 @@
                                 <div class="col-md-2 text-center mb-3 mb-md-0"><div class="bg-light rounded-3 p-3 text-danger d-inline-block"><i class="bi bi-ticket-perforated-fill fs-1"></i></div></div>
                                 <div class="col-md-7 mb-3 mb-md-0">
                                     <h5 class="fw-bold mb-1">{{ $ticket->race->circuit->gp_name }}</h5>
-                                    <p class="text-muted small mb-2"><i class="bi bi-calendar3 me-1"></i> {{ \Carbon\Carbon::parse($ticket->race->race_date)->translatedFormat('d F Y') }} <span class="mx-2">|</span> <i class="bi bi-geo-alt me-1"></i> {{ $ticket->race->circuit->circuit_name }}</p>
-                                    <div class="d-flex align-items-center gap-2"><span class="badge bg-success bg-opacity-10 text-success border border-success px-3">LUNAS</span><span class="text-muted small border-start ps-2 ms-1">ID: {{ $ticket->ticket_code }}</span></div>
+                                    <p class="text-muted small mb-2">
+                                        <i class="bi bi-calendar3 me-1"></i> {{ \Carbon\Carbon::parse($ticket->race->race_date)->translatedFormat('d F Y, H:i') }} WIB
+                                        <span class="mx-2">|</span>
+                                        <i class="bi bi-geo-alt me-1"></i> {{ $ticket->race->circuit->circuit_name }}
+                                    </p>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-success bg-opacity-10 text-success border border-success px-3">LUNAS</span>
+                                        <span class="text-muted small border-start ps-2 ms-1">ID: {{ $ticket->ticket_code }}</span>
+                                    </div>
                                 </div>
+
+                                <div class="text-center mb-4 pb-4 border-bottom">
+                                    <h4 class="fw-bold mb-1">{{ $ticket->race->circuit->gp_name }}</h4>
+                                    <span class="badge bg-dark rounded-pill px-3 mb-2">
+                                        {{ \Carbon\Carbon::parse($ticket->race->race_date)->translatedFormat('l, d F Y • H:i') }} WIB
+                                    </span>
+                                    <p class="text-muted small">{{ $ticket->race->circuit->circuit_name }}</p>
+                                </div>
+                                
                                 <div class="col-md-3 text-end">
                                     <button type="button" class="btn btn-outline-dark w-100 rounded-pill fw-bold btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $ticket->id }}"><i class="bi bi-eye me-2"></i>Detail Tiket</button>
                                 </div>

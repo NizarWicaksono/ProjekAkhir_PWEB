@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             // GANTI kolom nama & sirkuit string menjadi Foreign Key
             $table->foreignId('circuit_id')->constrained('circuits')->onDelete('cascade');
-        
-            $table->date('race_date');
+
+            $table->dateTime('race_date');
             $table->decimal('base_price', 15, 2);
             $table->timestamps();
         });
