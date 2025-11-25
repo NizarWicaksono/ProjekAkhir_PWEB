@@ -1,102 +1,127 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <title>{{ $article->title }} - F1 News</title>
+    <title>{{ $article->title }} - F1 Ticket</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
-        .navbar-f1 { background-color: #e10600 !important; }
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
 
-        /* Hero Image */
-        .article-hero {
-            height: 400px; width: 100%;
+        /* Navbar Style (Konsisten dengan Dashboard) */
+        .navbar-f1 { background-color: #e10600; }
+        .nav-link { color: rgba(255,255,255,0.8) !important; font-weight: 600; margin-right: 15px; }
+        .nav-link:hover, .nav-link.active { color: white !important; opacity: 1; }
+
+        /* Detail Artikel Style */
+        .article-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .article-img-header {
+            width: 100%;
+            height: 400px;
             object-fit: cover;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            object-position: center;
         }
-
-        /* Container Artikel */
-        .article-container { max-width: 800px; margin: -100px auto 0; position: relative; z-index: 10; }
-        .article-paper { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
-        .article-title { font-weight: 900; color: #111; font-size: 2rem; margin-bottom: 15px; }
-        .article-meta { color: #6c757d; font-size: 0.9rem; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
-        .article-body {
-            font-family: 'Merriweather', serif; /* Font enak untuk baca */
-            font-size: 1.1rem; line-height: 1.8; color: #333;
-        }
-        .article-body p { margin-bottom: 20px; }
-
-        /* Sidebar Rekomendasi */
-        .rec-card { border: none; background: white; transition: 0.2s; border-radius: 12px; overflow: hidden; }
-        .rec-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .rec-img { height: 120px; object-fit: cover; }
+        .article-content { font-size: 1.1rem; line-height: 1.8; color: #333; }
+        .meta-info { font-size: 0.9rem; color: #6c757d; }
     </style>
 </head>
-<body>
+<body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-f1 shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-f1 shadow-sm mb-4 sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold fst-italic" href="{{ route('users.dashboard') }}">
-                <i class="bi bi-arrow-left me-2"></i> Kembali ke Dashboard
+                <i class="bi bi-flag-fill me-2"></i>F1 TICKET
             </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tickets.index') }}">Beli Tiket</a>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center text-white">
+                    @auth
+                        <div class="dropdown">
+                            <a href="#" class="text-white text-decoration-none dropdown-toggle fw-bold" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                <li><a class="dropdown-item" href="{{ route('users.history') }}">Riwayat</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-danger fw-bold">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-light text-danger fw-bold me-2">Login</a>
+                    @endauth
+                </div>
+            </div>
         </div>
     </nav>
 
-    <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=2070&auto=format&fit=crop' }}" class="article-hero">
-
     <div class="container pb-5">
-        <div class="row">
-            <div class="col-lg-8 mx-auto article-container">
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('users.dashboard') }}" class="text-decoration-none text-danger fw-bold">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Detail Berita</li>
+            </ol>
+        </nav>
 
-                <div class="article-paper">
-                    <span class="badge bg-danger mb-2">F1 NEWS</span>
-                    <h1 class="article-title">{{ $article->title }}</h1>
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
 
-                    <div class="article-meta d-flex align-items-center">
-                        <div class="me-3"><i class="bi bi-calendar3 me-1"></i> {{ \Carbon\Carbon::parse($article->published_date)->translatedFormat('d F Y') }}</div>
-                        <div><i class="bi bi-person-circle me-1"></i> Admin Redaksi</div>
-                    </div>
+                <div class="card article-card bg-white">
+                    <img src="{{ $article->image ? asset('storage/'.$article->image) : 'https://images.unsplash.com/photo-1598556965690-65036b75f5d1?q=80&w=2070&auto=format&fit=crop' }}"
+                         class="article-img-header"
+                         alt="{{ $article->title }}">
 
-                    <div class="article-body">
-                        {!! nl2br(e($article->content)) !!}
-                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <h1 class="fw-bold mb-3 display-6">{{ $article->title }}</h1>
 
-                    <hr class="my-5">
-                    <div class="text-center">
-                        <small class="text-muted">Bagikan berita ini:</small>
-                        <div class="mt-2">
-                            <button class="btn btn-outline-dark btn-sm rounded-circle me-1"><i class="bi bi-whatsapp"></i></button>
-                            <button class="btn btn-outline-dark btn-sm rounded-circle me-1"><i class="bi bi-twitter-x"></i></button>
-                            <button class="btn btn-outline-dark btn-sm rounded-circle"><i class="bi bi-facebook"></i></button>
+                        <div class="d-flex align-items-center mb-4 pb-3 border-bottom meta-info">
+                            <div class="d-flex align-items-center me-4">
+                                <i class="bi bi-calendar3 me-2 text-danger"></i>
+                                {{ \Carbon\Carbon::parse($article->published_date)->translatedFormat('l, d F Y') }}
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle me-2 text-danger"></i>
+                                <span>Admin Redaksi</span>
+                            </div>
+                        </div>
+
+                        <div class="article-content text-justify">
+                            {{-- Gunakan {!! !!} jika konten mengandung HTML editor, atau {{ }} jika teks biasa --}}
+                            {!! nl2br(e($article->content)) !!}
+                        </div>
+
+                        <div class="mt-5 pt-4 border-top">
+                            <a href="{{ route('users.dashboard') }}" class="btn btn-outline-secondary rounded-pill px-4 fw-bold">
+                                <i class="bi bi-arrow-left me-2"></i>Kembali ke Dashboard
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                <h5 class="fw-bold mt-5 mb-3">Berita Lainnya</h5>
-                <div class="row g-3">
-                    @foreach($otherArticles as $item)
-                    <div class="col-md-4">
-                        <a href="{{ route('news.show', $item->id) }}" class="text-decoration-none text-dark">
-                            <div class="rec-card h-100 shadow-sm">
-                                <img src="{{ $item->image ? asset('storage/' . $item->image) : 'https://via.placeholder.com/300x200' }}" class="w-100 rec-img">
-                                <div class="p-3">
-                                    <small class="text-muted d-block mb-1">{{ \Carbon\Carbon::parse($item->published_date)->format('d M Y') }}</small>
-                                    <h6 class="fw-bold mb-0 text-truncate">{{ $item->title }}</h6>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    @endforeach
                 </div>
 
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

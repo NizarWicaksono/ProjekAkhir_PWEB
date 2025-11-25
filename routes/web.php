@@ -55,8 +55,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/history', [BookingController::class, 'history'])->name('users.history');
     // Route Download Tiket
     Route::get('/ticket/{code}/download', [BookingController::class, 'downloadTicket'])->name('ticket.download');
-    // Route Baca Berita (Public/User)
-    Route::get('/news/{id}', [ArticleController::class, 'showPublic'])->name('news.show');
 });
 
 // 5. ADMIN (Gunakan Controller Baru)
