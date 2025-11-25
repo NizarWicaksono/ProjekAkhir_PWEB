@@ -55,6 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/history', [BookingController::class, 'history'])->name('users.history');
     // Route Download Tiket
     Route::get('/ticket/{code}/download', [BookingController::class, 'downloadTicket'])->name('ticket.download');
+    // Route Profil User
+    Route::get('/profile', [AuthController::class, 'showProfile'])->name('users.profile');
+    Route::put('/profile', [AuthController::class, 'updateProfile'])->name('users.profile.update');
 });
 
 // 5. ADMIN (Gunakan Controller Baru)

@@ -68,6 +68,35 @@ class AuthController extends Controller
         ]);
     }
 
+    // ROUTE BARU: Tampilkan Profil User
+    public function showProfile()
+    {
+        return view('users.profile');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+            'password' => 'nullable|min:6|confirmed', // Konfirmasi password (password_confirmation)
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // Hanya update password jika diisi
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui!');
+    }
+
     // 5. Proses Logout
     public function logout(Request $request)
     {

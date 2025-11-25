@@ -90,6 +90,7 @@
                                 <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                <li><a class="dropdown-item" href="{{ route('users.profile') }}">Profil Saya</a></li>
                                 <li><a class="dropdown-item" href="{{ route('users.history') }}">Riwayat</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>

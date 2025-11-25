@@ -70,7 +70,7 @@
 </head>
 <body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-f1 shadow-sm mb-5 sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-f1 shadow-sm mb-4 sticky-top">
         <div class="container">
             <a class="navbar-brand fw-bold fst-italic" href="{{ route('users.dashboard') }}">
                 <i class="bi bi-flag-fill me-2"></i>F1 TICKET
@@ -82,9 +82,14 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="{{ route('users.dashboard') }}">Dashboard</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Beli Tiket</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('users.dashboard') }}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tickets.index') }}">Jadwal</a>
+                    </li>
                 </ul>
+
                 <div class="d-flex align-items-center text-white">
                     @auth
                         <div class="dropdown">
@@ -92,6 +97,7 @@
                                 <i class="bi bi-person-circle me-1"></i> {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
+                                <li><a class="dropdown-item" href="{{ route('users.profile') }}">Profil Saya</a></li>
                                 <li><a class="dropdown-item" href="{{ route('users.history') }}">Riwayat</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
