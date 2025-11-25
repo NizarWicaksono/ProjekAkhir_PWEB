@@ -102,9 +102,9 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
 
-        // Ambil berita lain untuk rekomendasi di sidebar (opsional)
+        // Rekomendasi artikel lain (3 terbaru selain yang sedang dibaca)
         $otherArticles = Article::where('id', '!=', $id)->latest()->take(3)->get();
 
-        return view('users.article_detail', compact('article', 'otherArticles'));
+        return view('users.detailartikel', compact('article', 'otherArticles'));
     }
 }

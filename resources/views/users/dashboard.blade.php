@@ -107,34 +107,38 @@
                     <h4 class="fw-bold m-0">F1 News</h4>
                 </div>
 
-                <div class="row">
+                <div class="col-lg-8">
+                    <h4 class="section-title">Berita Terbaru</h4>
+                    
                     @forelse($articles as $article)
-                        <div class="col-md-6 mb-4">
-                            <div class="card h-100 border-0 shadow-sm news-card-hover">
-                                <div class="position-relative">
-                                    <img src="{{ $article->image ? asset('storage/'.$article->image) : 'https://images.unsplash.com/photo-1598556965690-65036b75f5d1?q=80&w=2070&auto=format&fit=crop' }}"
-                                         class="card-img-top"
-                                         style="height: 200px; object-fit: cover;"
-                                         alt="Cover">
+                        <div class="card news-card shadow-sm position-relative">
+                        
+                            <a href="{{ route('news.show', $article->id) }}" class="stretched-link"></a>
+                        
+                            <img src="{{ $article->image ? asset('storage/'.$article->image) : 'https://images.unsplash.com/photo-1598556965690-65036b75f5d1?q=80&w=2070&auto=format&fit=crop' }}" class="card-img-top news-img" alt="News Cover">
+                        
+                            <div class="card-body p-4">
+                                <div class="news-meta">
+                                    <i class="bi bi-calendar3 me-1"></i> {{ \Carbon\Carbon::parse($article->published_date)->translatedFormat('d F Y') }}
+                                    <span class="mx-2">•</span>
+                                    <i class="bi bi-person me-1"></i> Admin
                                 </div>
-
-                                <div class="card-body d-flex flex-column p-4">
-                                    <h5 class="card-title fw-bold mb-3 text-dark">{{ Str::limit($article->title, 50) }}</h5>
-                                    <p class="card-text text-secondary small grow">
-                                        {{ Str::limit($article->content, 90) }}
-                                    </p>
-                                </div>
+                                <h3 class="card-title fw-bold mb-3">{{ $article->title }}</h3>
+                                <p class="card-text text-secondary">
+                                    {{ Str::limit($article->content, 150) }}
+                                </p>
+                            
+                                <span class="btn btn-outline-danger rounded-pill px-4 fw-bold mt-2">Baca Selengkapnya</span>
                             </div>
                         </div>
                     @empty
-                        <div class="col-12">
-                            <div class="alert alert-light border text-center py-5 rounded-4">
-                                <i class="bi bi-newspaper display-4 text-muted mb-3 d-block opacity-25"></i>
-                                <h5 class="fw-bold">Belum Ada Berita</h5>
-                                <p class="text-muted">Tim redaksi sedang memanaskan mesin.</p>
-                            </div>
+                        <div class="empty-state">
+                            <i class="bi bi-newspaper display-4 mb-3 d-block"></i>
+                            <h5 class="fw-bold">Belum Ada Berita</h5>
+                            <p>Tim redaksi sedang memanaskan mesin. Cek lagi nanti!</p>
                         </div>
                     @endforelse
+                    
                 </div>
             </div>
 
