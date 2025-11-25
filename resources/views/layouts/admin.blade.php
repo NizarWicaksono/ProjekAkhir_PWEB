@@ -79,6 +79,56 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Notifikasi Flash Message Sukses
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 2000,
+                background: '#fff',
+                color: '#000'
+            });
+        @endif
+
+        // Notifikasi Flash Message Error (jika ada)
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#e10600'
+            });
+        @endif
+
+        // Fungsi Konfirmasi Hapus Global
+        function confirmDelete(event) {
+            event.preventDefault(); // Hentikan submit form bawaan
+            const form = event.target; // Ambil form yang sedang disubmit
+
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#e10600', // Warna Merah F1
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal',
+                background: '#fff',
+                color: '#000'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Lanjutkan submit jika user klik Ya
+                }
+            });
+        }
+    </script>
+
     @stack('scripts')
 </body>
 </html>

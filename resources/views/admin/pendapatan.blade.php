@@ -13,7 +13,6 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold m-0">💰 Laporan Keuangan</h3>
-        <button onclick="window.print()" class="btn btn-outline-dark btn-sm fw-bold"><i class="bi bi-printer me-1"></i> Cetak Laporan</button>
     </div>
 
     <div class="row g-4 mb-4">

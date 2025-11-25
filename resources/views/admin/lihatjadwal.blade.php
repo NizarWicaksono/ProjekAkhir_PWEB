@@ -16,7 +16,7 @@
 
         /* Garis Warna di atas kartu */
         .card-top-line { height: 5px; background: #e10600; }
-        .race-card.past-race .card-top-line { background: #6c757d; } /* Abu-abu untuk yang lewat */
+        .race-card.past-race .card-top-line { background: #6c757d; }
 
         /* Tab Nav Custom */
         .nav-tabs .nav-link { color: #6c757d; font-weight: 600; border: none; padding: 10px 20px; }
@@ -32,7 +32,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold m-0">🏁 Kelola Jadwal Balapan</h3>
+        <h3 class="fw-bold m-0">🏁 Jadwal Balapan</h3>
         <button type="button" class="btn btn-danger fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addRaceModal">
             <i class="bi bi-plus-lg me-1"></i> Tambah Jadwal Baru
         </button>
@@ -82,12 +82,25 @@
                                     <div class="race-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
                                 </div>
 
-                                <form action="{{ route('admin.races.destroy', $race->id) }}" method="POST" onsubmit="return confirm('Yakin hapus jadwal ini?');">
-                                    @csrf @method('DELETE')
-                                    <button class="btn btn-sm btn-light text-danger border hover-shadow">
-                                        <i class="bi bi-trash"></i>
+                                <div class="d-flex gap-2">
+                                    {{-- TOMBOL EDIT --}}
+                                    <button class="btn btn-sm btn-warning text-white border hover-shadow btn-edit"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editRaceModal"
+                                        data-id="{{ $race->id }}"
+                                        data-circuit="{{ $race->circuit_id }}"
+                                        data-date="{{ $race->race_date->format('Y-m-d\TH:i') }}"
+                                        data-price="{{ $race->base_price }}">
+                                        <i class="bi bi-pencil-square"></i>
                                     </button>
-                                </form>
+
+                                    <form action="{{ route('admin.races.destroy', $race->id) }}" method="POST" onsubmit="return confirm('Yakin hapus jadwal ini?');">
+                                        @csrf @method('DELETE')
+                                        <button class="btn btn-sm btn-light text-danger border hover-shadow">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,8 +113,6 @@
                 </div>
                 @endforelse
             </div>
-
-            {{-- PAGINATION UNTUK ACTIVE RACES --}}
             <div class="d-flex justify-content-center mt-4">
                 {{ $activeRaces->appends(request()->query())->links() }}
             </div>
@@ -109,6 +120,7 @@
 
         {{-- TAB 2: PAST RACES --}}
         <div class="tab-pane fade" id="past" role="tabpanel">
+            {{-- Past races content (unchanged) --}}
             <div class="row g-4">
                 @forelse($pastRaces as $race)
                 <div class="col-md-4 col-lg-3">
@@ -117,15 +129,12 @@
                             <span class="badge bg-secondary w-auto align-self-start mb-2">
                                 <i class="bi bi-check-circle me-1"></i> Selesai
                             </span>
-
                             <h5 class="race-title text-muted">{{ $race->circuit->gp_name }}</h5>
                             <p class="race-info text-muted"><i class="bi bi-geo-alt-fill me-2"></i>{{ $race->circuit->circuit_name }}</p>
                             <p class="race-info mt-2 text-decoration-line-through">
                                 <i class="bi bi-calendar-check me-2"></i>{{ $race->race_date->format('d M Y') }}
                             </p>
-
                             <hr class="mt-auto mb-3 text-muted opacity-25">
-
                             <div class="d-flex justify-content-between align-items-center">
                                 <a href="{{ route('admin.pendapatan.detail', $race->id) }}" class="btn btn-sm btn-outline-dark fw-bold w-100">
                                     <i class="bi bi-wallet2 me-1"></i> Cek Laporan
@@ -140,8 +149,6 @@
                 </div>
                 @endforelse
             </div>
-
-            {{-- PAGINATION UNTUK PAST RACES --}}
             <div class="d-flex justify-content-center mt-4">
                 {{ $pastRaces->appends(request()->query())->links() }}
             </div>
@@ -149,7 +156,7 @@
 
     </div>
 
-    {{-- MODAL TAMBAH JADWAL --}}
+    {{-- MODAL TAMBAH JADWAL (Asli) --}}
     <div class="modal fade" id="addRaceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -196,20 +203,116 @@
             </div>
         </div>
     </div>
+
+    {{-- MODAL EDIT JADWAL (BARU) --}}
+    <div class="modal fade" id="editRaceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold">✏️ Edit Jadwal Balapan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    {{-- Form action akan di-set lewat JS --}}
+                    <form id="editForm" action="" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Pilih Grand Prix</label>
+                            <select name="circuit_id" id="gp_selector_edit" class="form-select" required>
+                                <option value="" disabled>--Pilih GP--</option>
+                                @foreach($circuits as $circuit)
+                                    <option value="{{ $circuit->id }}" data-circuit="{{ $circuit->circuit_name }}" data-country="{{ $circuit->country }}">
+                                        {{ $circuit->gp_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-muted text-uppercase">Lokasi Sirkuit</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="bi bi-geo-alt"></i></span>
+                                <input type="text" id="circuit_display_edit" class="form-control bg-light text-muted" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Tanggal & Jam</label>
+                                <input type="datetime-local" name="race_date" id="race_date_edit" class="form-control" required>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label class="form-label fw-bold small text-muted text-uppercase">Harga (IDR)</label>
+                                <input type="number" name="base_price" id="base_price_edit" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-warning fw-bold">Update Jadwal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
     <script>
+        // --- SCRIPT MODAL TAMBAH (Asli) ---
         const gpSelector = document.getElementById('gp_selector');
         const circuitDisplay = document.getElementById('circuit_display');
 
         if(gpSelector) {
             gpSelector.addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                const circuitName = selectedOption.getAttribute('data-circuit');
-                const countryName = selectedOption.getAttribute('data-country');
-                circuitDisplay.value = `${circuitName}, ${countryName}`;
+                updateDisplay(this, circuitDisplay);
             });
+        }
+
+        // --- SCRIPT MODAL EDIT (Baru) ---
+        const editButtons = document.querySelectorAll('.btn-edit');
+        const editForm = document.getElementById('editForm');
+        const gpSelectorEdit = document.getElementById('gp_selector_edit');
+        const circuitDisplayEdit = document.getElementById('circuit_display_edit');
+        const raceDateEdit = document.getElementById('race_date_edit');
+        const basePriceEdit = document.getElementById('base_price_edit');
+
+        // Base URL untuk update (sesuaikan jika route berbeda)
+        const baseUrl = "{{ url('/admin/races') }}";
+
+        // Logic saat tombol Edit diklik
+        editButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const circuitId = this.getAttribute('data-circuit');
+                const date = this.getAttribute('data-date');
+                const price = this.getAttribute('data-price');
+
+                // 1. Update Action URL Form
+                editForm.action = `${baseUrl}/${id}`;
+
+                // 2. Isi Value Input
+                gpSelectorEdit.value = circuitId;
+                raceDateEdit.value = date;
+                basePriceEdit.value = price;
+
+                // 3. Update Display Sirkuit secara manual
+                updateDisplay(gpSelectorEdit, circuitDisplayEdit);
+            });
+        });
+
+        // Event Listener untuk Dropdown di Modal Edit
+        if(gpSelectorEdit) {
+            gpSelectorEdit.addEventListener('change', function() {
+                updateDisplay(this, circuitDisplayEdit);
+            });
+        }
+
+        // Fungsi Helper agar tidak menulis ulang logic display
+        function updateDisplay(selector, displayTarget) {
+            const selectedOption = selector.options[selector.selectedIndex];
+            const circuitName = selectedOption.getAttribute('data-circuit');
+            const countryName = selectedOption.getAttribute('data-country');
+            displayTarget.value = `${circuitName}, ${countryName}`;
         }
     </script>
 @endpush

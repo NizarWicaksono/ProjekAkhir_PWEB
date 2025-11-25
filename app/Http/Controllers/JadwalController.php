@@ -47,6 +47,24 @@ class JadwalController extends Controller
         return redirect()->route('admin.lihatjadwal')->with('success', 'Jadwal berhasil ditambahkan!');
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'circuit_id' => 'required|exists:circuits,id',
+            'race_date' => 'required|date',
+            'base_price' => 'required|numeric|min:0',
+        ]);
+
+        $jadwal = Jadwal::findOrFail($id);
+        $jadwal->update([
+            'circuit_id' => $request->circuit_id,
+            'race_date' => $request->race_date,
+            'base_price' => $request->base_price,
+        ]);
+
+        return redirect()->route('admin.lihatjadwal')->with('success', 'Jadwal berhasil diperbarui!');
+    }
+
     // 3. Hapus Jadwal
     public function destroy($id)
     {

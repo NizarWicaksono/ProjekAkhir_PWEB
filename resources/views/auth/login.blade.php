@@ -14,7 +14,7 @@
             background-color: #f8f9fa;
         }
         .login-image {
-            background-image: url('https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=2070&auto=format&fit=crop');
+            background-image: url('https://images.pexels.com/photos/17555047/pexels-photo-17555047.jpeg');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -96,13 +96,13 @@
 
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase small text-muted">Email Address</label>
-                        <input type="email" name="email" class="form-control form-control-lg bg-light" placeholder="nama@email.com" required>
+                        <input type="email" name="email" class="form-control form-control-lg bg-light" required>
                     </div>
 
                     <div class="mb-4">
                         <label class="form-label fw-bold text-uppercase small text-muted">Password</label>
                         <div class="input-group">
-                            <input type="password" name="password" id="password" class="form-control form-control-lg bg-light input-with-icon" placeholder="••••••••" required>
+                            <input type="password" name="password" id="password" class="form-control form-control-lg bg-light input-with-icon" required>
                             <span class="input-group-text bg-light" onclick="togglePassword('password', 'eye-icon')">
                                 <i class="bi bi-eye" id="eye-icon"></i>
                             </span>
@@ -123,19 +123,40 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Tampilkan Alert Error jika login gagal
+    @if($errors->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Gagal',
+            html: '<ul style="text-align: left;">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>',
+            confirmButtonColor: '#e10600'
+        });
+    @endif
+
+    // Tampilkan pesan sukses (misal setelah register)
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+            confirmButtonColor: '#e10600'
+        });
+    @endif
+
     function togglePassword(inputId, iconId) {
+        // ... kode toggle password Anda yang lama ...
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
-
         if (input.type === "password") {
             input.type = "text";
             icon.classList.remove("bi-eye");
-            icon.classList.add("bi-eye-slash"); // Ganti icon jadi mata dicoret
+            icon.classList.add("bi-eye-slash");
         } else {
             input.type = "password";
             icon.classList.remove("bi-eye-slash");
-            icon.classList.add("bi-eye"); // Ganti icon jadi mata biasa
+            icon.classList.add("bi-eye");
         }
     }
 </script>

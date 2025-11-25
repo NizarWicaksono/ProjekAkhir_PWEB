@@ -68,6 +68,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // === JADWAL (Pakai JadwalController) ===
     Route::get('/races', [JadwalController::class, 'index'])->name('admin.lihatjadwal');
     Route::post('/races', [JadwalController::class, 'store'])->name('admin.races.store');
+    Route::put('/races/{id}', [JadwalController::class, 'update'])->name('admin.races.update');
     Route::delete('/races/{id}', [JadwalController::class, 'destroy'])->name('admin.races.destroy');
 
     // === KEUANGAN (Pakai KeuanganController) ===

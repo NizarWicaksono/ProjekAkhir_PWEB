@@ -30,12 +30,6 @@
         </a>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success border-0 shadow-sm mb-4">
-            <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-        </div>
-    @endif
-
     <div class="row g-4">
         @forelse($articles as $article)
         <div class="col-md-4">
@@ -61,7 +55,8 @@
                         <small class="text-muted"><i class="bi bi-person-circle me-1"></i> Admin</small>
 
                         <div class="btn-delete-wrapper">
-                            <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" onsubmit="return confirm('Hapus artikel ini?');">
+                            {{-- Tambahkan onsubmit="confirmDelete(event)" --}}
+                            <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" onsubmit="confirmDelete(event)">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger rounded-pill px-3">
                                     <i class="bi bi-trash"></i> Hapus

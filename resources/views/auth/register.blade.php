@@ -14,7 +14,7 @@
             background-color: #f8f9fa;
         }
         .register-image {
-            background-image: url('https://images.unsplash.com/photo-1535138876289-7c73b9819490?q=80&w=2070&auto=format&fit=crop');
+            background-image: url('https://images.pexels.com/photos/29276550/pexels-photo-29276550.jpeg');
             background-size: cover;
             background-position: center;
             min-height: 100vh;
@@ -70,7 +70,7 @@
             <div class="form-container">
                 <div class="mb-4">
                     <h1 class="brand-title">JOIN THE RACE.</h1>
-                    <p class="text-muted">Buat akun baru dalam hitungan detik.</p>
+                    <p class="text-muted">Buat akun baru.</p>
                 </div>
 
                 <form action="{{ route('register.process') }}" method="POST">
@@ -78,12 +78,12 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold text-uppercase small text-muted">Nama Lengkap</label>
-                        <input type="text" name="name" class="form-control form-control-lg bg-light" placeholder="Max Verstappen" required>
+                        <input type="text" name="name" class="form-control form-control-lg bg-light" placeholder="Nama Anda" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-bold text-uppercase small text-muted">Email Address</label>
-                        <input type="email" name="email" class="form-control form-control-lg bg-light" placeholder="nama@email.com" required>
+                        <input type="email" name="email" class="form-control form-control-lg bg-light" placeholder="nama@gmail.com" required>
                     </div>
 
                     <div class="mb-3">
