@@ -16,8 +16,8 @@ class BookingController extends Controller
         $races = Jadwal::where('race_date', '>=', now())
                      ->orderBy('race_date', 'asc')
                      ->with('circuit')
-                     ->get();
-    
+                     ->paginate(6);
+
         // Perbaikan Logika: Cek dulu apakah user login
         if (Auth::check()) {
             // Kalau login, hitung tiketnya
@@ -27,7 +27,7 @@ class BookingController extends Controller
             // Kalau guest, jumlah tiket pasti 0
             $myTicketCount = 0;
         }
-    
+
         return view('users.tickets', compact('races', 'myTicketCount'));
     }
 

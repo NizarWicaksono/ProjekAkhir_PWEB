@@ -20,11 +20,11 @@ Route::get('/', function () {
 
 // 2. Dashboard User
 Route::get('/dashboard', function () {
-    $articles = Article::latest()->get();
+    $articles = Article::latest()->paginate(6);
 
     $races = Jadwal::where('race_date', '>=', now())
                  ->orderBy('race_date', 'asc')
-                 ->take(5)
+                 ->take(4)
                  ->get();
 
     return view('users.dashboard', compact('articles', 'races'));

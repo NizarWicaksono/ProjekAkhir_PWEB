@@ -14,14 +14,14 @@ class JadwalController extends Controller
         // Jadwal yang akan datang atau hari ini (Urutkan dari yang terdekat)
         $activeRaces = Jadwal::with('circuit')
                         ->whereDate('race_date', '>=', now())
-                        ->orderBy('race_date', 'asc')
-                        ->get();
+                        ->orderBy('race_date', 'desc')
+                        ->paginate(8, ['*'], 'active_page');
 
         // Jadwal yang sudah lewat (Urutkan dari yang baru saja selesai)
         $pastRaces = Jadwal::with('circuit')
                         ->whereDate('race_date', '<', now())
                         ->orderBy('race_date', 'desc')
-                        ->get();
+                        ->paginate(8, ['*'], 'past_page');
 
         $circuits = Circuit::orderBy('gp_name', 'asc')->get();
 

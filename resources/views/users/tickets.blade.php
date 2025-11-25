@@ -108,7 +108,8 @@
     <div class="col-lg-8">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="fw-bold m-0 text-dark">🏁 Kalender Balapan</h4>
-            <span class="badge bg-dark">{{ $races->count() }} Event Tersedia</span>
+            {{-- Ubah count() menjadi total() karena sekarang menggunakan pagination --}}
+            <span class="badge bg-dark">{{ $races->total() }} Event Tersedia</span>
         </div>
 
         <div class="row g-3">
@@ -204,6 +205,12 @@
             </div>
             @endforelse
         </div>
+
+        {{-- TAMBAHKAN PAGINATION DI SINI --}}
+        <div class="d-flex justify-content-center mt-4">
+            {{ $races->links() }}
+        </div>
+
     </div>
 
     <div class="col-lg-4">

@@ -65,7 +65,7 @@
                                 </div>
 
                                 <div class="col-md-3 text-end">
-                                    <button type="button" class="btn btn-outline-dark w-100 rounded-pill fw-bold btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $ticket->id }}"><i class="bi bi-eye me-2"></i>Detail Tiket</button>
+                                    <button type="button" class="btn btn-outline-dark w-100 rounded-pill fw-bold btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $ticket->id }}"></i>Detail Tiket</button>
                                 </div>
                             </div>
                         </div>

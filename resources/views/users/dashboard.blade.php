@@ -56,6 +56,12 @@
                 </div>
             @endforelse
         </div>
+
+        {{-- BAGIAN PAGINATION DITAMBAHKAN DI SINI --}}
+        <div class="d-flex justify-content-center mt-4">
+            {{ $articles->links() }}
+        </div>
+
     </div>
 
     <div class="col-lg-4">

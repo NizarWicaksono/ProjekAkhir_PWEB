@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ticket;
-use App\Models\Jadwal; 
+use App\Models\Jadwal;
 use Illuminate\Support\Facades\DB;
 
 class KeuanganController extends Controller

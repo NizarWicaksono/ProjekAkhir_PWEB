@@ -83,4 +83,10 @@
         </div>
         @endforelse
     </div>
+
+    {{-- TAMBAHKAN PAGINATION DI SINI --}}
+    <div class="d-flex justify-content-center mt-5">
+        {{ $articles->links() }}
+    </div>
+
 @endsection

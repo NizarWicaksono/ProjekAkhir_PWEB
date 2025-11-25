@@ -32,7 +32,7 @@
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold m-0">📅 Kelola Jadwal Balapan</h3>
+        <h3 class="fw-bold m-0">🏁 Kelola Jadwal Balapan</h3>
         <button type="button" class="btn btn-danger fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addRaceModal">
             <i class="bi bi-plus-lg me-1"></i> Tambah Jadwal Baru
         </button>
@@ -47,18 +47,19 @@
     <ul class="nav nav-tabs" id="scheduleTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab">
-                🚀 Akan Datang <span class="badge bg-danger ms-1 rounded-pill">{{ $activeRaces->count() }}</span>
+                ⏳ Akan Datang <span class="badge bg-danger ms-1 rounded-pill">{{ $activeRaces->total() }}</span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab">
-                🏁 Sudah Selesai <span class="badge bg-secondary ms-1 rounded-pill">{{ $pastRaces->count() }}</span>
+                🏁 Sudah Selesai <span class="badge bg-secondary ms-1 rounded-pill">{{ $pastRaces->total() }}</span>
             </button>
         </li>
     </ul>
 
     <div class="tab-content" id="scheduleTabContent">
 
+        {{-- TAB 1: ACTIVE RACES --}}
         <div class="tab-pane fade show active" id="active" role="tabpanel">
             <div class="row g-4">
                 @forelse($activeRaces as $race)
@@ -99,8 +100,14 @@
                 </div>
                 @endforelse
             </div>
+
+            {{-- PAGINATION UNTUK ACTIVE RACES --}}
+            <div class="d-flex justify-content-center mt-4">
+                {{ $activeRaces->appends(request()->query())->links() }}
+            </div>
         </div>
 
+        {{-- TAB 2: PAST RACES --}}
         <div class="tab-pane fade" id="past" role="tabpanel">
             <div class="row g-4">
                 @forelse($pastRaces as $race)
@@ -133,15 +140,21 @@
                 </div>
                 @endforelse
             </div>
+
+            {{-- PAGINATION UNTUK PAST RACES --}}
+            <div class="d-flex justify-content-center mt-4">
+                {{ $pastRaces->appends(request()->query())->links() }}
+            </div>
         </div>
 
     </div>
 
+    {{-- MODAL TAMBAH JADWAL --}}
     <div class="modal fade" id="addRaceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold">🏁 Tambah Jadwal Balapan</h5>
+                    <h5 class="modal-title fw-bold">➕ Tambah Jadwal Balapan</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
