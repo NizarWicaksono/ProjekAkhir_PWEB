@@ -115,7 +115,7 @@
                                     <img src="{{ $article->image ? asset('storage/'.$article->image) : 'https://images.unsplash.com/photo-1598556965690-65036b75f5d1?q=80&w=2070&auto=format&fit=crop' }}"
                                          class="card-img-top"
                                          style="height: 200px; object-fit: cover;"
-                                         alt="Cover Artikel">
+                                         alt="Cover">
                                 </div>
 
                                 <div class="card-body d-flex flex-column p-4">

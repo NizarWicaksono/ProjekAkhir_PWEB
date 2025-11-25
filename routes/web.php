@@ -30,6 +30,8 @@ Route::get('/dashboard', function () {
     return view('users.dashboard', compact('articles', 'races'));
 })->name('users.dashboard');
 
+Route::get('/news/{id}', [ArticleController::class, 'showPublic'])->name('news.show');
+
 // 3. Guest (Login/Register)
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');

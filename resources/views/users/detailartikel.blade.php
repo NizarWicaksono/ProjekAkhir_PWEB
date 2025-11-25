@@ -20,18 +20,18 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
-        /* Content Style */
+        /* Container Artikel */
         .article-container { max-width: 800px; margin: -100px auto 0; position: relative; z-index: 10; }
         .article-paper { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
         .article-title { font-weight: 900; color: #111; font-size: 2rem; margin-bottom: 15px; }
         .article-meta { color: #6c757d; font-size: 0.9rem; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
         .article-body {
-            font-family: 'Merriweather', serif; /* Font enak buat baca */
+            font-family: 'Merriweather', serif; /* Font enak untuk baca */
             font-size: 1.1rem; line-height: 1.8; color: #333;
         }
         .article-body p { margin-bottom: 20px; }
 
-        /* Sidebar Recommendation */
+        /* Sidebar Rekomendasi */
         .rec-card { border: none; background: white; transition: 0.2s; border-radius: 12px; overflow: hidden; }
         .rec-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .rec-img { height: 120px; object-fit: cover; }
@@ -52,14 +52,14 @@
     <div class="container pb-5">
         <div class="row">
             <div class="col-lg-8 mx-auto article-container">
+
                 <div class="article-paper">
                     <span class="badge bg-danger mb-2">F1 NEWS</span>
                     <h1 class="article-title">{{ $article->title }}</h1>
 
                     <div class="article-meta d-flex align-items-center">
                         <div class="me-3"><i class="bi bi-calendar3 me-1"></i> {{ \Carbon\Carbon::parse($article->published_date)->translatedFormat('d F Y') }}</div>
-                        <div class="me-3"><i class="bi bi-person-circle me-1"></i> Admin Redaksi</div>
-                        <div><i class="bi bi-clock me-1"></i> 3 min read</div>
+                        <div><i class="bi bi-person-circle me-1"></i> Admin Redaksi</div>
                     </div>
 
                     <div class="article-body">
@@ -67,12 +67,13 @@
                     </div>
 
                     <hr class="my-5">
-
                     <div class="text-center">
-                        <p class="small text-muted">Bagikan berita ini:</p>
-                        <button class="btn btn-outline-dark btn-sm rounded-circle me-2"><i class="bi bi-whatsapp"></i></button>
-                        <button class="btn btn-outline-dark btn-sm rounded-circle me-2"><i class="bi bi-twitter-x"></i></button>
-                        <button class="btn btn-outline-dark btn-sm rounded-circle"><i class="bi bi-facebook"></i></button>
+                        <small class="text-muted">Bagikan berita ini:</small>
+                        <div class="mt-2">
+                            <button class="btn btn-outline-dark btn-sm rounded-circle me-1"><i class="bi bi-whatsapp"></i></button>
+                            <button class="btn btn-outline-dark btn-sm rounded-circle me-1"><i class="bi bi-twitter-x"></i></button>
+                            <button class="btn btn-outline-dark btn-sm rounded-circle"><i class="bi bi-facebook"></i></button>
+                        </div>
                     </div>
                 </div>
 
