@@ -4,106 +4,177 @@
 
 @push('styles')
 <style>
-    /* CSS Khusus Dashboard */
-    .sidebar-widget { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
-    .sticky-sidebar { position: sticky; top: 100px; z-index: 10; }
-    .race-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-    .race-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .date-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; text-align: center; padding: 5px 10px; min-width: 60px; }
-    .date-day { font-size: 1.2rem; font-weight: 800; line-height: 1; }
-    .date-month { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; }
-    .news-card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; overflow: hidden; border-radius: 12px; border: none; background: white; }
-    .news-card-hover:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; }
-    .news-card-hover img { transition: transform 0.5s ease; }
-    .news-card-hover:hover img { transform: scale(1.05); }
+    /* === CARD BERITA (CLEAN STYLE) === */
+    .news-card {
+        border: none;
+        border-radius: 16px;
+        background: #fff;
+        /* Shadow lembut agar card melayang */
+        box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        height: 100%;
+        overflow: hidden;
+    }
+    .news-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1); /* Shadow lebih dalam saat hover */
+    }
+
+    .news-img-wrapper {
+        height: 220px;
+        overflow: hidden;
+        position: relative;
+    }
+    .news-img-wrapper img {
+        transition: transform 0.5s ease;
+        width: 100%; height: 100%; object-fit: cover;
+    }
+    .news-card:hover .news-img-wrapper img {
+        transform: scale(1.05);
+    }
+
+    /* Badge Kategori di atas gambar */
+    .category-badge {
+        position: absolute; top: 15px; left: 15px;
+        background: rgba(225, 6, 0, 0.9); color: white;
+        padding: 4px 12px; border-radius: 30px;
+        font-size: 0.75rem; font-weight: 700;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* === SIDEBAR MODERN === */
+    .sidebar-wrapper {
+        position: sticky; top: 100px;
+    }
+    .sidebar-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 25px;
+        border: none;
+        box-shadow: 0 4px 25px rgba(0,0,0,0.05);
+    }
+
+    .section-header {
+        display: flex; align-items: center; margin-bottom: 20px;
+        border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;
+    }
+    .section-title {
+        font-weight: 800; font-size: 1.1rem; margin: 0;
+        text-transform: uppercase; color: #212529;
+        letter-spacing: 0.5px;
+    }
+
+    /* List Balapan */
+    .race-item {
+        display: flex; align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px dashed #eee;
+    }
+    .race-item:last-child { border-bottom: none; }
+
+    /* Kotak Tanggal Minimalis */
+    .date-box {
+        background: #f8f9fa;
+        color: #212529;
+        border-radius: 10px;
+        text-align: center;
+        padding: 8px 12px;
+        min-width: 65px;
+        font-weight: 800;
+        line-height: 1.1;
+        border: 1px solid #e9ecef;
+    }
+    .date-month { font-size: 0.7rem; color: #e10600; text-transform: uppercase; font-weight: 700; display: block; }
 </style>
 @endpush
 
 @section('content')
-<div class="row">
+<div class="row g-4">
+
     <div class="col-lg-8">
-        <div class="d-flex justify-content-between align-items-center mb-4 border-start border-5 border-danger ps-3">
-            <h4 class="fw-bold m-0">F1 News</h4>
+        <div class="d-flex align-items-center mb-4">
+            <div class="bg-danger rounded-pill me-3" style="width: 5px; height: 30px;"></div>
+            <h3 class="fw-bold m-0 ls-1">F1 NEWS</h3>
         </div>
 
-        <div class="row">
+        <div class="row g-4">
             @forelse($articles as $article)
-                <div class="col-md-6 mb-4">
-                    <div class="card news-card-hover shadow-sm h-100 position-relative">
+                <div class="col-md-6">
+                    <div class="news-card">
                         <a href="{{ route('news.show', $article->id) }}" class="stretched-link"></a>
-                        <div style="height: 200px; overflow: hidden;">
-                            <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
-                                 class="card-img-top w-100 h-100" style="object-fit: cover;" alt="News Cover">
+                        <div class="news-img-wrapper">
+                            <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=F1+News' }}" alt="Cover Berita">
                         </div>
-                        <div class="card-body p-3 d-flex flex-column">
-                            <div class="news-meta small text-muted mb-2">
-                                <i class="bi bi-calendar3 me-1"></i> {{ \Carbon\Carbon::parse($article->published_date)->translatedFormat('d M Y') }}
+                        <div class="card-body p-4 d-flex flex-column">
+                            <div class="d-flex align-items-center text-muted small mb-2 fw-bold" style="font-size: 0.75rem;">
+                                <i class="bi bi-calendar-event me-2"></i>
+                                {{ \Carbon\Carbon::parse($article->published_date)->format('d F Y') }}
                             </div>
-                            <h5 class="card-title fw-bold mb-2">{{ Str::limit($article->title, 50) }}</h5>
-                            <p class="card-text text-secondary small grow">
-                                {{ Str::limit($article->content, 90) }}
+                            <h5 class="card-title fw-bold text-dark mb-2" style="line-height: 1.4;">
+                                {{ Str::limit($article->title, 55) }}
+                            </h5>
+                            <p class="card-text text-secondary small mb-0 grow">
+                                {{ Str::limit($article->content, 80) }}
                             </p>
                         </div>
                     </div>
                 </div>
             @empty
                 <div class="col-12">
-                    <div class="empty-state text-center py-5 bg-white rounded shadow-sm">
-                        <i class="bi bi-newspaper display-4 mb-3 d-block text-muted"></i>
-                        <h5 class="fw-bold">Belum Ada Berita</h5>
-                        <p class="text-muted">Tim redaksi sedang memanaskan mesin. Cek lagi nanti!</p>
+                    <div class="alert alert-light text-center py-5 border-0 shadow-sm rounded-4">
+                        <i class="bi bi-newspaper display-4 text-muted mb-3 d-block opacity-50"></i>
+                        <h6 class="fw-bold text-muted">Belum ada berita saat ini.</h6>
                     </div>
                 </div>
             @endforelse
         </div>
 
-        {{-- BAGIAN PAGINATION DITAMBAHKAN DI SINI --}}
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center mt-5">
             {{ $articles->links() }}
         </div>
-
     </div>
 
     <div class="col-lg-4">
-        <div class="sticky-sidebar">
+        <div class="sidebar-wrapper">
 
-            <div class="sidebar-widget">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h5 class="fw-bold m-0">🏁 Next Races</h5>
+            <div class="sidebar-card mb-4">
+                <div class="section-header">
+                    <h5 class="section-title grow">Up Next</h5>
+                    <a href="{{ route('tickets.index') }}" class="text-danger fw-bold small text-decoration-none">VIEW ALL</a>
                 </div>
 
                 @forelse($races as $race)
-                    <div class="race-item d-flex align-items-center">
+                    <div class="race-item">
                         <div class="date-box me-3">
-                            <div class="date-day">{{ $race->race_date->format('d') }}</div>
-                            <div class="date-month">{{ $race->race_date->format('M') }}</div>
+                            <span class="fs-4">{{ $race->race_date->format('d') }}</span>
+                            <span class="date-month">{{ $race->race_date->format('M') }}</span>
                         </div>
                         <div class="grow">
-                            <h6 class="fw-bold mb-0 text-truncate">{{ $race->circuit->gp_name }}</h6>
-                            <small class="text-muted d-block mb-1">
-                                {{ $race->circuit->circuit_name }}
-                            </small>
-                            <small class="text-danger fw-bold d-block mb-1" style="font-size: 0.75rem;">
-                                <i class="bi bi-clock me-1"></i> {{ $race->race_date->format('H:i') }} WIB
-                            </small>
+                            <h6 class="fw-bold mb-0 text-dark text-truncate">{{ $race->circuit->gp_name }}</h6>
+                            <small class="text-muted d-block mb-1" style="font-size: 0.8rem;">{{ $race->circuit->country }}</small>
 
-                            <small class="text-success fw-bold" style="font-size: 0.75rem;">
-                                Rp {{ number_format($race->base_price, 0, ',', '.') }}
-                            </small>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <span class="badge bg-light text-dark border fw-bold">
+                                    <i class="bi bi-clock me-1"></i> {{ $race->race_date->format('H:i') }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 @empty
                     <div class="text-center py-4 text-muted">
-                        <i class="bi bi-flag-fill fs-1 mb-2 d-block text-secondary"></i>
-                        <p class="small fw-bold">Tidak ada jadwal dekat.</p>
+                        <i class="bi bi-flag-fill fs-4 mb-2 d-block opacity-25"></i>
+                        <p class="small fw-bold mb-0">Tidak ada jadwal dekat.</p>
                     </div>
                 @endforelse
             </div>
 
-            <div class="card border-0 shadow-sm mt-4 bg-dark text-white text-center p-4" style="border-radius: 12px;">
-                <h5 class="fw-bold">Ingin Nonton Langsung?</h5>
-                <p class="small text-white-50 mb-3">Cek ketersediaan tiket untuk balapan favoritmu sekarang.</p>
-                <a href="{{ route('tickets.index') }}" class="btn btn-danger fw-bold w-100 rounded-pill">Beli Tiket Sekarang</a>
+            <div class="card border-0 shadow-sm overflow-hidden rounded-4 text-white text-center" style="background: linear-gradient(135deg, #111 0%, #333 100%);">
+                <div class="card-body p-4">
+                    <i class="bi bi-ticket-perforated-fill display-4 mb-3 text-danger"></i>
+                    <h5 class="fw-bold fst-italic">SECURE YOUR SEAT!</h5>
+                    <p class="small text-white-50 mb-4">Jangan lewatkan aksi balapan langsung di sirkuit favoritmu.</p>
+                    <a href="{{ route('tickets.index') }}" class="btn btn-danger fw-bold w-100 rounded-pill shadow">BELI TIKET SEKARANG</a>
+                </div>
             </div>
 
         </div>
