@@ -19,9 +19,18 @@
             border: none; border-radius: 12px; overflow: hidden;
             background: white; transition: transform 0.2s; height: 100%;
             display: flex; flex-direction: column;
+            /* Penting: Agar stretched-link bekerja dalam scope ini */
+            position: relative;
+            cursor: pointer;
         }
         .article-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .article-img { height: 180px; object-fit: cover; background-color: #eee; }
+
+        /* Agar tombol hapus bisa diklik di atas stretched-link */
+        .btn-delete-wrapper {
+            position: relative;
+            z-index: 2; /* Layer lebih tinggi dari link utama */
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -64,6 +73,9 @@
             @forelse($articles as $article)
             <div class="col-md-4">
                 <div class="article-card shadow-sm">
+
+                    <a href="{{ route('admin.articles.show', $article->id) }}" class="stretched-link"></a>
+
                     <img src="{{ $article->image ? asset('storage/' . $article->image) : 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=2070&auto=format&fit=crop' }}"
                          class="article-img" alt="Cover">
 
@@ -81,12 +93,15 @@
                         <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
                             <small class="text-muted"><i class="bi bi-person-circle me-1"></i> Admin</small>
 
-                            <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" onsubmit="return confirm('Hapus artikel ini?');">
-                                @csrf @method('DELETE')
-                                <button class="btn btn-sm btn-outline-danger rounded-pill px-3">
-                                    <i class="bi bi-trash"></i> Hapus
-                                </button>
-                            </form>
+                            <div class="btn-delete-wrapper">
+                                <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" onsubmit="return confirm('Hapus artikel ini?');">
+                                    @csrf @method('DELETE')
+                                    <button class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                        <i class="bi bi-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </div>
+
                         </div>
                     </div>
                 </div>

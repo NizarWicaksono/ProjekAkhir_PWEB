@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/history', [BookingController::class, 'history'])->name('users.history');
     // Route Download Tiket
     Route::get('/ticket/{code}/download', [BookingController::class, 'downloadTicket'])->name('ticket.download');
+    // Route Baca Berita (Public/User)
+    Route::get('/news/{id}', [ArticleController::class, 'showPublic'])->name('news.show');
 });
 
 // 5. ADMIN (Gunakan Controller Baru)
@@ -73,5 +75,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/articles', [ArticleController::class, 'index'])->name('admin.articles.index');
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
     Route::post('/articles', [ArticleController::class, 'store'])->name('admin.articles.store');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('admin.articles.show'); // Lihat Detail
+    Route::put('/articles/{id}', [ArticleController::class, 'update'])->name('admin.articles.update'); // Update
     Route::delete('/articles/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
 });

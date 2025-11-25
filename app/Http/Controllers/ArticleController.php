@@ -96,4 +96,15 @@ class ArticleController extends Controller
         $article->delete();
         return redirect()->back()->with('success', 'Artikel berhasil dihapus.');
     }
+
+    // === METHOD BARU: TAMPILAN BACA UNTUK USER ===
+    public function showPublic($id)
+    {
+        $article = Article::findOrFail($id);
+
+        // Ambil berita lain untuk rekomendasi di sidebar (opsional)
+        $otherArticles = Article::where('id', '!=', $id)->latest()->take(3)->get();
+
+        return view('users.article_detail', compact('article', 'otherArticles'));
+    }
 }
