@@ -51,7 +51,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('tickets.index') ? 'active' : '' }}"
-                           href="{{ route('tickets.index') }}">Beli Tiket</a>
+                           href="{{ route('tickets.index') }}">Jadwal</a>
                     </li>
                 </ul>
 

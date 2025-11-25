@@ -6,7 +6,7 @@
 <style>
     /* CSS Khusus Dashboard */
     .sidebar-widget { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
-    .sticky-sidebar { position: sticky; top: 90px; z-index: 10; }
+    .sticky-sidebar { position: sticky; top: 100px; z-index: 10; }
     .race-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
     .race-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
     .date-box { background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; text-align: center; padding: 5px 10px; min-width: 60px; }
@@ -82,7 +82,7 @@
                             </small>
 
                             <small class="text-success fw-bold" style="font-size: 0.75rem;">
-                                Mulai Rp {{ number_format($race->base_price, 0, ',', '.') }}
+                                Rp {{ number_format($race->base_price, 0, ',', '.') }}
                             </small>
                         </div>
                     </div>
