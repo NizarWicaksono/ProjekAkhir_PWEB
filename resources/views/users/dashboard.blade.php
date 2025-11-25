@@ -6,6 +6,7 @@
 <style>
     /* === CARD BERITA (CLEAN STYLE) === */
     .news-card {
+        position: relative;
         border: none;
         border-radius: 16px;
         background: #fff;
@@ -170,7 +171,6 @@
 
             <div class="card border-0 shadow-sm overflow-hidden rounded-4 text-white text-center" style="background: linear-gradient(135deg, #111 0%, #333 100%);">
                 <div class="card-body p-4">
-                    <i class="bi bi-ticket-perforated-fill display-4 mb-3 text-danger"></i>
                     <h5 class="fw-bold fst-italic">SECURE YOUR SEAT!</h5>
                     <p class="small text-white-50 mb-4">Jangan lewatkan aksi balapan langsung di sirkuit favoritmu.</p>
                     <a href="{{ route('tickets.index') }}" class="btn btn-danger fw-bold w-100 rounded-pill shadow">BELI TIKET SEKARANG</a>
