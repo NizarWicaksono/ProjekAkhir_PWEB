@@ -47,12 +47,12 @@
     <ul class="nav nav-tabs" id="scheduleTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="active-tab" data-bs-toggle="tab" data-bs-target="#active" type="button" role="tab">
-                ⏳ Akan Datang <span class="badge bg-danger ms-1 rounded-pill">{{ $activeRaces->total() }}</span>
+                Akan Datang <span class="badge bg-danger ms-1 rounded-pill">{{ $activeRaces->total() }}</span>
             </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="past-tab" data-bs-toggle="tab" data-bs-target="#past" type="button" role="tab">
-                🏁 Sudah Selesai <span class="badge bg-secondary ms-1 rounded-pill">{{ $pastRaces->total() }}</span>
+                Sudah Selesai <span class="badge bg-secondary ms-1 rounded-pill">{{ $pastRaces->total() }}</span>
             </button>
         </li>
     </ul>
