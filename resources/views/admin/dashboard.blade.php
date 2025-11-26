@@ -4,104 +4,148 @@
 
 @push('styles')
     <style>
-        /* Stats Card Styles (Khusus Dashboard) */
+        /* === MODERN DASHBOARD CARDS === */
         .stat-card {
             border: none;
-            border-radius: 12px;
+            border-radius: 20px; /* Sudut lebih membulat */
             background: white;
-            padding: 25px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-            height: 100%;
-        }
-        .stat-card:hover { transform: translateY(-5px); }
-        .stat-icon {
-            width: 50px; height: 50px;
-            background-color: #fff5f5;
-            color: #e10600;
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; margin-bottom: 15px;
-        }
-        .stat-value { font-size: 2rem; font-weight: 800; color: #111; line-height: 1; }
-        .stat-label { font-size: 0.85rem; color: #6c757d; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-
-        /* Quick Action Button Styles */
-        .btn-action {
             padding: 30px;
-            border: 2px dashed #ddd;
-            background: white;
-            color: #555;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Shadow lebih lembut & luas */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        /* Ikon dengan Background Gradient */
+        .stat-icon-wrapper {
+            width: 60px; height: 60px;
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: 25px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Warna Gradient */
+        .bg-grad-red { background: linear-gradient(135deg, #ff4d4d 0%, #c20b04 100%); }
+        .bg-grad-green { background: linear-gradient(135deg, #2ecc71 0%, #218c74 100%); }
+        .bg-grad-blue { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
+        .bg-grad-purple { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); }
+
+        /* Typography */
+        .stat-value {
+            font-size: 2.25rem; /* Font lebih besar */
+            font-weight: 800;
+            color: #212529;
+            line-height: 1.1;
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #adb5bd;
             font-weight: 700;
-            border-radius: 12px;
-            width: 100%;
-            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .btn-action:hover {
-            border-color: #e10600;
-            color: #e10600;
-            background: #fff5f5;
+
+        /* Hiasan Latar Belakang (Lingkaran samar) */
+        .stat-decoration {
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: 0;
         }
+        .bg-dec-red { background-color: #e10600; }
+        .bg-dec-green { background-color: #2ecc71; }
+        .bg-dec-blue { background-color: #3498db; }
+        .bg-dec-purple { background-color: #9b59b6; }
     </style>
 @endpush
 
 @section('content')
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold m-0">📊 Overview Statistik</h3>
+    {{-- Header Section --}}
+    <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+            <h2 class="fw-bold m-0 text-dark">Welcome, Admin!</h2>
+            <p class="text-muted m-0 mt-2">Berikut adalah overview statistik dari F1 Ticket</p>
+        </div>
+        <div class="text-end d-none d-md-block">
+            <span class="badge bg-light text-dark border px-3 py-2 rounded-pill shadow-sm">
+                <i class="bi bi-calendar3 me-2"></i> {{ now()->translatedFormat('l, d F Y') }}
+            </span>
+        </div>
     </div>
 
-    <div class="row g-4 mb-5">
-        <div class="col-md-3">
+    {{-- Stats Grid --}}
+    <div class="row g-4">
+
+        {{-- Card 1: Pendapatan --}}
+        <div class="col-md-6 col-xl-3">
             <div class="stat-card">
-                <div class="stat-icon"><i class="bi bi-cash-coin"></i></div>
-                <div class="stat-value">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</div>
-                <div class="stat-label">Total Pendapatan</div>
+                <div class="stat-decoration bg-dec-red"></div>
+                <div class="stat-icon-wrapper bg-grad-red">
+                    <i class="bi bi-wallet2"></i>
+                </div>
+                <div>
+                    <div class="stat-value">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</div>
+                    <div class="stat-label">Total Pendapatan</div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
+
+        {{-- Card 2: Tiket Terjual --}}
+        <div class="col-md-6 col-xl-3">
             <div class="stat-card">
-                <div class="stat-icon" style="color: #2ecc71; background: #eafff0;">
+                <div class="stat-decoration bg-dec-green"></div>
+                <div class="stat-icon-wrapper bg-grad-green">
                     <i class="bi bi-ticket-perforated-fill"></i>
                 </div>
-                <div class="stat-value">{{ number_format($totalTickets, 0, ',', '.') }}</div>
-                <div class="stat-label">Tiket Terjual</div>
+                <div>
+                    <div class="stat-value">{{ number_format($totalTickets, 0, ',', '.') }}</div>
+                    <div class="stat-label">Tiket Terjual</div>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="stat-card">
-                <div class="stat-icon" style="color: #3498db; background: #f0f8ff;"><i class="bi bi-flag-fill"></i></div>
-                <div class="stat-value">{{ $totalRaces }}</div>
-                <div class="stat-label">Jadwal Balapan</div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="stat-card">
-                <div class="stat-icon" style="color: #9b59b6; background: #fcf0ff;"><i class="bi bi-people-fill"></i></div>
-                <div class="stat-value">{{ $totalUsers }}</div>
-                <div class="stat-label">User Terdaftar</div>
-            </div>
-        </div>
-    </div>
 
-    <h5 class="fw-bold mb-3">⚡ Aksi Cepat</h5>
-    <div class="row g-3">
-        <div class="col-md-4">
-            <a href="#" class="btn-action d-block text-decoration-none text-center">
-                <i class="bi bi-plus-circle display-6 d-block mb-2"></i>
-                Tambah Jadwal Balapan
-            </a>
+        {{-- Card 3: Jadwal Balapan --}}
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-decoration bg-dec-blue"></div>
+                <div class="stat-icon-wrapper bg-grad-blue">
+                    <i class="bi bi-flag-fill"></i>
+                </div>
+                <div>
+                    <div class="stat-value">{{ $totalRaces }}</div>
+                    <div class="stat-label">Jadwal Balapan</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <a href="#" class="btn-action d-block text-decoration-none text-center">
-                <i class="bi bi-pencil-square display-6 d-block mb-2"></i>
-                Tulis Artikel Baru
-            </a>
+
+        {{-- Card 4: User Terdaftar --}}
+        <div class="col-md-6 col-xl-3">
+            <div class="stat-card">
+                <div class="stat-decoration bg-dec-purple"></div>
+                <div class="stat-icon-wrapper bg-grad-purple">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+                <div>
+                    <div class="stat-value">{{ $totalUsers }}</div>
+                    <div class="stat-label">User Terdaftar</div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <a href="{{ route('admin.pendapatan') }}" class="btn-action d-block text-decoration-none text-center">
-                <i class="bi bi-file-earmark-spreadsheet display-6 d-block mb-2"></i>
-                Export Laporan Penjualan
-            </a>
-        </div>
+
     </div>
 @endsection
