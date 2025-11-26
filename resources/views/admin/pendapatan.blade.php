@@ -11,15 +11,25 @@
             background: white;
             box-shadow: 0 4px 20px rgba(0,0,0,0.03);
             transition: transform 0.2s, box-shadow 0.2s;
-            /* Hapus overflow:hidden agar dropdown (jika ada) tidak terpotong, tapi di sini aman */
             overflow: hidden;
         }
-        /* Hapus efek hover pada card agar tidak bergerak */
-        /* .modern-card:hover { transform: translateY(-3px); box-shadow: ... } */
 
         /* === TYPOGRAPHY === */
         .stat-label { font-size: 0.9rem; color: #6c757d; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 5px; }
         .stat-value { font-size: 2rem; font-weight: 800; color: #212529; letter-spacing: -1px; }
+
+        /* === ICON BOX STYLE (Sesuai Dashboard) === */
+        .stat-icon-box {
+            width: 60px; height: 60px;
+            border-radius: 16px; /* Lebih rounded */
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.75rem;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        /* Warna Gradient Dashboard */
+        .bg-grad-red { background: linear-gradient(135deg, #ff4d4d 0%, #c20b04 100%); }
+        .bg-grad-green { background: linear-gradient(135deg, #2ecc71 0%, #218c74 100%); }
 
         /* === MODERN TABLE === */
         .table-custom thead th {
@@ -39,23 +49,15 @@
             font-weight: 500;
         }
         .table-custom tbody tr:last-child td { border-bottom: none; }
-
-        /* Memastikan tidak ada efek hover pada baris tabel */
-        .table-custom tbody tr:hover {
-            background-color: transparent !important;
-        }
+        .table-custom tbody tr:hover { background-color: transparent !important; }
 
         /* === LIST ITEMS (TRANSAKSI) === */
         .transaction-item {
             padding: 15px;
             border-bottom: 1px dashed #f0f0f0;
             display: flex; align-items: center;
-            /* Hapus transition background */
         }
         .transaction-item:last-child { border-bottom: none; }
-
-        /* Hapus efek hover pada item transaksi */
-        /* .transaction-item:hover { background-color: #fafafa; } */
 
         .avatar-circle {
             min-width: 40px; width: 40px; height: 40px;
@@ -78,20 +80,24 @@
 
     {{-- ROW STATISTIK --}}
     <div class="row g-4 mb-4">
+        {{-- KARTU PENDAPATAN --}}
         <div class="col-md-6">
             <div class="modern-card p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center h-100">
                     <div>
                         <div class="stat-label">Total Pendapatan Bersih</div>
-                        <div class="stat-value text-success">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
+                        {{-- Warna teks tetap HIJAU (text-success) sesuai permintaan --}}
+                        <div class="stat-value">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
                     </div>
-                    {{-- Icon Asli --}}
-                    <div class="bg-success bg-opacity-10 p-3 rounded-3">
-                        <i class="bi bi-cash-stack text-success fs-1"></i>
+                    {{-- ICON: Dompet, Gradient Merah (Sama seperti Dashboard) --}}
+                    <div class="stat-icon-box bg-grad-red">
+                        <i class="bi bi-wallet2"></i>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- KARTU TIKET --}}
         <div class="col-md-6">
             <div class="modern-card p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center h-100">
@@ -99,9 +105,9 @@
                         <div class="stat-label">Total Tiket Terjual</div>
                         <div class="stat-value">{{ $totalTicketsSold }} <span class="fs-6 text-muted fw-normal">Tiket</span></div>
                     </div>
-                    {{-- Icon Asli --}}
-                    <div class="bg-primary bg-opacity-10 p-3 rounded-3">
-                        <i class="bi bi-ticket-perforated-fill text-primary fs-1"></i>
+                    {{-- ICON: Tiket, Gradient Hijau (Sama seperti Dashboard) --}}
+                    <div class="stat-icon-box bg-grad-green">
+                        <i class="bi bi-ticket-perforated-fill"></i>
                     </div>
                 </div>
             </div>
@@ -118,7 +124,6 @@
                     </h6>
                 </div>
                 <div class="table-responsive">
-                    {{-- Pastikan class 'table-hover' TIDAK ADA disini --}}
                     <table class="table table-custom mb-0">
                         <thead>
                             <tr>
@@ -181,7 +186,7 @@
                             <div class="avatar-circle shrink-0">
                                 <i class="bi bi-person-fill"></i>
                             </div>
-                            <div class="grow pe-3">
+                            <div class="flex-grow-1 pe-3">
                                 {{-- Nama Pembeli (Full) --}}
                                 <div class="fw-bold text-dark" style="line-height: 1.2; word-break: break-word;">
                                     {{ $trx->user->name ?? 'Guest' }}

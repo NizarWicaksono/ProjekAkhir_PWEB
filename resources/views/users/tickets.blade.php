@@ -246,7 +246,7 @@
 
     <div class="col-lg-4">
         <div class="sidebar-card">
-            <div class="d-flex align-items-center mb-4 border-bottom pb-3">
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
                 <h5 class="fw-bold m-0 text-uppercase grow">Dompet Tiket</h5>
                 <i class="bi bi-wallet2 fs-4 text-secondary"></i>
             </div>

@@ -19,9 +19,45 @@
         .race-card.past-race .card-top-line { background: #6c757d; }
 
         /* Tab Nav Custom */
-        .nav-tabs .nav-link { color: #6c757d; font-weight: 600; border: none; padding: 10px 20px; }
-        .nav-tabs .nav-link.active { color: #e10600; border-bottom: 3px solid #e10600; background: transparent; }
-        .nav-tabs { border-bottom: 2px solid #eee; margin-bottom: 20px; }
+        .nav-tabs {
+            border-bottom: none;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .nav-tabs .nav-link {
+            /* TAMPILAN TIDAK AKTIF */
+            color: rgba(255, 255, 255, 0.8); /* Teks Putih agak transparan */
+            background-color: #212529; /* Background Hitam/Gelap */
+
+            font-weight: 700;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #000; /* Lebih gelap saat hover */
+            color: #e10600; /* Teks jadi Merah saat hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-tabs .nav-link.active {
+            /* TAMPILAN AKTIF */
+            background-color: #e10600 !important; /* Merah F1 */
+            color: white !important; /* Teks Putih Jelas */
+            box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
+        }
+
+        /* Badge Hitungan */
+        .nav-tabs .nav-link .badge {
+            background-color: rgba(255,255,255,0.2) !important;
+            color: white;
+            margin-left: 8px;
+        }
 
         /* Modal Style */
         .modal-content { border-radius: 16px; border: none; }
