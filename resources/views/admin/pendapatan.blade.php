@@ -4,7 +4,6 @@
 
 @push('styles')
     <style>
-        /* === MODERN CARD STYLE === */
         .modern-card {
             border: none;
             border-radius: 16px;
@@ -14,15 +13,27 @@
             overflow: hidden;
         }
 
-        /* === TYPOGRAPHY === */
-        .stat-label { font-size: 0.9rem; color: #6c757d; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 5px; }
-        .stat-value { font-size: 2rem; font-weight: 800; color: #212529; letter-spacing: -1px; }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #212529;
+            letter-spacing: -1px; }
 
-        /* === ICON BOX STYLE === */
         .stat-icon-box {
-            width: 60px; height: 60px;
+            width: 60px;
+            height: 60px;
             border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.75rem;
             color: white;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
@@ -30,7 +41,6 @@
         .bg-grad-red { background: linear-gradient(135deg, #ff4d4d 0%, #c20b04 100%); }
         .bg-grad-green { background: linear-gradient(135deg, #2ecc71 0%, #218c74 100%); }
 
-        /* === MODERN TABLE === */
         .table-custom thead th {
             background-color: #f8f9fa;
             color: #6c757d;
@@ -50,42 +60,42 @@
         .table-custom tbody tr:last-child td { border-bottom: none; }
         .table-custom tbody tr:hover { background-color: transparent !important; }
 
-        /* === LIST ITEMS (TRANSAKSI) === */
         .transaction-item {
             padding: 15px;
             border-bottom: 1px dashed #f0f0f0;
-            display: flex; align-items: center;
+            display: flex;
+            align-items: center;
         }
         .transaction-item:last-child { border-bottom: none; }
 
         .avatar-circle {
-            min-width: 40px; width: 40px; height: 40px;
+            min-width: 40px;
+            width: 40px;
+            height: 40px;
             background-color: #e9ecef;
             color: #6c757d;
             border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: bold;
             margin-right: 15px;
         }
 
-        /* === MODERN PAGINATION STYLE (MODIFIED) === */
-        /* 1. Sembunyikan teks 'Showing...' */
         .clean-pagination .text-muted,
         .clean-pagination .small.text-muted {
             display: none !important;
         }
 
-        /* 2. Style Container agar terpusat */
         .clean-pagination nav > div {
             justify-content: center !important;
-            box-shadow: none !important; /* Hilangkan shadow bawaan container */
+            box-shadow: none !important;
         }
 
-        /* 3. Style Tombol */
         .pagination {
-            gap: 8px; /* Jarak antar tombol */
+            gap: 8px;
             justify-content: center;
-            margin: 0; /* Reset margin */
+            margin: 0;
         }
 
         .page-item:first-child .page-link,
@@ -96,7 +106,7 @@
         .page-link {
             border: none;
             border-radius: 50% !important;
-            width: 40px; /* Sedikit lebih kecil agar rapi */
+            width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
@@ -139,9 +149,8 @@
         </div>
     </div>
 
-    {{-- ROW STATISTIK --}}
     <div class="row g-4 mb-4">
-        {{-- KARTU PENDAPATAN --}}
+        {{-- Pendapatan --}}
         <div class="col-md-6">
             <div class="modern-card p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center h-100">
@@ -156,7 +165,7 @@
             </div>
         </div>
 
-        {{-- KARTU TIKET --}}
+        {{-- Tiket --}}
         <div class="col-md-6">
             <div class="modern-card p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center h-100">
@@ -173,7 +182,7 @@
     </div>
 
     <div class="row g-4">
-        {{-- KOLOM KIRI: TABEL LAPORAN --}}
+        {{-- Tabel Laporan --}}
         <div class="col-lg-8">
             <div class="modern-card">
                 <div class="d-flex justify-content-between align-items-center p-4 pb-2 border-bottom border-light">
@@ -227,7 +236,6 @@
                     </table>
                 </div>
 
-                {{-- PAGINATION (CLEAN STYLE) --}}
                 <div class="p-4 border-top border-light d-flex justify-content-center clean-pagination">
                     {{ $raceReports->links() }}
                 </div>
@@ -235,7 +243,7 @@
             </div>
         </div>
 
-        {{-- KOLOM KANAN: TRANSAKSI TERBARU --}}
+        {{-- Transaksi Terbaru --}}
         <div class="col-lg-4">
             <div class="modern-card">
                 <div class="p-4 pb-2 border-bottom border-light">

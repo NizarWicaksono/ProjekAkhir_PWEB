@@ -10,48 +10,41 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* === GLOBAL STYLE (Sama seperti User Theme) === */
         body {
             font-family: 'Inter', sans-serif;
-            /* Menggunakan Gradient Light Modern agar bersih & konsisten */
             background: linear-gradient(135deg, #e3e9f2 0%, #d4dde9 100%);
             background-attachment: fixed;
             color: #212529;
         }
-
-        /* === NAVBAR ADMIN (Warna Asli, Style Modern) === */
         .navbar-admin {
-            background-color: #111; /* TETAP HITAM (Sesuai Permintaan) */
+            background-color: #111;
             padding: 15px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* Tambahan shadow halus agar tidak 'mati' */
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
 
         .navbar-brand {
             font-weight: 900;
             letter-spacing: -1px;
             font-size: 1.5rem;
-            color: #e10600 !important; /* Aksen Merah pada Logo */
+            color: #e10600 !important;
             text-transform: uppercase;
             font-style: italic;
         }
 
-        /* Link Menu */
         .nav-link {
-            color: rgba(255,255,255,0.7) !important; /* Warna teks agak redup */
+            color: rgba(255,255,255,0.7) !important;
             font-weight: 600;
             font-size: 0.9rem;
             margin-right: 15px;
             transition: all 0.2s ease-in-out;
         }
 
-        /* Efek Hover Modern (Melayang) */
         .nav-link:hover, .nav-link.active {
-            color: #fff !important; /* Putih terang saat aktif */
-            transform: translateY(-2px); /* Efek naik sedikit saat di-hover */
+            color: #fff !important;
+            transform: translateY(-2px);
             text-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        /* Badge User di Navbar */
         .admin-badge {
             background: rgba(255,255,255,0.1);
             padding: 6px 15px;
@@ -133,9 +126,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // --- Konfigurasi SweetAlert Modern ---
-
-        // Notifikasi Sukses (Popup Tengah)
+        // Notif Sukses
         @if(session('success'))
             Swal.fire({
                 icon: 'success',
@@ -152,7 +143,7 @@
             });
         @endif
 
-        // Notifikasi Error
+        // Notif Error
         @if(session('error'))
             Swal.fire({
                 icon: 'error',
@@ -165,7 +156,7 @@
             });
         @endif
 
-        // Fungsi Global Konfirmasi Hapus (Style Modern)
+        // Konfirmasi Hapus
         function confirmDelete(event) {
             event.preventDefault();
             const form = event.target;
@@ -175,8 +166,8 @@
                 text: "Data yang dihapus tidak bisa dikembalikan.",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33', // Merah untuk hapus
-                cancelButtonColor: '#333',  // Hitam untuk batal
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#333',  
                 confirmButtonText: 'Ya, Hapus!',
                 cancelButtonText: 'Batal',
                 background: '#fff',

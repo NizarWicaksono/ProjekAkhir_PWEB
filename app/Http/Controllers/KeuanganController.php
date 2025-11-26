@@ -14,7 +14,6 @@ class KeuanganController extends Controller
         $totalRevenue = Ticket::where('status', 'sold')->sum('price');
         $totalTicketsSold = Ticket::where('status', 'sold')->count();
 
-        // Join pakai nama TABEL ('races'), jadi ini TIDAK PERLU diganti ke 'jadwals'
         $raceReports = Ticket::where('tickets.status', 'sold')
             ->join('races', 'tickets.race_id', '=', 'races.id')
             ->join('circuits', 'races.circuit_id', '=', 'circuits.id')
@@ -40,7 +39,6 @@ class KeuanganController extends Controller
 
     public function show($id)
     {
-        // PERBAIKAN: Ganti Race:: menjadi Jadwal::
         $race = Jadwal::with('circuit')->findOrFail($id);
 
         $transactions = Ticket::where('race_id', $id)

@@ -4,12 +4,10 @@
 
 @push('styles')
 <style>
-    /* === GAYA CARD BARU (Mengadopsi Style Dashboard) === */
     .ticket-card {
         border: none;
-        border-radius: 16px; /* Sudut membulat modern */
+        border-radius: 16px;
         background: #fff;
-        /* Shadow lembut seperti di dashboard */
         box-shadow: 0 4px 20px rgba(0,0,0,0.03);
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         height: 100%;
@@ -19,18 +17,16 @@
         flex-direction: column;
     }
     .ticket-card:hover {
-        transform: translateY(-5px); /* Efek melayang */
+        transform: translateY(-5px);
         box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
 
-    /* Aksen visual F1 yang lebih halus */
     .card-accent-strip {
         height: 6px;
         background: linear-gradient(90deg, #e10600 0%, #ff4d4d 100%);
         width: 100%;
     }
 
-    /* Badge Tanggal Modern */
     .date-badge {
         background-color: #f8f9fa;
         color: #212529;
@@ -43,9 +39,11 @@
         align-items: center;
         margin-bottom: 15px;
     }
-    .date-badge i { color: #e10600; margin-right: 6px; }
+    .date-badge i {
+        color: #e10600;
+        margin-right: 6px;
+    }
 
-    /* Tipografi Judul */
     .race-title {
         font-weight: 800;
         font-size: 1.25rem;
@@ -60,7 +58,6 @@
         font-weight: 500;
     }
 
-    /* Harga & Footer Card */
     .card-footer-custom {
         margin-top: auto;
         padding-top: 20px;
@@ -70,10 +67,19 @@
         align-items: center;
     }
 
-    .price-label { font-size: 0.7rem; text-transform: uppercase; color: #adb5bd; font-weight: 700; display: block; }
-    .ticket-price { color: #198754; font-weight: 800; font-size: 1.2rem; }
+    .price-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        color: #adb5bd;
+        font-weight: 700;
+        display: block;
+    }
+    .ticket-price {
+        color: #198754;
+        font-weight: 800;
+        font-size: 1.2rem;
+    }
 
-    /* === SIDEBAR STYLE (Konsisten dengan Dashboard) === */
     .sidebar-card {
         background: #fff;
         border-radius: 16px;
@@ -84,69 +90,90 @@
         top: 100px;
     }
     .icon-box {
-        width: 50px; height: 50px;
+        width: 50px;
+        height: 50px;
         background-color: #fff5f5;
         color: #e10600;
-        display: flex; align-items: center; justify-content: center;
-        border-radius: 12px; font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 1.5rem;
         box-shadow: 0 4px 10px rgba(225, 6, 0, 0.1);
     }
 
-    /* === MODAL STYLE === */
-    .modal-content { border-radius: 20px; border: none; overflow: hidden; }
+    .modal-content {
+        border-radius: 20px;
+        border: none;
+        overflow: hidden;
+    }
     .modal-header-custom {
         background: linear-gradient(135deg, #e10600 0%, #b30500 100%);
-        color: white; padding: 20px 25px;
+        color: white;
+        padding: 20px 25px;
     }
 
-    /* Input Qty Modern */
     .qty-input-group {
         background-color: #f8f9fa;
-        border-radius: 12px; padding: 5px;
+        border-radius: 12px;
+        padding: 5px;
         border: 1px solid #dee2e6;
-        display: flex; align-items: center; justify-content: space-between;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         width: 140px;
     }
     .btn-qty {
-        width: 36px; height: 36px;
+        width: 36px;
+        height: 36px;
         border-radius: 8px !important;
-        font-weight: 800; border: none;
-        display: flex; align-items: center; justify-content: center;
-        transition: 0.2s; cursor: pointer;
+        font-weight: 800;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        cursor: pointer;
     }
-    .btn-minus { background-color: #fff; color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .btn-plus { background-color: #212529; color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .btn-minus {
+        background-color: #fff;
+        color: #333;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .btn-plus {
+        background-color: #212529;
+        color: white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
     .input-qty {
-        border: none; background: transparent;
-        text-align: center; font-size: 1.1rem; font-weight: 800;
-        width: 40px; outline: none;
+        border: none;
+        background: transparent;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 800;
+        width: 40px;
+        outline: none;
     }
 
-    /* === MODERN PAGINATION STYLE (CLEAN) === */
-    /* Sembunyikan teks "Showing 1 to 10 of..." */
     .clean-pagination .small.text-muted,
     .clean-pagination p.text-muted {
         display: none !important;
     }
 
-    /* Paksa container pagination ke tengah */
     .clean-pagination nav > div {
         justify-content: center !important;
     }
 
-    /* Hapus flex grow yang mungkin membuat tombol geser ke kanan */
     .clean-pagination nav > div > div:first-child {
-        display: none !important; /* Ini menyembunyikan div pembungkus teks secara total */
+        display: none !important;
     }
 
-    /* Atur jarak item pagination */
     .pagination {
         gap: 8px;
         justify-content: center;
         margin: 0;
     }
 
-    /* Style tombol (Sama seperti sebelumnya) */
     .page-item:first-child .page-link,
     .page-item:last-child .page-link {
         border-radius: 50% !important;
@@ -166,7 +193,7 @@
         background-color: #fff;
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        text-decoration: none; /* Hilangkan underline */
+        text-decoration: none;
     }
 
     .page-link:hover {
@@ -206,7 +233,7 @@
             </span>
         </div>
 
-        <div class="row g-4"> {{-- Tetap menggunakan Grid System --}}
+        <div class="row g-4">
             @forelse($races as $race)
             <div class="col-md-6">
                 <div class="ticket-card">
@@ -249,7 +276,7 @@
                     </div>
                 </div>
 
-                {{-- MODAL BOOKING (Tetap Disertakan) --}}
+                {{-- Modal Booking Tiket --}}
                 @auth
                 <div class="modal fade" id="bookModal-{{ $race->id }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
@@ -306,7 +333,6 @@
             @endforelse
         </div>
 
-        {{-- Pagination --}}
         <div class="d-flex justify-content-center mt-5 clean-pagination">
             {{ $races->links() }}
         </div>
@@ -342,7 +368,7 @@
     </div>
 </div>
 
-{{-- Modal Guest --}}
+{{-- Modal Peringatan login--}}
 <div class="modal fade" id="guestModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content text-center p-3 shadow-lg">
@@ -362,7 +388,6 @@
 
 @push('scripts')
 <script>
-    // Script Logika Harga (Sama seperti sebelumnya)
     const prices = {
         @foreach($races as $race)
             {{ $race->id }}: {{ $race->base_price }},

@@ -4,7 +4,6 @@
 
 @push('styles')
 <style>
-    /* === CARD BERITA (CLEAN STYLE) === */
     .news-card {
         position: relative;
         border: none;
@@ -27,15 +26,17 @@
     }
     .news-img-wrapper img {
         transition: transform 0.5s ease;
-        width: 100%; height: 100%; object-fit: cover;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
     .news-card:hover .news-img-wrapper img {
         transform: scale(1.05);
     }
 
-    /* === SIDEBAR MODERN === */
     .sidebar-wrapper {
-        position: sticky; top: 100px;
+        position: sticky;
+        top: 100px;
     }
     .sidebar-card {
         background: #fff;
@@ -46,24 +47,29 @@
     }
 
     .section-header {
-        display: flex; align-items: center; margin-bottom: 20px;
-        border-bottom: 2px solid #f0f0f0; padding-bottom: 15px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
     }
     .section-title {
-        font-weight: 800; font-size: 1.1rem; margin: 0;
-        text-transform: uppercase; color: #212529;
+        font-weight: 800;
+        font-size: 1.1rem;
+        margin: 0;
+        text-transform: uppercase;
+        color: #212529;
         letter-spacing: 0.5px;
     }
 
-    /* List Balapan */
     .race-item {
-        display: flex; align-items: center;
+        display: flex;
+        align-items: center;
         padding: 12px 0;
         border-bottom: 1px dashed #eee;
     }
     .race-item:last-child { border-bottom: none; }
 
-    /* Kotak Tanggal Minimalis */
     .date-box {
         background: #f8f9fa;
         color: #212529;
@@ -75,9 +81,14 @@
         line-height: 1.1;
         border: 1px solid #e9ecef;
     }
-    .date-month { font-size: 0.7rem; color: #e10600; text-transform: uppercase; font-weight: 700; display: block; }
+    .date-month {
+        font-size: 0.7rem;
+        color: #e10600;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: block;
+    }
 
-    /* === MODERN PAGINATION STYLE (CLEAN) === */
     .clean-pagination .text-muted,
     .clean-pagination .small.text-muted {
         display: none !important;
@@ -179,7 +190,6 @@
             @endforelse
         </div>
 
-        {{-- PAGINATION MODERN --}}
         <div class="d-flex justify-content-center mt-5 clean-pagination">
             {{ $articles->links() }}
         </div>

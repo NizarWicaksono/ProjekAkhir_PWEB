@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    // PENTING: Karena nama model 'Jadwal' tapi tabelnya 'races', kita harus definisikan ini:
     protected $table = 'races';
 
     protected $fillable = [
@@ -16,7 +15,7 @@ class Jadwal extends Model
     ];
 
     protected $casts = [
-    'race_date' => 'datetime', // Pastikan dicasting ke datetime
+    'race_date' => 'datetime',
     'base_price' => 'decimal:2',
     ];
 

@@ -14,7 +14,7 @@
 
             <div class="card border-0 shadow-sm rounded-4">
                 <div class="card-header bg-white py-3">
-                    <h5 class="m-0 fw-bold">✏️ Tulis Artikel Baru</h5>
+                    <h5 class="m-0 fw-bold">Tulis Artikel Baru</h5>
                 </div>
                 <div class="card-body p-4">
 

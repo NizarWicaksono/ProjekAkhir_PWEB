@@ -5,31 +5,50 @@
 @push('styles')
     <style>
         .race-card {
-            border: none; border-radius: 12px; transition: transform 0.2s, box-shadow 0.2s;
-            background: white; height: 100%; display: flex; flex-direction: column;
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
-        .race-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .race-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .race-info { font-size: 0.9rem; color: #6c757d; margin-bottom: 0.25rem; }
-        .race-price { font-weight: 700; color: #198754; font-size: 1.2rem; margin-top: 0.5rem; }
-
-        /* Garis Warna di atas kartu */
-        .card-top-line { height: 5px; background: #e10600; }
+        .race-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .race-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .race-info {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+        }
+        .race-price {
+            font-weight: 700;
+            color: #198754;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        .card-top-line {
+            height: 5px;
+            background: #e10600;
+        }
         .race-card.past-race .card-top-line { background: #6c757d; }
 
-        /* Tab Nav Custom */
         .nav-tabs {
             border-bottom: none;
             margin-bottom: 30px;
             gap: 15px;
         }
-
+        /* Tampilan tidak aktif */
         .nav-tabs .nav-link {
-            /* TAMPILAN TIDAK AKTIF */
-            color: rgba(255, 255, 255, 0.8); /* Teks Putih agak transparan */
-            background-color: #212529; /* Background Hitam/Gelap */
-
+            color: rgba(255, 255, 255, 0.8);
+            background-color: #212529;
             font-weight: 700;
             border: none;
             padding: 12px 30px;
@@ -37,31 +56,34 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
-
         .nav-tabs .nav-link:hover {
-            background-color: #000; /* Lebih gelap saat hover */
-            color: #e10600; /* Teks jadi Merah saat hover */
+            background-color: #000;
+            color: #e10600;
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0,0,0,0.2);
         }
-
+        /* Tampilan aktif */
         .nav-tabs .nav-link.active {
-            /* TAMPILAN AKTIF */
-            background-color: #e10600 !important; /* Merah F1 */
-            color: white !important; /* Teks Putih Jelas */
+            background-color: #e10600 !important;
+            color: white !important;
             box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
         }
-
         /* Badge Hitungan */
         .nav-tabs .nav-link .badge {
             background-color: rgba(255,255,255,0.2) !important;
             color: white;
             margin-left: 8px;
         }
-
-        /* Modal Style */
-        .modal-content { border-radius: 16px; border: none; }
-        .modal-header { background-color: #212529; color: white; border-top-left-radius: 16px; border-top-right-radius: 16px; }
+        .modal-content {
+            border-radius: 16px;
+            border: none;
+        }
+        .modal-header {
+            background-color: #212529;
+            color: white;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
         .btn-close-white { filter: invert(1) grayscale(100%) brightness(200%); }
     </style>
 @endpush
@@ -94,8 +116,7 @@
     </ul>
 
     <div class="tab-content" id="scheduleTabContent">
-
-        {{-- TAB 1: ACTIVE RACES --}}
+        {{-- Jadwal Aktif --}}
         <div class="tab-pane fade show active" id="active" role="tabpanel">
             <div class="row g-4">
                 @forelse($activeRaces as $race)
@@ -119,7 +140,7 @@
                                 </div>
 
                                 <div class="d-flex gap-2">
-                                    {{-- TOMBOL EDIT --}}
+                                    {{-- Tomblo Edit --}}
                                     <button class="btn btn-sm btn-warning text-white border hover-shadow btn-edit"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editRaceModal"
@@ -153,10 +174,8 @@
                 {{ $activeRaces->appends(request()->query())->links() }}
             </div>
         </div>
-
-        {{-- TAB 2: PAST RACES --}}
+        {{-- Jadwal Tidak Aktif --}}
         <div class="tab-pane fade" id="past" role="tabpanel">
-            {{-- Past races content (unchanged) --}}
             <div class="row g-4">
                 @forelse($pastRaces as $race)
                 <div class="col-md-4 col-lg-3">
@@ -191,13 +210,12 @@
         </div>
 
     </div>
-
-    {{-- MODAL TAMBAH JADWAL (Asli) --}}
+    {{-- Modal Tambah Jadwal --}}
     <div class="modal fade" id="addRaceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fw-bold">➕ Tambah Jadwal Balapan</h5>
+                    <h5 class="modal-title fw-bold">Tambah Jadwal Balapan</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
@@ -239,8 +257,7 @@
             </div>
         </div>
     </div>
-
-    {{-- MODAL EDIT JADWAL (BARU) --}}
+    {{-- Modal Edit Jadwal --}}
     <div class="modal fade" id="editRaceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -294,7 +311,7 @@
 
 @push('scripts')
     <script>
-        // --- SCRIPT MODAL TAMBAH (Asli) ---
+        // Script Modal Tambah Jadwal
         const gpSelector = document.getElementById('gp_selector');
         const circuitDisplay = document.getElementById('circuit_display');
 
@@ -303,8 +320,7 @@
                 updateDisplay(this, circuitDisplay);
             });
         }
-
-        // --- SCRIPT MODAL EDIT (Baru) ---
+        // Script Modal Edit Jadwal
         const editButtons = document.querySelectorAll('.btn-edit');
         const editForm = document.getElementById('editForm');
         const gpSelectorEdit = document.getElementById('gp_selector_edit');
@@ -312,31 +328,28 @@
         const raceDateEdit = document.getElementById('race_date_edit');
         const basePriceEdit = document.getElementById('base_price_edit');
 
-        // Base URL untuk update (sesuaikan jika route berbeda)
+        // Base URL untuk update
         const baseUrl = "{{ url('/admin/races') }}";
 
-        // Logic saat tombol Edit diklik
+        // Logic tombol edit diklik
         editButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');
                 const circuitId = this.getAttribute('data-circuit');
                 const date = this.getAttribute('data-date');
                 const price = this.getAttribute('data-price');
-
                 // 1. Update Action URL Form
                 editForm.action = `${baseUrl}/${id}`;
-
                 // 2. Isi Value Input
                 gpSelectorEdit.value = circuitId;
                 raceDateEdit.value = date;
                 basePriceEdit.value = price;
-
                 // 3. Update Display Sirkuit secara manual
                 updateDisplay(gpSelectorEdit, circuitDisplayEdit);
             });
         });
 
-        // Event Listener untuk Dropdown di Modal Edit
+        // Event Listener Dropdown di Modal Edit
         if(gpSelectorEdit) {
             gpSelectorEdit.addEventListener('change', function() {
                 updateDisplay(this, circuitDisplayEdit);

@@ -4,13 +4,12 @@
 
 @push('styles')
     <style>
-        /* === MODERN DASHBOARD CARDS === */
         .stat-card {
             border: none;
-            border-radius: 20px; /* Sudut lebih membulat */
+            border-radius: 20px;
             background: white;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); /* Shadow lebih lembut & luas */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             height: 100%;
             position: relative;
@@ -24,26 +23,26 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.1);
         }
 
-        /* Ikon dengan Background Gradient */
         .stat-icon-wrapper {
-            width: 60px; height: 60px;
+            width: 60px;
+            height: 60px;
             border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.75rem;
             margin-bottom: 25px;
             color: white;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
-        /* Warna Gradient */
         .bg-grad-red { background: linear-gradient(135deg, #ff4d4d 0%, #c20b04 100%); }
         .bg-grad-green { background: linear-gradient(135deg, #2ecc71 0%, #218c74 100%); }
         .bg-grad-blue { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
         .bg-grad-purple { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); }
 
-        /* Typography */
         .stat-value {
-            font-size: 2.25rem; /* Font lebih besar */
+            font-size: 2.25rem;
             font-weight: 800;
             color: #212529;
             line-height: 1.1;
@@ -58,7 +57,6 @@
             letter-spacing: 1px;
         }
 
-        /* Hiasan Latar Belakang (Lingkaran samar) */
         .stat-decoration {
             position: absolute;
             top: -30px; right: -30px;
@@ -75,7 +73,6 @@
 @endpush
 
 @section('content')
-    {{-- Header Section --}}
     <div class="d-flex justify-content-between align-items-end mb-5">
         <div>
             <h2 class="fw-bold m-0 text-dark">Welcome, Admin!</h2>
@@ -88,10 +85,8 @@
         </div>
     </div>
 
-    {{-- Stats Grid --}}
     <div class="row g-4">
-
-        {{-- Card 1: Pendapatan --}}
+        {{-- Pendapatan --}}
         <div class="col-md-6 col-xl-3">
             <div class="stat-card">
                 <div class="stat-decoration bg-dec-red"></div>
@@ -105,7 +100,7 @@
             </div>
         </div>
 
-        {{-- Card 2: Tiket Terjual --}}
+        {{-- Tiket Terjual --}}
         <div class="col-md-6 col-xl-3">
             <div class="stat-card">
                 <div class="stat-decoration bg-dec-green"></div>
@@ -119,7 +114,7 @@
             </div>
         </div>
 
-        {{-- Card 3: Jadwal Balapan --}}
+        {{-- Jadwal Balapan --}}
         <div class="col-md-6 col-xl-3">
             <div class="stat-card">
                 <div class="stat-decoration bg-dec-blue"></div>
@@ -133,7 +128,7 @@
             </div>
         </div>
 
-        {{-- Card 4: User Terdaftar --}}
+        {{-- User Terdaftar --}}
         <div class="col-md-6 col-xl-3">
             <div class="stat-card">
                 <div class="stat-decoration bg-dec-purple"></div>

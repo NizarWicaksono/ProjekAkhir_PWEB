@@ -4,26 +4,36 @@
 
 @push('styles')
     <style>
-        /* Article Card Styles */
         .article-card {
-            border: none; border-radius: 12px; overflow: hidden;
-            background: white; transition: transform 0.2s; height: 100%;
-            display: flex; flex-direction: column;
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
             position: relative;
             cursor: pointer;
         }
-        .article-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .article-img { height: 180px; object-fit: cover; background-color: #eee; }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .article-img {
+            height: 180px;
+            object-fit: cover;
+            background-color: #eee;
+        }
 
         .btn-delete-wrapper {
             position: relative;
             z-index: 2;
         }
 
-        /* === MODERN PAGINATION STYLE (CLEAN) === */
         .clean-pagination .text-muted,
         .clean-pagination .small.text-muted {
-            display: none !important; /* Sembunyikan teks 'Showing...' */
+            display: none !important;
         }
 
         .clean-pagination nav > div {
@@ -137,7 +147,6 @@
         @endforelse
     </div>
 
-    {{-- PAGINATION MODERN --}}
     <div class="d-flex justify-content-center mt-5 clean-pagination">
         {{ $articles->links() }}
     </div>

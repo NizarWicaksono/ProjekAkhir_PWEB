@@ -4,21 +4,43 @@
 
 @push('styles')
 <style>
-    /* Sidebar Style */
     .user-sidebar .nav-link {
         color: #495057 !important;
         padding: 15px 20px;
         border-radius: 10px;
         margin-bottom: 5px;
-        display: flex; align-items: center; transition: all 0.2s; font-weight: 600;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+        font-weight: 600;
     }
-    .user-sidebar .nav-link:hover { background-color: #e9ecef; color: #e10600 !important; }
-    .user-sidebar .nav-link.active { background-color: #ffe5e5; color: #e10600 !important; font-weight: 800; }
-    .user-sidebar .nav-link i { font-size: 1.2rem; margin-right: 15px; width: 24px; text-align: center; }
+    .user-sidebar .nav-link:hover {
+        background-color: #e9ecef;
+        color: #e10600 !important;
+    }
+    .user-sidebar .nav-link.active {
+        background-color: #ffe5e5;
+        color: #e10600 !important;
+        font-weight: 800;
+    }
+    .user-sidebar .nav-link i {
+        font-size: 1.2rem;
+        margin-right: 15px;
+        width: 24px;
+        text-align: center;
+    }
 
-    /* Form Style */
-    .form-control-plaintext { font-weight: 600; font-size: 1.1rem; color: #212529; }
-    .readonly-field { background-color: #f8f9fa; padding: 10px 15px; border-radius: 8px; border: 1px solid #dee2e6; }
+    .form-control-plaintext {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #212529;
+    }
+    .readonly-field {
+        background-color: #f8f9fa;
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
 </style>
 @endpush
 

@@ -13,12 +13,10 @@ use App\Models\Jadwal;
 use App\Models\Circuit;
 use Illuminate\Http\Request;
 
-// 1. Halaman Utama
 Route::get('/', function () {
     return redirect()->route('users.dashboard');
 });
 
-// 2. Dashboard User
 Route::get('/dashboard', function () {
     $articles = Article::latest()->paginate(6);
 
@@ -31,10 +29,8 @@ Route::get('/dashboard', function () {
 })->name('users.dashboard');
 
 Route::get('/news/{id}', [ArticleController::class, 'showPublic'])->name('news.show');
-// ROUTE BARU: Halaman List Tiket
 Route::get('/tickets', [BookingController::class, 'index'])->name('tickets.index');
 
-// 3. Guest (Login/Register)
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.process');
@@ -42,44 +38,36 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 });
 
-// 4. User Login
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    // 1. Halaman Form Booking (GET)
+    // Form Booking
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
-    // 2. Proses Simpan/Bayar (POST)
+    // Bayar Booking
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    // Route Proses Bayar
-    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    // ROUTE BARU: Riwayat
+    // Riwayat
     Route::get('/history', [BookingController::class, 'history'])->name('users.history');
-    // Route Download Tiket
+    // Download Tiket
     Route::get('/ticket/{code}/download', [BookingController::class, 'downloadTicket'])->name('ticket.download');
-    // Route Profil User
+    // Profil User
     Route::get('/profile', [AuthController::class, 'showProfile'])->name('users.profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('users.profile.update');
 });
 
-// 5. ADMIN (Gunakan Controller Baru)
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-
-    // === JADWAL (Pakai JadwalController) ===
+    // Jadwal
     Route::get('/races', [JadwalController::class, 'index'])->name('admin.lihatjadwal');
     Route::post('/races', [JadwalController::class, 'store'])->name('admin.races.store');
     Route::put('/races/{id}', [JadwalController::class, 'update'])->name('admin.races.update');
     Route::delete('/races/{id}', [JadwalController::class, 'destroy'])->name('admin.races.destroy');
-
-    // === KEUANGAN (Pakai KeuanganController) ===
+    // Pendapatan
     Route::get('/pendapatan', [KeuanganController::class, 'index'])->name('admin.pendapatan');
     Route::get('/pendapatan/{id}', [KeuanganController::class, 'show'])->name('admin.pendapatan.detail');
-
-    // === MANAJEMEN ARTIKEL ===
+    // Artikel
     Route::get('/articles', [ArticleController::class, 'index'])->name('admin.articles.index');
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('admin.articles.create');
     Route::post('/articles', [ArticleController::class, 'store'])->name('admin.articles.store');
-    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('admin.articles.show'); // Lihat Detail
-    Route::put('/articles/{id}', [ArticleController::class, 'update'])->name('admin.articles.update'); // Update
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('admin.articles.show');
+    Route::put('/articles/{id}', [ArticleController::class, 'update'])->name('admin.articles.update');
     Route::delete('/articles/{id}', [ArticleController::class, 'destroy'])->name('admin.articles.destroy');
 });

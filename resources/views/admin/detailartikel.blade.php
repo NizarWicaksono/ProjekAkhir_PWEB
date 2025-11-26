@@ -59,14 +59,14 @@
                             </div>
 
                             <div class="mb-4 p-3 bg-light rounded border">
-                                <label class="form-label fw-bold small text-uppercase text-muted">Update Cover (Opsional)</label>
+                                <label class="form-label fw-bold small text-uppercase text-muted">Update Cover</label>
                                 <div class="d-flex align-items-center">
                                     @if($article->image)
                                         <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                                     @endif
                                     <input type="file" name="image" class="form-control" accept="image/*">
                                 </div>
-                                <div class="form-text mt-2">Biarkan kosong jika tidak ingin mengubah gambar.</div>
+                                <div class="form-text mt-2">Biarkan jika tidak ingin mengubah gambar.</div>
                             </div>
 
                             <div class="mb-4">

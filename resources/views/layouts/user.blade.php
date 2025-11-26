@@ -9,19 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* === REFINED LIGHT THEME === */
         body {
             font-family: 'Inter', sans-serif;
-            /* Gradient sangat halus: Putih -> Abu kebiruan sangat muda */
             background: linear-gradient(180deg, #faf3e6 0%, #cecece 100%);
             background-attachment: fixed;
             color: #212529;
         }
 
-        /* Navbar Merah F1 yang Solid & Tegas */
         .navbar-f1 {
-            background-color: #e10600; /* Merah F1 Asli */
-            box-shadow: 0 4px 12px rgba(225, 6, 0, 0.2); /* Glow merah halus di bawah */
+            background-color: #e10600;
+            box-shadow: 0 4px 12px rgba(225, 6, 0, 0.2);
             padding: 12px 0;
         }
 
@@ -42,10 +39,9 @@
 
         .nav-link:hover, .nav-link.active {
             color: #fff !important;
-            transform: translateY(-1px); /* Efek naik sedikit */
+            transform: translateY(-1px);
         }
 
-        /* Tombol User di Navbar */
         .user-pill {
             background: rgba(255,255,255,0.15);
             border-radius: 50px;
@@ -113,7 +109,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Cek apakah ada session 'success' dari Controller
         @if(session('success'))
             Swal.fire({
                 icon: 'success',
@@ -121,9 +116,9 @@
                 text: '{{ session('success') }}',
                 showConfirmButton: true,
                 confirmButtonText: 'OK, Siap!',
-                confirmButtonColor: '#e10600', // Warna Merah F1
+                confirmButtonColor: '#e10600',
                 background: '#fff',
-                timer: 5000, // Otomatis tutup dalam 5 detik
+                timer: 5000,
                 timerProgressBar: true,
                 customClass: {
                     title: 'fw-bold',
@@ -132,7 +127,6 @@
             });
         @endif
 
-        // Opsional: Cek apakah ada error
         @if(session('error'))
             Swal.fire({
                 icon: 'error',
@@ -142,7 +136,6 @@
             });
         @endif
 
-        // Opsional: Cek validasi error (misal jumlah tiket salah)
         @if($errors->any())
             Swal.fire({
                 icon: 'warning',

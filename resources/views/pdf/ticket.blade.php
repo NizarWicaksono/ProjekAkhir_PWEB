@@ -3,20 +3,58 @@
 <head>
     <title>E-Ticket F1</title>
     <style>
-        body { font-family: sans-serif; color: #333; }
-        .header { background-color: #e10600; color: white; padding: 20px; text-align: center; }
+        body {
+            font-family: sans-serif;
+            color: #333;
+        }
+        .header {
+            background-color: #e10600;
+            color: white; padding: 20px;
+            text-align: center;
+        }
         .content { padding: 30px; }
-        .title { font-size: 24px; font-weight: bold; margin-bottom: 5px; text-align: center; }
-        .subtitle { font-size: 14px; color: #666; margin-bottom: 30px; text-align: center; }
-        .row { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-        .label { font-weight: bold; font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 5px; }
-        .value { font-size: 16px; font-weight: bold; }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .row {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .label {
+            font-weight: bold;
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+        }
         .ticket-code-box {
-            text-align: center; margin-top: 40px; padding: 20px;
-            border: 2px dashed #333; border-radius: 10px;
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            border: 2px dashed #333;
+            border-radius: 10px;
             background-color: #f9f9f9;
         }
-        .footer { text-align: center; margin-top: 40px; font-size: 10px; color: #aaa; }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 10px;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>

@@ -50,13 +50,11 @@
             font-weight: 900;
             letter-spacing: -1px;
         }
-        /* Cursor pointer untuk icon mata */
         .input-group-text {
             cursor: pointer;
             background-color: white;
             border-left: none;
         }
-        /* Fix border input saat ada icon */
         .input-with-icon {
             border-right: none;
         }
@@ -75,7 +73,7 @@
                         <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
                     </a>
                 </div>
-                
+
                 <div class="mb-5">
                     <h1 class="brand-title">F1 TICKETING.</h1>
                     <p class="text-muted">Masuk untuk memesan kursi terbaikmu.</p>
@@ -115,7 +113,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Tampilkan Alert Error jika login gagal
+    // Alert Error login gagal
     @if($errors->any())
         Swal.fire({
             icon: 'error',
@@ -125,7 +123,7 @@
         });
     @endif
 
-    // Tampilkan pesan sukses (misal setelah register)
+    // Pesan Sukses
     @if(session('success'))
         Swal.fire({
             icon: 'success',
@@ -136,7 +134,6 @@
     @endif
 
     function togglePassword(inputId, iconId) {
-        // ... kode toggle password Anda yang lama ...
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
         if (input.type === "password") {

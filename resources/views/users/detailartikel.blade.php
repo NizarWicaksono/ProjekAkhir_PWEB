@@ -9,23 +9,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
 
-        /* Navbar Style (Konsisten dengan Dashboard) */
         .navbar-f1 { background-color: #e10600; }
-        .nav-link { color: rgba(255,255,255,0.8) !important; font-weight: 600; margin-right: 15px; }
-        .nav-link:hover, .nav-link.active { color: white !important; opacity: 1; }
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            opacity: 1;
+        }
 
-        /* Detail Artikel Style */
-        .article-card { border: none; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .article-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
         .article-img-header {
             width: 100%;
             height: 400px;
             object-fit: cover;
             object-position: center;
         }
-        .article-content { font-size: 1.1rem; line-height: 1.8; color: #333; }
-        .meta-info { font-size: 0.9rem; color: #6c757d; }
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        .meta-info {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -107,7 +127,6 @@
                         </div>
 
                         <div class="article-content text-justify">
-                            {{-- Gunakan {!! !!} jika konten mengandung HTML editor, atau {{ }} jika teks biasa --}}
                             {!! nl2br(e($article->content)) !!}
                         </div>
 

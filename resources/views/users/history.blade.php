@@ -4,15 +4,54 @@
 
 @push('styles')
 <style>
-    .user-sidebar .nav-link { color: #495057 !important; padding: 15px 20px; border-radius: 10px; margin-bottom: 5px; display: flex; align-items: center; transition: all 0.2s; font-weight: 600; }
-    .user-sidebar .nav-link:hover { background-color: #e9ecef; color: #e10600 !important; }
-    .user-sidebar .nav-link.active { background-color: #ffe5e5; color: #e10600 !important; font-weight: 800; }
-    .user-sidebar .nav-link i { font-size: 1.2rem; margin-right: 15px; width: 24px; text-align: center; }
+    .user-sidebar .nav-link {
+        color: #495057 !important;
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+        font-weight: 600;
+    }
+    .user-sidebar .nav-link:hover {
+        background-color: #e9ecef;
+        color: #e10600 !important;
+    }
+    .user-sidebar .nav-link.active {
+        background-color: #ffe5e5;
+        color: #e10600 !important;
+        font-weight: 800;
+    }
+    .user-sidebar .nav-link i {
+        font-size: 1.2rem;
+        margin-right: 15px;
+        width: 24px;
+        text-align: center;
+    }
     .ticket-item { transition: transform 0.2s; }
-    .ticket-item:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-    .modal-header-custom { background: linear-gradient(135deg, #e10600 0%, #ff4d4d 100%); color: white; }
-    .detail-label { font-size: 0.8rem; text-transform: uppercase; color: #6c757d; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 2px; }
-    .detail-value { font-size: 1rem; font-weight: 700; color: #212529; margin-bottom: 15px; }
+    .ticket-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .modal-header-custom {
+        background: linear-gradient(135deg, #e10600 0%, #ff4d4d 100%);
+        color: white;
+    }
+    .detail-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: #6c757d;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+        margin-bottom: 2px;
+    }
+    .detail-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #212529;
+        margin-bottom: 15px;
+    }
 </style>
 @endpush
 

@@ -9,7 +9,6 @@ class Article extends Model
 {
     use HasFactory;
 
-    // TAMBAHKAN BAGIAN INI (Agar data bisa disimpan)
     protected $fillable = [
         'title',
         'content',
@@ -18,7 +17,6 @@ class Article extends Model
         'user_id',
     ];
 
-    // Relasi ke User (Penulis)
     public function user()
     {
         return $this->belongsTo(User::class);

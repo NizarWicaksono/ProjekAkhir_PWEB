@@ -53,14 +53,12 @@ class ArticleController extends Controller
 
     }
 
-    // 4. LIHAT DETAIL ARTIKEL
     public function show($id)
     {
         $article = Article::findOrFail($id);
         return view('admin.detailartikel', compact('article'));
     }
 
-    // 6. PROSES UPDATE ARTIKEL
     public function update(Request $request, $id)
     {
         $article = Article::findOrFail($id);
@@ -94,7 +92,7 @@ class ArticleController extends Controller
         $article->update($dataToUpdate);
         return redirect()->route('admin.articles.show', $article->id)->with('success', 'Artikel berhasil diperbarui!');
     }
-    // 7. PROSES HAPUS ARTIKEL
+
     public function destroy($id)
     {
         $article = Article::findOrFail($id);
@@ -107,12 +105,9 @@ class ArticleController extends Controller
         return redirect()->back()->with('success', 'Artikel berhasil dihapus.');
     }
 
-    // === METHOD BARU: TAMPILAN BACA UNTUK USER ===
     public function showPublic($id)
     {
         $article = Article::findOrFail($id);
-
-        // Rekomendasi artikel lain (3 terbaru selain yang sedang dibaca)
         $otherArticles = Article::where('id', '!=', $id)->latest()->take(3)->get();
 
         return view('users.detailartikel', compact('article', 'otherArticles'));

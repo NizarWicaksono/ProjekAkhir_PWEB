@@ -9,42 +9,33 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // 1. Tampilkan Form Register
     public function showRegister()
     {
         return view('auth.register');
     }
 
-    // 2. Proses Register
     public function register(Request $request)
     {
-        // Validasi input
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed', // confirmed butuh input name="password_confirmation" di form
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Simpan ke Database
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Password wajib di-hash/enkripsi
+            'password' => Hash::make($request->password),
         ]);
-
-        // Langsung login setelah register (opsional)
-        // Auth::attempt(['email' => $request->email, 'password' => $request->password]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
-    // 3. Tampilkan Form Login
     public function showLogin()
     {
         return view('auth.login');
     }
 
-    // 4. Proses Login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -55,12 +46,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // CEK ROLE USER DISINI
             if (Auth::user()->role === 'admin') {
-                return redirect()->route('admin.dashboard'); // Lempar ke Admin
+                return redirect()->route('admin.dashboard');
             }
 
-            return redirect()->intended('dashboard'); // Lempar ke User Biasa
+            return redirect()->intended('dashboard');
         }
 
         return back()->withErrors([
@@ -68,7 +58,6 @@ class AuthController extends Controller
         ]);
     }
 
-    // ROUTE BARU: Tampilkan Profil User
     public function showProfile()
     {
         return view('users.profile');
@@ -81,13 +70,12 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
-            'password' => 'nullable|min:6|confirmed', // Konfirmasi password (password_confirmation)
+            'password' => 'nullable|min:6|confirmed',
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
 
-        // Hanya update password jika diisi
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -97,7 +85,6 @@ class AuthController extends Controller
         return back()->with('success', 'Profil berhasil diperbarui!');
     }
 
-    // 5. Proses Logout
     public function logout(Request $request)
     {
         Auth::logout();
