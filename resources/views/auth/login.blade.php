@@ -75,22 +75,6 @@
                     <p class="text-muted">Masuk untuk memesan kursi terbaikmu.</p>
                 </div>
 
-                @if($errors->any())
-                    <div class="alert alert-danger border-0 shadow-sm mb-4">
-                        <ul class="mb-0 ps-3">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                @if(session('success'))
-                    <div class="alert alert-success border-0 shadow-sm mb-4">
-                        {{ session('success') }}
-                    </div>
-                @endif
-
                 <form action="{{ route('login.process') }}" method="POST">
                     @csrf
 

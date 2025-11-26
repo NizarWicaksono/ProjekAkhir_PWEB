@@ -106,18 +106,52 @@
     </nav>
 
     <div class="container pb-5">
-        @if(session('success'))
-            <div class="alert alert-success shadow-sm rounded-3 mb-4 d-flex align-items-center bg-white border-start border-5 border-success">
-                <i class="bi bi-check-circle-fill fs-4 me-3 text-success"></i>
-                <div class="text-dark fw-bold">{{ session('success') }}</div>
-            </div>
-        @endif
-
         @yield('content')
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Cek apakah ada session 'success' dari Controller
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'BERHASIL!',
+                text: '{{ session('success') }}',
+                showConfirmButton: true,
+                confirmButtonText: 'OK, Siap!',
+                confirmButtonColor: '#e10600', // Warna Merah F1
+                background: '#fff',
+                timer: 5000, // Otomatis tutup dalam 5 detik
+                timerProgressBar: true,
+                customClass: {
+                    title: 'fw-bold',
+                    popup: 'rounded-4'
+                }
+            });
+        @endif
+
+        // Opsional: Cek apakah ada error
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#333'
+            });
+        @endif
+
+        // Opsional: Cek validasi error (misal jumlah tiket salah)
+        @if($errors->any())
+            Swal.fire({
+                icon: 'warning',
+                title: 'Perhatian',
+                html: '<ul class="text-start m-0">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>',
+                confirmButtonColor: '#e10600'
+            });
+        @endif
+    </script>
 
     @stack('scripts')
 </body>

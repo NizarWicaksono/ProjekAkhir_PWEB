@@ -59,7 +59,8 @@ class BookingController extends Controller
         }
 
         // Redirect kembali ke dashboard dengan pesan sukses
-        return redirect()->route('tickets.index')->with('success', "Berhasil membeli {$request->quantity} tiket!");}
+        return redirect()->route('tickets.index')->with('success', "Berhasil membeli {$request->quantity} tiket! Cek riwayat untuk detailnya.");
+    }
 
     public function history()
     {
