@@ -18,16 +18,15 @@
         .stat-label { font-size: 0.9rem; color: #6c757d; text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-bottom: 5px; }
         .stat-value { font-size: 2rem; font-weight: 800; color: #212529; letter-spacing: -1px; }
 
-        /* === ICON BOX STYLE (Sesuai Dashboard) === */
+        /* === ICON BOX STYLE === */
         .stat-icon-box {
             width: 60px; height: 60px;
-            border-radius: 16px; /* Lebih rounded */
+            border-radius: 16px;
             display: flex; align-items: center; justify-content: center;
             font-size: 1.75rem;
             color: white;
             box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
-        /* Warna Gradient Dashboard */
         .bg-grad-red { background: linear-gradient(135deg, #ff4d4d 0%, #c20b04 100%); }
         .bg-grad-green { background: linear-gradient(135deg, #2ecc71 0%, #218c74 100%); }
 
@@ -68,6 +67,68 @@
             font-weight: bold;
             margin-right: 15px;
         }
+
+        /* === MODERN PAGINATION STYLE (MODIFIED) === */
+        /* 1. Sembunyikan teks 'Showing...' */
+        .clean-pagination .text-muted,
+        .clean-pagination .small.text-muted {
+            display: none !important;
+        }
+
+        /* 2. Style Container agar terpusat */
+        .clean-pagination nav > div {
+            justify-content: center !important;
+            box-shadow: none !important; /* Hilangkan shadow bawaan container */
+        }
+
+        /* 3. Style Tombol */
+        .pagination {
+            gap: 8px; /* Jarak antar tombol */
+            justify-content: center;
+            margin: 0; /* Reset margin */
+        }
+
+        .page-item:first-child .page-link,
+        .page-item:last-child .page-link {
+            border-radius: 50% !important;
+        }
+
+        .page-link {
+            border: none;
+            border-radius: 50% !important;
+            width: 40px; /* Sedikit lebih kecil agar rapi */
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .page-link:hover {
+            background-color: #fff;
+            color: #e10600;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, #e10600 0%, #ff4d4d 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
+            transform: scale(1.1);
+        }
+
+        .page-item.disabled .page-link {
+            background-color: #f8f9fa;
+            color: #dee2e6;
+            box-shadow: none;
+            transform: none;
+        }
     </style>
 @endpush
 
@@ -86,10 +147,8 @@
                 <div class="d-flex justify-content-between align-items-center h-100">
                     <div>
                         <div class="stat-label">Total Pendapatan Bersih</div>
-                        {{-- Warna teks tetap HIJAU (text-success) sesuai permintaan --}}
                         <div class="stat-value">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
                     </div>
-                    {{-- ICON: Dompet, Gradient Merah (Sama seperti Dashboard) --}}
                     <div class="stat-icon-box bg-grad-red">
                         <i class="bi bi-wallet2"></i>
                     </div>
@@ -105,7 +164,6 @@
                         <div class="stat-label">Total Tiket Terjual</div>
                         <div class="stat-value">{{ $totalTicketsSold }} <span class="fs-6 text-muted fw-normal">Tiket</span></div>
                     </div>
-                    {{-- ICON: Tiket, Gradient Hijau (Sama seperti Dashboard) --}}
                     <div class="stat-icon-box bg-grad-green">
                         <i class="bi bi-ticket-perforated-fill"></i>
                     </div>
@@ -168,6 +226,12 @@
                         </tbody>
                     </table>
                 </div>
+
+                {{-- PAGINATION (CLEAN STYLE) --}}
+                <div class="p-4 border-top border-light d-flex justify-content-center clean-pagination">
+                    {{ $raceReports->links() }}
+                </div>
+
             </div>
         </div>
 
@@ -187,7 +251,6 @@
                                 <i class="bi bi-person-fill"></i>
                             </div>
                             <div class="flex-grow-1 pe-3">
-                                {{-- Nama Pembeli (Full) --}}
                                 <div class="fw-bold text-dark" style="line-height: 1.2; word-break: break-word;">
                                     {{ $trx->user->name ?? 'Guest' }}
                                 </div>
@@ -196,7 +259,6 @@
                                 </div>
                             </div>
                             <div class="text-end shrink-0">
-                                {{-- Format Uang Lengkap --}}
                                 <div class="fw-bold text-success small">
                                     + Rp {{ number_format($trx->price, 0, ',', '.') }}
                                 </div>

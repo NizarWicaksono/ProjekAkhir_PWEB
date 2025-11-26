@@ -27,7 +27,7 @@ class KeuanganController extends Controller
             )
             ->groupBy('races.id', 'circuits.gp_name', 'races.race_date')
             ->orderByDesc('total_income')
-            ->get();
+            ->paginate(10);
 
         $recentTransactions = Ticket::with(['user', 'race.circuit'])
             ->where('status', 'sold')

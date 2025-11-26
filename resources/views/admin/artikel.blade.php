@@ -4,7 +4,7 @@
 
 @push('styles')
     <style>
-        /* Article Card Styles (Khusus Artikel) */
+        /* Article Card Styles */
         .article-card {
             border: none; border-radius: 12px; overflow: hidden;
             background: white; transition: transform 0.2s; height: 100%;
@@ -18,6 +18,65 @@
         .btn-delete-wrapper {
             position: relative;
             z-index: 2;
+        }
+
+        /* === MODERN PAGINATION STYLE (CLEAN) === */
+        .clean-pagination .text-muted,
+        .clean-pagination .small.text-muted {
+            display: none !important; /* Sembunyikan teks 'Showing...' */
+        }
+
+        .clean-pagination nav > div {
+            justify-content: center !important;
+            box-shadow: none !important;
+        }
+
+        .pagination {
+            gap: 8px;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .page-item:first-child .page-link,
+        .page-item:last-child .page-link {
+            border-radius: 50% !important;
+        }
+
+        .page-link {
+            border: none;
+            border-radius: 50% !important;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-weight: 700;
+            font-size: 0.9rem;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .page-link:hover {
+            background-color: #fff;
+            color: #e10600;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, #e10600 0%, #ff4d4d 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
+            transform: scale(1.1);
+        }
+
+        .page-item.disabled .page-link {
+            background-color: #f8f9fa;
+            color: #dee2e6;
+            box-shadow: none;
+            transform: none;
         }
     </style>
 @endpush
@@ -37,7 +96,7 @@
 
                 <a href="{{ route('admin.articles.show', $article->id) }}" class="stretched-link"></a>
 
-                <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
+                <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
                      class="article-img" alt="Cover">
 
                 <div class="card-body p-4 d-flex flex-column h-100">
@@ -55,7 +114,6 @@
                         <small class="text-muted"><i class="bi bi-person-circle me-1"></i> Admin</small>
 
                         <div class="btn-delete-wrapper">
-                            {{-- Tambahkan onsubmit="confirmDelete(event)" --}}
                             <form action="{{ route('admin.articles.destroy', $article->id) }}" method="POST" onsubmit="confirmDelete(event)">
                                 @csrf @method('DELETE')
                                 <button class="btn btn-sm btn-outline-danger rounded-pill px-3">
@@ -79,8 +137,8 @@
         @endforelse
     </div>
 
-    {{-- TAMBAHKAN PAGINATION DI SINI --}}
-    <div class="d-flex justify-content-center mt-5">
+    {{-- PAGINATION MODERN --}}
+    <div class="d-flex justify-content-center mt-5 clean-pagination">
         {{ $articles->links() }}
     </div>
 

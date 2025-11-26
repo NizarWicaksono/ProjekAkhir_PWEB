@@ -121,6 +121,74 @@
         text-align: center; font-size: 1.1rem; font-weight: 800;
         width: 40px; outline: none;
     }
+
+    /* === MODERN PAGINATION STYLE (CLEAN) === */
+    /* Sembunyikan teks "Showing 1 to 10 of..." */
+    .clean-pagination .small.text-muted,
+    .clean-pagination p.text-muted {
+        display: none !important;
+    }
+
+    /* Paksa container pagination ke tengah */
+    .clean-pagination nav > div {
+        justify-content: center !important;
+    }
+
+    /* Hapus flex grow yang mungkin membuat tombol geser ke kanan */
+    .clean-pagination nav > div > div:first-child {
+        display: none !important; /* Ini menyembunyikan div pembungkus teks secara total */
+    }
+
+    /* Atur jarak item pagination */
+    .pagination {
+        gap: 8px;
+        justify-content: center;
+        margin: 0;
+    }
+
+    /* Style tombol (Sama seperti sebelumnya) */
+    .page-item:first-child .page-link,
+    .page-item:last-child .page-link {
+        border-radius: 50% !important;
+    }
+
+    .page-link {
+        border: none;
+        border-radius: 50% !important;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-weight: 700;
+        font-size: 0.9rem;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        text-decoration: none; /* Hilangkan underline */
+    }
+
+    .page-link:hover {
+        background-color: #fff;
+        color: #e10600;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .page-item.active .page-link {
+        background: linear-gradient(135deg, #e10600 0%, #ff4d4d 100%);
+        color: white;
+        box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
+        transform: scale(1.1);
+    }
+
+    .page-item.disabled .page-link {
+        background-color: #f8f9fa;
+        color: #dee2e6;
+        box-shadow: none;
+        transform: none;
+    }
 </style>
 @endpush
 
@@ -160,7 +228,7 @@
 
                         <div class="card-footer-custom">
                             <div>
-                                <span class="price-label">Mulai Dari</span>
+                                <span class="price-label">Harga</span>
                                 <div class="ticket-price">Rp {{ number_format($race->base_price, 0, ',', '.') }}</div>
                             </div>
 
@@ -239,7 +307,7 @@
         </div>
 
         {{-- Pagination --}}
-        <div class="d-flex justify-content-center mt-5">
+        <div class="d-flex justify-content-center mt-5 clean-pagination">
             {{ $races->links() }}
         </div>
     </div>
@@ -267,7 +335,7 @@
                 </a>
             @else
                 <a href="{{ route('login') }}" class="btn btn-outline-danger w-100 fw-bold py-2 rounded-pill mb-2">
-                    <i class="bi bi-box-arrow-in-right me-2"></i> Login Akses
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Login Untuk Melihat Tiket
                 </a>
             @endauth
         </div>

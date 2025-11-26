@@ -10,7 +10,6 @@
         border: none;
         border-radius: 16px;
         background: #fff;
-        /* Shadow lembut agar card melayang */
         box-shadow: 0 2px 20px rgba(0,0,0,0.04);
         transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         height: 100%;
@@ -18,7 +17,7 @@
     }
     .news-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1); /* Shadow lebih dalam saat hover */
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
 
     .news-img-wrapper {
@@ -32,15 +31,6 @@
     }
     .news-card:hover .news-img-wrapper img {
         transform: scale(1.05);
-    }
-
-    /* Badge Kategori di atas gambar */
-    .category-badge {
-        position: absolute; top: 15px; left: 15px;
-        background: rgba(225, 6, 0, 0.9); color: white;
-        padding: 4px 12px; border-radius: 30px;
-        font-size: 0.75rem; font-weight: 700;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
     /* === SIDEBAR MODERN === */
@@ -86,6 +76,65 @@
         border: 1px solid #e9ecef;
     }
     .date-month { font-size: 0.7rem; color: #e10600; text-transform: uppercase; font-weight: 700; display: block; }
+
+    /* === MODERN PAGINATION STYLE (CLEAN) === */
+    .clean-pagination .text-muted,
+    .clean-pagination .small.text-muted {
+        display: none !important;
+    }
+
+    .clean-pagination nav > div {
+        justify-content: center !important;
+        box-shadow: none !important;
+    }
+
+    .pagination {
+        gap: 8px;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .page-item:first-child .page-link,
+    .page-item:last-child .page-link {
+        border-radius: 50% !important;
+    }
+
+    .page-link {
+        border: none;
+        border-radius: 50% !important;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-weight: 700;
+        font-size: 0.9rem;
+        background-color: #fff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .page-link:hover {
+        background-color: #fff;
+        color: #e10600;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .page-item.active .page-link {
+        background: linear-gradient(135deg, #e10600 0%, #ff4d4d 100%);
+        color: white;
+        box-shadow: 0 8px 20px rgba(225, 6, 0, 0.3);
+        transform: scale(1.1);
+    }
+
+    .page-item.disabled .page-link {
+        background-color: #f8f9fa;
+        color: #dee2e6;
+        box-shadow: none;
+        transform: none;
+    }
 </style>
 @endpush
 
@@ -130,7 +179,8 @@
             @endforelse
         </div>
 
-        <div class="d-flex justify-content-center mt-5">
+        {{-- PAGINATION MODERN --}}
+        <div class="d-flex justify-content-center mt-5 clean-pagination">
             {{ $articles->links() }}
         </div>
     </div>

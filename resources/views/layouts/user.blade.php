@@ -13,7 +13,7 @@
         body {
             font-family: 'Inter', sans-serif;
             /* Gradient sangat halus: Putih -> Abu kebiruan sangat muda */
-            background: linear-gradient(180deg, #ffffff 0%, #f0f2f5 100%);
+            background: linear-gradient(180deg, #faf3e6 0%, #cecece 100%);
             background-attachment: fixed;
             color: #212529;
         }
