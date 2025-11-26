@@ -70,6 +70,12 @@
 
         <div class="col-md-6 col-lg-5 login-section bg-white">
             <div class="form-container">
+                <div class="mb-4">
+                    <a href="{{ route('users.dashboard') }}" class="text-decoration-none text-secondary fw-bold small">
+                        <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
+                    </a>
+                </div>
+                
                 <div class="mb-5">
                     <h1 class="brand-title">F1 TICKETING.</h1>
                     <p class="text-muted">Masuk untuk memesan kursi terbaikmu.</p>
