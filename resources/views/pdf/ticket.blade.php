@@ -67,7 +67,7 @@
         <div class="title">{{ $ticket->race->circuit->gp_name }}</div>
         <div class="subtitle">
             {{ $ticket->race->circuit->circuit_name }} <br>
-            {{ $ticket->race->race_date->format('d F Y') }}
+            {{ $ticket->race->race_date->format('d F Y, H:i') }}
         </div>
 
         <div class="row">
@@ -88,7 +88,7 @@
         </div>
 
         <div class="ticket-code-box">
-            <div style="font-size: 12px; color: #666; margin-bottom: 5px;">KODE UNIK TIKET</div>
+            <div style="font-size: 12px; color: #666; margin-bottom: 5px;">KODE TIKET</div>
             <h2 style="font-family: monospace; font-size: 30px; letter-spacing: 3px; margin: 0;">
                 {{ $ticket->ticket_code }}
             </h2>

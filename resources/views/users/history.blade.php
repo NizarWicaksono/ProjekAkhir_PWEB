@@ -120,7 +120,7 @@
                                 <div class="modal-body p-4">
                                     <div class="text-center mb-4 pb-4 border-bottom">
                                         <h4 class="fw-bold mb-1">{{ $ticket->race->circuit->gp_name }}</h4>
-                                        <span class="badge bg-dark rounded-pill px-3 mb-2">{{ \Carbon\Carbon::parse($ticket->race->race_date)->translatedFormat('l, d F Y') }}</span>
+                                        <span class="badge bg-dark rounded-pill px-3 mb-2">{{ \Carbon\Carbon::parse($ticket->race->race_date)->translatedFormat('l, d F Y, H:i') }}</span>
                                     </div>
                                     <div class="row">
                                         <div class="col-6"><div class="detail-label">Pemilik Tiket</div><div class="detail-value">{{ Auth::user()->name }}</div></div>
