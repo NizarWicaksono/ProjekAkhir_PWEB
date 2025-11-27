@@ -97,11 +97,9 @@
             const editSection = document.getElementById('edit-section');
 
             if (readSection.classList.contains('d-none')) {
-                // Jika sedang Edit -> Kembali ke Baca
                 readSection.classList.remove('d-none');
                 editSection.classList.add('d-none');
             } else {
-                // Jika sedang Baca -> Masuk ke Edit
                 readSection.classList.add('d-none');
                 editSection.classList.remove('d-none');
             }

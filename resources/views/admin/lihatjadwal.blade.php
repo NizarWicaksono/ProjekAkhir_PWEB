@@ -343,7 +343,7 @@
                 gpSelectorEdit.value = circuitId;
                 raceDateEdit.value = date;
                 basePriceEdit.value = price;
-                // 3. Update Display Sirkuit secara manual
+                // Update Display Sirkuit
                 updateDisplay(gpSelectorEdit, circuitDisplayEdit);
             });
         });
