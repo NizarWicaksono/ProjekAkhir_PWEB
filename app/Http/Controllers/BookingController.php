@@ -13,7 +13,7 @@ class BookingController extends Controller
     public function index()
     {
         $races = Jadwal::where('race_date', '>=', now())
-                     ->orderBy('race_date', 'desc')
+                     ->orderBy('race_date', 'asc')
                      ->with('circuit')
                      ->paginate(6);
 
