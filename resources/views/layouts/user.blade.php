@@ -104,6 +104,39 @@
         @yield('content')
     </div>
 
+    <footer class="bg-dark text-white pt-5 pb-4 mt-auto" style="border-top: 5px solid #e10600;">
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+
+                <div class="col-md-6 mb-4">
+                    <h5 class="fw-bold fst-italic text-uppercase mb-3" style="letter-spacing: 1px;">
+                        <i class="bi bi-flag-fill text-danger me-2"></i>F1 TICKET
+                    </h5>
+                    <p class="small text-white-50 mb-0" style="max-width: 400px;">
+                        Platform resmi pemesanan tiket Formula 1 termudah dan terpercaya. Rasakan adrenalin balapan kelas dunia langsung dari sirkuit.
+                    </p>
+                </div>
+
+                <div class="col-md-4 mb-4 text-md-end">
+                    <h6 class="fw-bold text-uppercase text-danger mb-3 small">Connect With Us</h6>
+                    <div class="d-flex gap-3 justify-content-md-end">
+                        <a href="https://www.instagram.com/f1" target="blank" class="btn btn-outline-light btn-sm rounded-circle" style="width: 35px; height: 35px;"><i class="bi bi-instagram"></i></a>
+                        <a href="https://x.com/f1" target="blank" class="btn btn-outline-light btn-sm rounded-circle" style="width: 35px; height: 35px;"><i class="bi bi-twitter-x"></i></a>
+                        <a href="https://www.youtube.com/@Formula1" target="blank" class="btn btn-outline-light btn-sm rounded-circle" style="width: 35px; height: 35px;"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr class="border-secondary my-4">
+
+            <div class="text-center small text-white-50">
+                &copy; {{ date('Y') }} <strong>F1 Ticket System</strong>. All rights reserved. <br>
+                <span style="font-size: 0.75rem;">Unofficial Student Project for Web Programming.</span>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
