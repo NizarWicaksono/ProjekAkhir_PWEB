@@ -108,8 +108,7 @@ class ArticleController extends Controller
     public function showPublic($id)
     {
         $article = Article::findOrFail($id);
-        $otherArticles = Article::where('id', '!=', $id)->latest()->take(3)->get();
 
-        return view('users.detailartikel', compact('article', 'otherArticles'));
+        return view('users.detailartikel', compact('article'));
     }
 }
