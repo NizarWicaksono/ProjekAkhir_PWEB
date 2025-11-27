@@ -40,15 +40,13 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    // Form Booking
+    // Beli Tiket
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
-    // Bayar Booking
     Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
-    // Riwayat
     Route::get('/history', [BookingController::class, 'history'])->name('users.history');
     // Download Tiket
     Route::get('/ticket/{code}/download', [BookingController::class, 'downloadTicket'])->name('ticket.download');
-    // Profil User
+    // Profil 
     Route::get('/profile', [AuthController::class, 'showProfile'])->name('users.profile');
     Route::put('/profile', [AuthController::class, 'updateProfile'])->name('users.profile.update');
 });

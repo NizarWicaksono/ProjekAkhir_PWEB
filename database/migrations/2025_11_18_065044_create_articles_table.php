@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('title');        // Judul Berita
-            $table->text('content');        // Isi Berita (bisa panjang)
-            $table->string('image')->nullable(); // Foto Utama
-            $table->foreignId('user_id')->constrained(); // Siapa penulisnya (Admin)
-            $table->date('published_date'); // Tanggal tayang
+            $table->string('title');
+            $table->text('content');
+            $table->string('image')->nullable();
+            $table->foreignId('user_id')->constrained();
+            $table->date('published_date'); 
             $table->timestamps();
         });
     }

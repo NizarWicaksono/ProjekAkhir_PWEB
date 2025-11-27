@@ -11,12 +11,12 @@ class JadwalController extends Controller
     public function index()
     {
         $activeRaces = Jadwal::with('circuit')
-                        ->whereDate('race_date', '>=', now())
+                        ->where('race_date', '>=', now())
                         ->orderBy('race_date', 'desc')
                         ->paginate(8, ['*'], 'active_page');
 
         $pastRaces = Jadwal::with('circuit')
-                        ->whereDate('race_date', '<', now())
+                        ->where('race_date', '<', now())
                         ->orderBy('race_date', 'desc')
                         ->paginate(8, ['*'], 'past_page');
 

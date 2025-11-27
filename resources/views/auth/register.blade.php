@@ -73,7 +73,7 @@
                         <i class="bi bi-arrow-left me-1"></i> Kembali ke Dashboard
                     </a>
                 </div>
-                
+
                 <div class="mb-4">
                     <h1 class="brand-title">JOIN THE RACE.</h1>
                     <p class="text-muted">Buat akun baru.</p>

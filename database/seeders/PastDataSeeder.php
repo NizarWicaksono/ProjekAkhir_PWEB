@@ -15,7 +15,6 @@ class PastDataSeeder extends Seeder
 {
     public function run()
     {
-        // 1. Buat User Dummy Pembeli
         $users = [];
         $names = ['Leclerc', 'Verstappen', 'Lando', 'Lewis', 'Carlos'];
 
@@ -30,11 +29,9 @@ class PastDataSeeder extends Seeder
             );
         }
 
-        // 2. Data Balapan Masa Lalu (Maret-April 2025)
-        // KITA HANYA BUTUH NAMA GP, karena detail sirkuit diambil dari database
         $pastRaces = [
             [
-                'gp_name' => 'Australian Grand Prix', // Harus sama persis dengan di CircuitSeeder
+                'gp_name' => 'Australian Grand Prix',
                 'race_date' => Carbon::create(2025, 3, 16),
                 'base_price' => 3500000,
             ],
@@ -51,15 +48,12 @@ class PastDataSeeder extends Seeder
         ];
 
         foreach ($pastRaces as $raceData) {
-            // A. CARI CIRCUIT ID BERDASARKAN NAMA GP
             $circuit = Circuit::where('gp_name', $raceData['gp_name'])->first();
 
-            // Jika sirkuit ketemu, baru buat jadwalnya
             if ($circuit) {
-                // Gunakan firstOrCreate dengan 'circuit_id'
                 $race = Jadwal::firstOrCreate(
                     [
-                        'circuit_id' => $circuit->id, // <--- INI PERBAIKANNYA
+                        'circuit_id' => $circuit->id,
                         'race_date' => $raceData['race_date']
                     ],
                     [
@@ -67,7 +61,6 @@ class PastDataSeeder extends Seeder
                     ]
                 );
 
-                // 3. Generate Tiket (Sama seperti sebelumnya)
                 for ($i = 1; $i <= 15; $i++) {
                     $isSold = $i <= 10;
                     $buyer = $isSold ? $users[array_rand($users)] : null;

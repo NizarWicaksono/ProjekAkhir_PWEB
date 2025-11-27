@@ -76,7 +76,7 @@ class ArticleController extends Controller
         $secureUrl = $article->image;
 
         if ($request->hasFile('image')) {
-            $folderPath = 'artkel_f1';
+            $folderPath = 'artikel_f1';
             $file = $request->file('image')->getClientOriginalName();
             $file_name = pathinfo($file, PATHINFO_FILENAME);
             $public_id = date('y-m-d_His') . '_' . $file_name;

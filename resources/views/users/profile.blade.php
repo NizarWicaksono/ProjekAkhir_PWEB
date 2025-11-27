@@ -92,7 +92,7 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-5">
                         <label class="text-muted small fw-bold text-uppercase mb-2">Alamat Email</label>
                         <div class="readonly-field d-flex align-items-center">
                             <i class="bi bi-envelope text-secondary me-3 fs-5"></i>
@@ -100,23 +100,9 @@
                         </div>
                     </div>
 
-                    <div class="mb-5">
-                        <label class="text-muted small fw-bold text-uppercase mb-2">Password</label>
-                        <div class="readonly-field d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-key text-secondary me-3 fs-5"></i>
-                                <input type="password" value="DummyPassword123" class="border-0 bg-transparent fw-bold text-dark" id="dummy-password" readonly style="outline: none; width: 200px;">
-                            </div>
-                            <button type="button" class="btn btn-sm btn-link text-decoration-none text-secondary" onclick="toggleDummyPassword()">
-                                <i class="bi bi-eye-slash" id="dummy-eye-icon"></i>
-                            </button>
-                        </div>
-                        <small class="text-muted fst-italic mt-1 d-block">*Password terenkripsi demi keamanan.</small>
-                    </div>
-
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-danger px-4 py-2 fw-bold rounded-pill shadow-sm" onclick="enableEditMode()">
-                            <i class="bi bi-pencil-square me-2"></i>Update Profil
+                            <i class="bi bi-pencil-square me-2"></i>Update Akun
                         </button>
                     </div>
                 </div>
@@ -198,12 +184,7 @@
         document.getElementById('edit-mode').style.display = 'none';
         document.getElementById('view-mode').style.display = 'block';
     }
-    function toggleDummyPassword() {
-        const input = document.getElementById('dummy-password');
-        const icon = document.getElementById('dummy-eye-icon');
-        if (input.type === 'password') { input.type = 'text'; icon.classList.remove('bi-eye-slash'); icon.classList.add('bi-eye'); }
-        else { input.type = 'password'; icon.classList.remove('bi-eye'); icon.classList.add('bi-eye-slash'); }
-    }
+    // Fungsi Toggle Password
     function togglePassword(inputId, iconId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);

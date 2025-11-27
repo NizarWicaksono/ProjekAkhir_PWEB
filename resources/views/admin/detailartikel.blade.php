@@ -60,9 +60,11 @@
 
                             <div class="mb-4 p-3 bg-light rounded border">
                                 <label class="form-label fw-bold small text-uppercase text-muted">Update Cover</label>
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center gap-3">
                                     @if($article->image)
-                                        <img src="{{ $article->image ? $article->image : 'https://via.placeholder.com/400x250?text=Cover+Artikel' }}"
+                                        <img src="{{ $article->image }}"
+                                             class="rounded object-fit-cover border"
+                                             style="width: 120px; height: 80px;" alt="Preview">
                                     @endif
                                     <input type="file" name="image" class="form-control" accept="image/*">
                                 </div>

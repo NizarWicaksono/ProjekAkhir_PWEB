@@ -46,7 +46,6 @@
             background: rgba(255,255,255,0.15);
             border-radius: 50px;
             padding: 5px 15px 5px 5px;
-            transition: background 0.2s;
         }
         .user-pill:hover { background: rgba(255,255,255,0.25); }
     </style>

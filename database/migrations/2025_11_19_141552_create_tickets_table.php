@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('race_id')->constrained()->onDelete('cascade'); // Relasi ke Balapan
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null'); // Siapa yang beli (Bisa kosong kalau belum laku)
-            $table->string('ticket_code')->unique(); // Kode unik tiket
-            $table->string('category_name'); // Misal: "Grandstand", "VIP"
-            $table->decimal('price', 15, 2); // Harga Tiket
+            $table->foreignId('race_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('ticket_code')->unique();
+            $table->string('category_name');
+            $table->decimal('price', 15, 2);
             $table->enum('status', ['available', 'sold'])->default('available');
-            $table->timestamp('purchase_date')->nullable(); // Tanggal beli (penting untuk laporan)
+            $table->timestamp('purchase_date')->nullable(); 
             $table->timestamps();
         });
     }

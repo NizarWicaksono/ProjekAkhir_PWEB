@@ -118,12 +118,12 @@
         Swal.fire({
             icon: 'error',
             title: 'Login Gagal',
-            html: '<ul style="text-align: left;">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>',
+            html: '@foreach ($errors->all() as $error){{ $error }}<br>@endforeach',
             confirmButtonColor: '#e10600'
         });
     @endif
 
-    // Pesan Sukses
+    // Alert Sukses
     @if(session('success'))
         Swal.fire({
             icon: 'success',

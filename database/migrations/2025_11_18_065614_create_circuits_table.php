@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('circuits', function (Blueprint $table) {
             $table->id();
-            $table->string('gp_name');      // Contoh: Bahrain Grand Prix
-            $table->string('circuit_name'); // Contoh: Bahrain International Circuit
-            $table->string('country');      // Contoh: Bahrain
+            $table->string('gp_name');
+            $table->string('circuit_name');
+            $table->string('country');      
             $table->timestamps();
         });
     }

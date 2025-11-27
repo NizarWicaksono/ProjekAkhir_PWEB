@@ -68,7 +68,6 @@
             color: white !important;
             box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
         }
-        /* Badge Hitungan */
         .nav-tabs .nav-link .badge {
             background-color: rgba(255,255,255,0.2) !important;
             color: white;
@@ -187,7 +186,7 @@
                             <h5 class="race-title text-muted">{{ $race->circuit->gp_name }}</h5>
                             <p class="race-info text-muted"><i class="bi bi-geo-alt-fill me-2"></i>{{ $race->circuit->circuit_name }}</p>
                             <p class="race-info mt-2 text-decoration-line-through">
-                                <i class="bi bi-calendar-check me-2"></i>{{ $race->race_date->format('d M Y') }}
+                                <i class="bi bi-calendar-check me-2"></i>{{ $race->race_date->format('d M Y, H:i') }} WIB
                             </p>
                             <hr class="mt-auto mb-3 text-muted opacity-25">
                             <div class="d-flex justify-content-between align-items-center">

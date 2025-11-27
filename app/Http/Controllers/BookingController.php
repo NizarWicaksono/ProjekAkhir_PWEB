@@ -13,7 +13,7 @@ class BookingController extends Controller
     public function index()
     {
         $races = Jadwal::where('race_date', '>=', now())
-                     ->orderBy('race_date', 'asc')
+                     ->orderBy('race_date', 'desc')
                      ->with('circuit')
                      ->paginate(6);
 
@@ -56,7 +56,7 @@ class BookingController extends Controller
     {
         $tickets = Ticket::where('user_id', Auth::id())
                          ->where('status', 'sold')
-                         ->with('race.circuit') 
+                         ->with('race.circuit')
                          ->orderByDesc('purchase_date')
                          ->get();
 

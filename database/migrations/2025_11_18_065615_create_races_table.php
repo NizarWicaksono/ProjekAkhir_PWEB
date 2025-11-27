@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('races', function (Blueprint $table) {
             $table->id();
-            // GANTI kolom nama & sirkuit string menjadi Foreign Key
             $table->foreignId('circuit_id')->constrained('circuits')->onDelete('cascade');
-
             $table->dateTime('race_date');
             $table->decimal('base_price', 15, 2);
             $table->timestamps();
